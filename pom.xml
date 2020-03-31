@@ -11,7 +11,7 @@
 
     <groupId>com.github.leftisttachyon</groupId>
     <artifactId>dsi-hub</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <name>DSi Hub</name>
     <description>A Spring-backed website created for use by the DSi</description>
