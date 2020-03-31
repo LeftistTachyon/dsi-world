@@ -14,7 +14,7 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <name>DSi Hub</name>
-    <description>A Spring Boot-backed website created for use by the DSi</description>
+    <description>A Spring-backed website created for use by the DSi</description>
     <inceptionYear>2020</inceptionYear>
 
     <properties>
