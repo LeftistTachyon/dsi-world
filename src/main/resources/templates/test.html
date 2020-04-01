@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Test page</title>
+</head>
+<body>
+So I'm going to put as many HTML5 tags as I can below, and I'll assess how they look on the DSi.
+<!-- Comment; you shouldn't see this --><br>
+<a href="index.html" th:href="@{/}">Link to home</a><br>
+The <abbr title="World Health Organization">WHO</abbr> was founded in 1948.<br>
+<address>You can shoot me an email <a href="mailto:randydonaldjr@gmail.com">here</a>.</address>
+<br>
+<img src="../static/dsi.jpg" th:src="@{/dsi.jpg}" width="100" height="100" alt="Blue DSi" usemap="#testmap">
+<map name="testmap">
+    <area shape="rect" coords="31,14,69,43" href="javascript:alert('That\'s the top screen!');" alt="Top screen"/>
+    <area shape="rect" coords="31,56,69,85" href="javascript:alert('That\'s the bottom screen!');" alt="Bottom screen"/>
+</map>
+<br>
+<article>
+    World News, from the BBC.<br>
+    At 6 AM GMT, this is the Newsroom.
+</article>
+<br>
+<aside>I don't know why I did that last one.</aside>
+<br>
+<audio controls>
+    <source src="../static/horserace.mp3" th:src="@{/horserace.mp3}" type="audio/mpeg">
+    Your browser does not support the audio tag.
+</audio>
+<br>
+<b>Boldface!</b>
+<br>
+<bdi>BDI stands for Bi-Directional Isolation.</bdi>
+<br>
+<bdo>BDO stands for Bi-Directional Override.</bdo>
+<br>
+<blockquote>
+    This is a blockquote.
+</blockquote>
+<br>
+<button onclick="javascript:alert('Hi!');">Click me!</button>
+<br>
+Canvas:
+<canvas id="test-canvas" style="width:100px;height:100px;"></canvas>
+<br>
+<cite>The Scream</cite> by Edward Munch. Painted in 1893.<br>
+<code>System.out.println("Hello World!");</code>
+<br>
+<data value="egg">Eggs</data>
+<br>
+<input list="browsers">
+<datalist id="browsers">
+    <option value="Internet Explorer">
+    <option value="Firefox">
+    <option value="Chrome">
+    <option value="Opera">
+    <option value="Safari">
+</datalist>
+<br>
+<dl>
+    <dt>Coffee</dt>
+    <dd>Black hot drink</dd>
+    <dt>Milk</dt>
+    <dd>White cold drink</dd>
+</dl>
+<br>
+<del>Strike!</del>
+<br>
+<details>
+    Spoiler?
+</details>
+<br>
+<dfn>HTML</dfn> is the standard markup language for creating web pages.<br>
+<br>
+<dialog open>This is an open dialog window.</dialog>
+<br>
+<em>Emphasize!</em>
+<br>
+<fieldset>
+    <legend>Personalia:</legend>
+    <label for="fname">First name:</label>
+    <input type="text" id="fname" name="fname"><br><br>
+    <label for="lname">Last name:</label>
+    <input type="text" id="lname" name="lname"><br><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email"><br><br>
+    <label for="birthday">Birthday:</label>
+    <input type="date" id="birthday" name="birthday"><br><br>
+    <input type="submit" value="Submit">
+</fieldset>
+<br>
+<figure>
+    aaaAAAAAAAaaa
+    <figcaption>Fig. 1: Pain</figcaption>
+</figure>
+<br>
+<footer>Footer</footer>
+<br>
+<h1>Heading 1</h1>
+<br>
+<h2>Heading 2</h2>
+<br>
+<h3>Heading 3</h3>
+<br>
+<h4>Heading 4</h4>
+<br>
+<h5>Heading 5</h5>
+<br>
+<h6>Heading 6</h6>
+<br>
+<header>Header</header>
+<br>
+Horizontal
+<hr>
+Rule<br>
+<i>Insert alternate voice or mood here</i>
+<br>
+<iframe src="https://www.w3schools.com" height="100px" width="100px"></iframe>
+<br>
+<ins>Insert</ins>
+<br>
+<kbd>Keyboard input</kbd>
+<br>
+<ol>
+    <li>Eggs</li>
+    <li>Bacon</li>
+    <li>Waffles</li>
+</ol>
+<br>
+<main>This is the main show.</main>
+<br>
+<mark>Highlighted/marked?</mark>
+<br>
+<label for="disk_c">Disk usage C:</label>
+<meter id="disk_c" value="2" min="0" max="10">2 out of 10</meter>
+<br>
+<nav>
+    <a href="https://www.google.com">Google</a>
+    <a href="https://github.com">GitHub</a>
+</nav>
+<br>
+<noscript>Looks like you don't support client-side scripts.</noscript>
+<br>
+<label for="cars">Choose a car:</label>
+<select id="cars">
+    <optgroup label="Swedish Cars">
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+    </optgroup>
+    <optgroup label="German Cars">
+        <option value="mercedes">Mercedes</option>
+        <option value="audi">Audi</option>
+    </optgroup>
+</select>
+<br>
+<form oninput="x.value=parseInt(a.value)+parseInt(b.value)">0
+    <input type="range" id="a" value="50">100
+    +<input type="number" id="b" value="50">
+    =
+    <output name="x" for="a b"></output>
+</form>
+<br>
+<p>This is a paragraph!</p>
+<br>
+<pre>Preformatted text
+Doesn't need
+
+br tags lmoa</pre>
+<br>
+<label for="file">Downloading progress:</label>
+<progress id="file" value="32" max="100"> 32%</progress>
+<br>
+<q>Other sports run for punishment.</q> said the wise man.
+<br>
+<ruby>
+    漢
+    <rt>
+        <rp>(</rp>
+        ㄏㄢˋ
+        <rp>)</rp>
+    </rt>
+</ruby>
+<br>
+<s>My car is blue.</s> It's actually silver now.<br>
+<samp>Sample output</samp>
+<br>
+<section>The only lonely section</section>
+<br>
+Normal text <small>This is small, but why no big tag?</small>
+<br>
+<strong>STRENGTH!</strong>
+<br>
+Normal text <sub>Subscript</sub>
+<br>
+e<sup>absolutely nothing</sup>
+<br>
+<table>
+    <caption>Monthly savings</caption>
+    <thead>
+    <tr>
+        <th>Month</th>
+        <th>Savings</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>January</td>
+        <td>$100</td>
+    </tr>
+    <tr>
+        <td>February</td>
+        <td>$80</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td>Sum</td>
+        <td>$180</td>
+    </tr>
+    </tfoot>
+</table>
+<br>
+<template>You can't see me!</template>
+<br>
+<textarea></textarea>
+<br>
+<p>We open at <time>10:00</time> every morning.
+</p>
+<p>I have a date on <time datetime="2008-02-14 20:00">Valentines day</time>.</p>
+<br>
+<u>Stylistically different</u>
+<br>
+<ul>
+    <li>Unordered</li>
+    <li>List</li>
+</ul>
+<br>
+<var>Variable font</var>
+<br>
+One of the longest words in the English language is pneumo<wbr>noultramicro<wbr>scopicsilico<wbr>volcanoconiosis.
+</body>
+</html>

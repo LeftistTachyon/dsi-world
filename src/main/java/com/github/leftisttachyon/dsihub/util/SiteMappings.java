@@ -12,4 +12,13 @@ public final class SiteMappings {
      */
     private SiteMappings() {
     }
+
+    /**
+     * The URL for the home page.
+     */
+    public static final String HOME = "/";
+    /**
+     * The URL for the test page.
+     */
+    public static final String TEST = "/test";
 }
