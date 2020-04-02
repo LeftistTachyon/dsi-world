@@ -1,6 +1,6 @@
-package com.github.leftisttachyon.dsihub.config;
+package com.github.leftisttachyon.dsiworld.config;
 
-import com.github.leftisttachyon.dsihub.util.ViewNames;
+import com.github.leftisttachyon.dsiworld.util.ViewNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

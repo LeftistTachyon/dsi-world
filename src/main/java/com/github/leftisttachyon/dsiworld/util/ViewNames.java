@@ -1,4 +1,4 @@
-package com.github.leftisttachyon.dsihub.util;
+package com.github.leftisttachyon.dsiworld.util;
 
 /**
  * A class that stores the names for the view files.

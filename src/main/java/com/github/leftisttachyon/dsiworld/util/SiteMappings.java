@@ -1,4 +1,4 @@
-package com.github.leftisttachyon.dsihub.util;
+package com.github.leftisttachyon.dsiworld.util;
 
 /**
  * A utility class that stores the mappings for this site.
