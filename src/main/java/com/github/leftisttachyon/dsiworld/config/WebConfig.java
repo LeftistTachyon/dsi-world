@@ -1,5 +1,6 @@
 package com.github.leftisttachyon.dsiworld.config;
 
+import com.github.leftisttachyon.dsiworld.util.SiteMappings;
 import com.github.leftisttachyon.dsiworld.util.ViewNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -39,7 +40,8 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName(ViewNames.HOME);
+        registry.addViewController(SiteMappings.HOME).setViewName(ViewNames.HOME);
+        registry.addViewController(SiteMappings.TEST).setViewName(ViewNames.TEST);
     }
 
     /**

@@ -16,4 +16,8 @@ public final class ViewNames {
      * The name of the file containing the home page.
      */
     public static final String HOME = "index";
+    /**
+     * The name of the file containing the test page.
+     */
+    public static final String TEST = "test";
 }
