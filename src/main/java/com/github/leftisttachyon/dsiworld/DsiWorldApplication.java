@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 0.0.1
  */
 @SpringBootApplication
-public class DsiHubApplication {
+public class DsiWorldApplication {
 
     /**
      * The main method
@@ -18,7 +18,7 @@ public class DsiHubApplication {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        SpringApplication.run(DsiHubApplication.class, args);
+        SpringApplication.run(DsiWorldApplication.class, args);
     }
 
 }
