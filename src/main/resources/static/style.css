@@ -19,7 +19,7 @@ cite, dfn, em, i, var {
     font-style: italic;
 }
 
-h1 {
+H1 {
     display: block;
     font-size: 2em;
     margin-block-start: 0.67em;
