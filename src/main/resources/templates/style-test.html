@@ -11,11 +11,16 @@
 </head>
 <body>
 <p>I'm going to test some cool things I put in the <code>style.css</code> file here.</p>
-<p class="serif">This is a neat serif font.</p>
-<p class="sans-serif">This is a neat sans-serif font.</p>
 <button id="button" onclick='$("#button")[0].innerHTML="Thank you!"'>Click me!</button>
-<span style="font-weight:bold">If this isn't in italics, I don't know what is.</span>
-<div style="font-weight:bold">Trying it with div</div>
+<p>List of findings:
+<ul>
+    <li>The latest version of jQuery that is supported is 1.12.4, which is unfortunate.</li>
+    <li>Both bold and italics are broken on the DSi</li>
+    <li>There is only one font: the default font</li>
+    <li>em as a CSS width is broken</li>
+</ul>
+</p>
+<button></button>
 <p><a href="index.html" th:href="@{/}">Go back to home</a></p>
 </body>
 </html>
