@@ -1,10 +1,13 @@
 body {
     font-family: sans-serif;
-    font-size: 10px;
-    line-height: 11px;
     margin: 2px;
     overflow-x: hidden;
     width: 236px;
+}
+
+* {
+    font-size: 10px;
+    line-height: 11px;
 }
 
 address {
