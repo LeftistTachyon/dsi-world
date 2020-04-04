@@ -1,14 +1,20 @@
 package com.github.leftisttachyon.dsiworld.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
-import java.io.*;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 /**
  * A class that implements the {@link EncryptionFileService} interface.
@@ -31,7 +37,7 @@ public class EncryptionFileServiceImpl implements EncryptionFileService {
     /**
      * The constructor
      */
-    EncryptionFileServiceImpl() {
+    EncryptionFileServiceImpl(@Value("${encryption.seed}") long seed) {
         Cipher tempC = null;
         try {
             tempC = Cipher.getInstance("AES/CBC/PKCS5Padding");
@@ -41,15 +47,10 @@ public class EncryptionFileServiceImpl implements EncryptionFileService {
             cipher = tempC;
         }
 
-        SecretKey tempSK = null;
-        try {
-            KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-            keyGen.init(256);
-            tempSK = keyGen.generateKey();
-        } catch (NoSuchAlgorithmException e) {
-            log.error("javax.crypto.SecretKey could not be initialized", e);
-        }
-        secretKey = tempSK;
+        Random r = new Random(seed);
+        byte[] key = new byte[16];
+        r.nextBytes(key);
+        secretKey = new SecretKeySpec(key, "AES");
     }
 
     @Override

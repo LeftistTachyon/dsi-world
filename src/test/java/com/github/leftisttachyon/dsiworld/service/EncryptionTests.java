@@ -2,12 +2,14 @@ package com.github.leftisttachyon.dsiworld.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
+import java.security.SecureRandom;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -78,7 +80,8 @@ public class EncryptionTests {
     @Test
     public void crossInstanceEncryptionTest() throws IOException, InvalidAlgorithmParameterException,
             InvalidKeyException {
-        EncryptionFileService one = new EncryptionFileServiceImpl();
+        final long seed = 125L;
+        EncryptionFileService one = new EncryptionFileServiceImpl(seed);
         String info = "This is a\nmulti-line\nnightmare";
 
         File temp = Files.createTempFile("temp", "txt").toFile();
@@ -97,7 +100,7 @@ public class EncryptionTests {
             }
         }
 
-        EncryptionFileService two = new EncryptionFileServiceImpl();
+        EncryptionFileService two = new EncryptionFileServiceImpl(seed);
 
         System.out.println("Reading text:");
         StringBuilder lines = new StringBuilder();
@@ -115,5 +118,41 @@ public class EncryptionTests {
         }
 
         assertEquals(lines.toString(), info);
+    }
+
+    /**
+     * Literally nothing
+     */
+    public void generationTest() {
+        SecureRandom r = new SecureRandom();
+        byte[] bb = new byte[16];
+        r.nextBytes(bb);
+
+        System.out.print("new byte[]{");
+        for (int i = 0; i < bb.length; i++) {
+            System.out.print(bb[i]);
+            if (i == bb.length - 1) {
+                System.out.println("}");
+            } else {
+                System.out.print(", ");
+            }
+        }
+    }
+
+    @Value("${encryption.seed}")
+    private long seed;
+
+    /**
+     * Tests whether the property injection from Spring will works like I remember it.
+     */
+    @Test
+    public void propertyInjectionTest() {
+        System.out.println(seed);
+        String s = System.getenv("SEED");
+        if (s == null || s.isEmpty() || !s.matches("\\d+")) {
+            assertEquals(125, seed);
+        } else {
+            assertEquals(s, String.valueOf(seed));
+        }
     }
 }
