@@ -10,42 +10,32 @@ body {
     line-height: 11px;
 }
 
-address {
-    display: block;
-    font-style: italic;
-}
-
-article, aside, footer, header, main, section {
+address, article, aside, footer, header, main, section {
     display: block;
 }
 
 h1 {
     display: block;
     font-size: 20px;
-    font-weight: bold;
 }
 
 h2 {
     display: block;
     font-size: 15px;
-    font-weight: bold;
 }
 
 h3 {
     display: block;
     font-size: 11.7px;
-    font-weight: bold;
 }
 
 h4 {
     display: block;
-    font-weight: bold;
 }
 
 h5 {
     display: block;
     font-size: 8.3px;
-    font-weight: bold;
 }
 
 h6 {
