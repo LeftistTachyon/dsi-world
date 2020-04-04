@@ -18,6 +18,16 @@
     <li>Both bold and italics are broken on the DSi</li>
     <li>There is only one font: the default font</li>
     <li>em as a CSS width is broken</li>
+    <li>How the DSi deals with font sizes is cursed.
+        <ul>
+            <li>All sizes 1px to 9px are the same with the same element height;</li>
+            <li>After that, the element's height starts to linearly increase, but the font itself
+                does not increase in size until 12px.
+            </li>
+            <li>Sizes 12px to 14px are the same, and sizes 15px and up are the same.</li>
+            <li>You can test it below using a DSi.</li>
+        </ul>
+    </li>
 </ul>
 </p>
 <p id="resizable">Sample test</p>

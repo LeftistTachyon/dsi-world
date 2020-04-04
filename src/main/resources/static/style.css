@@ -10,7 +10,7 @@ body {
     line-height: 11px;
 }
 
-address, article, aside, footer, header, main, section {
+address, article, aside, footer, h3, h4, h5, h6, header, main, section {
     display: block;
 }
 
@@ -21,27 +21,7 @@ h1 {
 
 h2 {
     display: block;
-    font-size: 15px;
-}
-
-h3 {
-    display: block;
-    font-size: 11.7px;
-}
-
-h4 {
-    display: block;
-}
-
-h5 {
-    display: block;
-    font-size: 8.3px;
-}
-
-h6 {
-    display: block;
-    font-size: 6.7px;
-    font-weight: bold;
+    font-size: 13px;
 }
 
 mark {
