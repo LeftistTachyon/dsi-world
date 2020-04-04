@@ -2,9 +2,12 @@ package com.github.leftisttachyon.dsiworld.service;
 
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.SealedObject;
 import java.io.*;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * An interface that outlines a service that encrypts and decrypts files.
@@ -12,7 +15,7 @@ import java.security.InvalidKeyException;
  * @author Jed Wang
  * @since 1.0.0
  */
-public interface EncryptionFileService {
+public interface EncryptionService {
     /**
      * Returns a {@link CipherInputStream} that reads from the given {@link File}.
      *
@@ -90,4 +93,28 @@ public interface EncryptionFileService {
     default ObjectOutputStream getEncryptedObjectOutputStream(File f) throws IOException, InvalidKeyException {
         return new ObjectOutputStream(getCipherOutputStream(f));
     }
+
+    /**
+     * Converts the given {@link Serializable} object into a {@link SealedObject}.
+     *
+     * @param s the {@link Serializable} object to seal away
+     * @return a {@link SealedObject} that wraps the given object
+     * @throws IOException               if something goes wrong while wrapping the object
+     * @throws IllegalBlockSizeException if something goes wrong while wrapping the object
+     * @throws InvalidKeyException       if something goes wrong while wrapping the object
+     */
+    SealedObject sealObject(Serializable s) throws IOException, IllegalBlockSizeException, InvalidKeyException;
+
+    /**
+     * Converts the given {@link SealedObject} into an {@link Object}.
+     *
+     * @param so the {@link SealedObject} to unseal
+     * @return the {@link Object} contained within the given {@link SealedObject}
+     * @throws ClassNotFoundException   if an invalid object is in the given {@link SealedObject}
+     * @throws NoSuchAlgorithmException if an invalid algorithm is used to seal the object
+     * @throws InvalidKeyException      if an invalid key is used to unseal the object
+     * @throws IOException              if something goes wrong while unsealing the object
+     */
+    Object unsealObject(SealedObject so) throws ClassNotFoundException, NoSuchAlgorithmException, InvalidKeyException,
+            IOException;
 }

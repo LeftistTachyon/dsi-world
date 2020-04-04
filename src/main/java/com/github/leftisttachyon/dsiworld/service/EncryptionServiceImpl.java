@@ -7,24 +7,21 @@ import org.springframework.stereotype.Service;
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 /**
- * A class that implements the {@link EncryptionFileService} interface.
+ * A class that implements the {@link EncryptionService} interface.
  *
  * @author Jed Wang
  * @since 1.0.0
  */
 @Service
 @Slf4j
-public class EncryptionFileServiceImpl implements EncryptionFileService {
+public class EncryptionServiceImpl implements EncryptionService {
     /**
      * The cipher to use
      */
@@ -37,7 +34,7 @@ public class EncryptionFileServiceImpl implements EncryptionFileService {
     /**
      * The constructor
      */
-    EncryptionFileServiceImpl(@Value("${encryption.seed}") long seed) {
+    EncryptionServiceImpl(@Value("${encryption.seed}") long seed) {
         Cipher tempC = null;
         try {
             tempC = Cipher.getInstance("AES/CBC/PKCS5Padding");
@@ -75,5 +72,17 @@ public class EncryptionFileServiceImpl implements EncryptionFileService {
         fOut.write(iv);
 
         return new CipherOutputStream(fOut, cipher);
+    }
+
+    @Override
+    public SealedObject sealObject(Serializable s) throws IOException, IllegalBlockSizeException, InvalidKeyException {
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        return new SealedObject(s, cipher);
+    }
+
+    @Override
+    public Object unsealObject(SealedObject so) throws ClassNotFoundException, NoSuchAlgorithmException,
+            InvalidKeyException, IOException {
+        return so.getObject(secretKey);
     }
 }
