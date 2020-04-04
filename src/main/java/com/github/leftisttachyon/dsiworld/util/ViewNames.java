@@ -20,4 +20,8 @@ public final class ViewNames {
      * The name of the file containing the test page.
      */
     public static final String TEST = "test";
+    /**
+     * The name of the file containing the style testing page.
+     */
+    public static final String STYLE_TEST = "style-test";
 }

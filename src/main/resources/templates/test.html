@@ -8,11 +8,11 @@
 <body>
 So I'm going to put as many HTML5 tags as I can below, and I'll assess how they look on the DSi.
 <!-- Comment; you shouldn't see this --><br>
-<a href="index.html" th:href="@{/}">Link to home</a><br>
+<a href="index.html" th:href="@{/}">Link to home</a><br><br>
 The <abbr title="World Health Organization">WHO</abbr> was founded in 1948.<br>
 <address>You can shoot me an email <a href="mailto:randydonaldjr@gmail.com">here</a>.</address>
 <br>
-<img src="../static/dsi.jpg" th:src="@{/dsi.jpg}" width="100" height="100" alt="Blue DSi" usemap="#testmap">
+<img src="../static/resources/dsi.jpg" th:src="@{/resources/dsi.jpg}" width="100" height="100" alt="Blue DSi" usemap="#testmap">
 <map name="testmap">
     <area shape="rect" coords="31,14,69,43" href="javascript:alert('That\'s the top screen!');" alt="Top screen"/>
     <area shape="rect" coords="31,56,69,85" href="javascript:alert('That\'s the bottom screen!');" alt="Bottom screen"/>
@@ -25,16 +25,9 @@ The <abbr title="World Health Organization">WHO</abbr> was founded in 1948.<br>
 <br>
 <aside>I don't know why I did that last one.</aside>
 <br>
-<audio controls>
-    <source src="../static/horserace.mp3" th:src="@{/horserace.mp3}" type="audio/mpeg">
-    Your browser does not support the audio tag.
-</audio>
-<br>
 <b>Boldface!</b>
 <br>
-<bdi>BDI stands for Bi-Directional Isolation.</bdi>
-<br>
-<bdo>BDO stands for Bi-Directional Override.</bdo>
+<bdo dir="rtl">BDO stands for Bi-Directional Override.</bdo>
 <br>
 <blockquote>
     This is a blockquote.
@@ -227,7 +220,5 @@ e<sup>absolutely nothing</sup>
 </ul>
 <br>
 <var>Variable font</var>
-<br>
-One of the longest words in the English language is pneumo<wbr>noultramicro<wbr>scopicsilico<wbr>volcanoconiosis.
 </body>
 </html>

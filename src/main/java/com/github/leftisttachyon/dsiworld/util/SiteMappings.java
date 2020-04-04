@@ -21,4 +21,8 @@ public final class SiteMappings {
      * The URL for the test page.
      */
     public static final String TEST = "/test";
+    /**
+     * The URL for the style testing page.
+     */
+    public static final String STYLE_TEST = "/style-test";
 }

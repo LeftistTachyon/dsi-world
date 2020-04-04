@@ -2,4 +2,6 @@
 <thlogic>
     <attr sel="#test-link"
           th:href="@{__${T(com.github.leftisttachyon.dsiworld.util.SiteMappings).TEST}__}"/>
+    <attr sel="#style-test-link"
+          th:href="@{__${T(com.github.leftisttachyon.dsiworld.util.SiteMappings).STYLE_TEST}__}"/>
 </thlogic>
