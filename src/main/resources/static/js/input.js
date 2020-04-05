@@ -11,7 +11,7 @@ function clearScreen() {
 
 var previousY = 0, previousDY = 0, scrollCnt = 0, keyStr = "";
 
-document.addEventListener("scroll", function() {
+document.body.addEventListener("scroll", function() {
     clearScreen();
 
     ctx.fillStyle = "#000";
