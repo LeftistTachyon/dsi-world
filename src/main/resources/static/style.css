@@ -32,3 +32,19 @@ mark {
 template {
     display: none;
 }
+
+ul {
+    padding-left: 25px;
+}
+
+.screen {
+    width: 240px;
+    height: 176px;
+    border: 1px solid #000;
+}
+
+.top-left {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+}

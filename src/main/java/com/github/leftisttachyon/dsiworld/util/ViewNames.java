@@ -24,4 +24,8 @@ public final class ViewNames {
      * The name of the file containing the style testing page.
      */
     public static final String STYLE_TEST = "style-test";
+    /**
+     * The name of the file containing the input detection page.
+     */
+    public static final String INPUT_DETECTION = "input-detection";
 }

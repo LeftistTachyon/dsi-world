@@ -4,4 +4,6 @@
           th:href="@{__${T(com.github.leftisttachyon.dsiworld.util.SiteMappings).TEST}__}"/>
     <attr sel="#style-test-link"
           th:href="@{__${T(com.github.leftisttachyon.dsiworld.util.SiteMappings).STYLE_TEST}__}"/>
+    <attr sel="#input-detection-link"
+          th:href="@{__${T(com.github.leftisttachyon.dsiworld.util.SiteMappings).INPUT_DETECTION}__}"/>
 </thlogic>

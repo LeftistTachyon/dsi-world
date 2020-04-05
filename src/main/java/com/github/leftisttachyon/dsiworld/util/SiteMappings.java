@@ -25,4 +25,8 @@ public final class SiteMappings {
      * The URL for the style testing page.
      */
     public static final String STYLE_TEST = "/style-test";
+    /**
+     * The URL for the input detection page.
+     */
+    public static final String INPUT_DETECTION = "/input-detection";
 }
