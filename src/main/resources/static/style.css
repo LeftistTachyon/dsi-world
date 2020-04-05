@@ -43,8 +43,14 @@ ul {
     border: 1px solid #000;
 }
 
-.top-left {
+.top-left-bottom {
     position: fixed;
     top: 0px;
+    left: 0px;
+}
+
+.top-left-top {
+    position: fixed;
+    top: -176px;
     left: 0px;
 }

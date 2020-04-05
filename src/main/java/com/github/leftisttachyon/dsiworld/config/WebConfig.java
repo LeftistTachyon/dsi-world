@@ -43,6 +43,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController(SiteMappings.HOME).setViewName(ViewNames.HOME);
         registry.addViewController(SiteMappings.TEST).setViewName(ViewNames.TEST);
         registry.addViewController(SiteMappings.STYLE_TEST).setViewName(ViewNames.STYLE_TEST);
+        registry.addViewController(SiteMappings.INPUT_DETECTION).setViewName(ViewNames.INPUT_DETECTION);
     }
 
     /**
