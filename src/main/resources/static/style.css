@@ -45,12 +45,12 @@ ul {
 
 .top-left-bottom {
     position: fixed;
-    top: 0px;
+    top: 12px;
     left: 0px;
 }
 
 .top-left-top {
     position: fixed;
-    top: -176px;
+    top: 188px;
     left: 0px;
 }
