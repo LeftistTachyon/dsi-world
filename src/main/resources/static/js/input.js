@@ -1,5 +1,5 @@
 try{
-    $(document).ready(function() {
+    $(function() {
         alert("Document is ready");
 
         var canvas = document.getElementById("bottom-canvas");
