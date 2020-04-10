@@ -44,15 +44,3 @@ ul {
     height: 176px;
     border: 1px solid #000;
 }
-
-.top-left-bottom {
-    position: fixed;
-    top: 197px;
-    left: 0px;
-}
-
-.top-left-top {
-    position: fixed;
-    top: 15px;
-    left: 0px;
-}
