@@ -1,5 +1,19 @@
+CanvasRenderingContext2D.prototype.fillNumber = function(num, x, y) {
+    num |= 0;
+    for(var i = 0; num > 0; i++) {
+        var digit = num % 10;
+        var r = digit.toString(16).padStart(2, '0');
+
+        ctx.fillStyle = "#" + r + r + r;
+
+        ctx.fillRect(x + i * 5, y - 10, 5, 10);
+
+        num = (num / 10) | 0;
+    }
+};
+
 window.onload = function() {
-    var canvas = document.getElementById('bottomcanvas');
+    var canvas = document.getElementById('bottom-canvas');
     var ctx = canvas.getContext('2d');
 
     function clearScreen() {
@@ -7,23 +21,23 @@ window.onload = function() {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
-    var previousY = 0, previousDY = 0, scrollCnt = 0, keyStr = '';
+    var previousY = 0, previousDY = 0, scrollCnt = 0, keyStr = 0;
 
     document.addEventListener('scroll', function() {
-        alert(ctx.fillText);
+        alert(ctx.fillNumber);
 
         var topY = window.scrollY || document.body.scrollTop;
 
         clearScreen();
 
         ctx.fillStyle = '#000';
-        ctx.fillText(topY, 10, 30 + topY);
-
         try {
-            var currentDY = topY - previousY;
-            ctx.fillText(currentDY, 10, 50 + topY);
+            ctx.fillNumber(topY, 10, 30 + topY);
 
-            ctx.fillText(++scrollCnt, 10, 70 + topY);
+            var currentDY = topY - previousY;
+            ctx.fillNumber(currentDY, 10, 50 + topY);
+
+            ctx.fillNumber(++scrollCnt, 10, 70 + topY);
 
             previousY = topY;
 
@@ -31,13 +45,13 @@ window.onload = function() {
             // console.log(mag);
             if(mag > Math.abs(previousDY)) {
                 if(currentDY > 0) {
-                    keyStr = mag + ' down';
+                    keyStr = mag;
                 } else {
-                    keyStr = mag + ' up';
+                    keyStr = mag;
                 }
             }
 
-            ctx.fillText(keyStr, 10, 100 + topY);
+            ctx.fillNumber(keyStr, 10, 100 + topY);
 
             previousDY = currentDY;
         } catch(e) {
