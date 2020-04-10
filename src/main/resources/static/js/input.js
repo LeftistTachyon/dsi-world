@@ -1,5 +1,5 @@
 try{
-    $(function() {
+    window.onload = function() {
         alert('Document is ready');
 
         alert(document.getElementById);
@@ -49,7 +49,7 @@ try{
         }, false);
 
         alert('Listener setup complete');
-    });
+    };
 } catch(e) {
     alert(e);
 }
