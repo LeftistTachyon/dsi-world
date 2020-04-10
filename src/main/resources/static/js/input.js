@@ -11,19 +11,19 @@ window.onload = function() {
 
     document.addEventListener('scroll', function() {
         try {
-            alert(window.scrollY);
+            var topY = window.scrollY || document.body.scrollTop;
 
             clearScreen();
 
             ctx.fillStyle = '#000';
-            ctx.fillText(window.scrollY, 10, 30 + window.scrollY);
+            ctx.fillText(topY, 10, 30 + topY);
 
-            var currentDY = window.scrollY - previousY;
-            ctx.fillText(currentDY, 10, 50 + window.scrollY);
+            var currentDY = topY - previousY;
+            ctx.fillText(currentDY, 10, 50 + topY);
 
-            ctx.fillText(++scrollCnt, 10, 70 + window.scrollY);
+            ctx.fillText(++scrollCnt, 10, 70 + topY);
 
-            previousY = window.scrollY;
+            previousY = topY;
 
             var mag = Math.abs(currentDY); // magnitude of currentDY
             console.log(mag);
@@ -35,7 +35,7 @@ window.onload = function() {
                 }
             }
 
-            ctx.fillText(keyStr, 10, 100 + window.scrollY);
+            ctx.fillText(keyStr, 10, 100 + topY);
 
             previousDY = currentDY;
         } catch(e) {
