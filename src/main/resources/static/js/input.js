@@ -14,9 +14,9 @@ window.onload = function() {
     document.addEventListener('scroll', function() {
         var topY = window.scrollY || document.body.scrollTop;
 
-        try {
-            clearScreen();
+        clearScreen();
 
+        try {
             ctx.fillStyle = '#000';
             ctx.fillText(topY, 10, 30 + topY);
 
