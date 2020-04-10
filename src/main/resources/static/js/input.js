@@ -11,7 +11,7 @@ window.onload = function() {
 
     document.addEventListener('scroll', function() {
         try {
-            console.log(window.scrollY);
+            alert(window.scrollY);
 
             clearScreen();
 
