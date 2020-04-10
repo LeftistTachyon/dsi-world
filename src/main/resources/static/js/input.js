@@ -13,8 +13,8 @@ CanvasRenderingContext2D.prototype.fillNumber = function(num, x, y) {
 };
 
 window.onload = function() {
-    var canvas = document.getElementById('bottom-canvas');
-    var ctx = canvas.getContext('2d');
+    window.canvas = document.getElementById('bottom-canvas');
+    window.ctx = canvas.getContext('2d');
 
     function clearScreen() {
         ctx.fillStyle = '#fff';
