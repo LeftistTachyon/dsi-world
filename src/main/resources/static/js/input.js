@@ -13,6 +13,8 @@ window.onload = function() {
         try {
             var topY = window.scrollY || document.body.scrollTop;
 
+            alert("topY: " + topY);
+
             clearScreen();
 
             ctx.fillStyle = '#000';
