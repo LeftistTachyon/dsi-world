@@ -2,7 +2,7 @@ try{
     $(function() {
         alert('Document is ready');
 
-        var canvas = document.getElementById('bottom-canvas');
+        var canvas = document.getElementById('bottomcanvas');
         alert(canvas + ' isNull=' + (canvas == null));
         var ctx = canvas.getContext('2d');
         alert(ctx);
