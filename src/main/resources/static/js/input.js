@@ -2,6 +2,8 @@ try{
     $(function() {
         alert('Document is ready');
 
+        alert(document.getElementById);
+
         var canvas = document.getElementById('bottomcanvas');
         alert(canvas + ' isNull=' + (canvas == null));
         var ctx = canvas.getContext('2d');
@@ -14,10 +16,7 @@ try{
 
         alert(clearScreen);
 
-        var previousY = 0;
-        var previousDY = 0;
-        var scrollCnt = 0;
-        var keyStr = '';
+        var previousY = 0, previousDY = 0, scrollCnt = 0, keyStr = '';
 
         alert('Instantiation complete');
 
