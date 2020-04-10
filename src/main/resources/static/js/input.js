@@ -11,6 +11,8 @@ window.onload = function() {
 
     document.addEventListener('scroll', function() {
         try {
+            console.log(window.scrollY);
+
             clearScreen();
 
             ctx.fillStyle = '#000';
