@@ -3,12 +3,16 @@ try{
         alert("Document is ready");
 
         var canvas = document.getElementById("bottom-canvas");
+        alert(canvas);
         var ctx = canvas.getContext("2d");
+        alert(ctx);
 
         function clearScreen() {
             ctx.fillStyle = "#fff";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
+
+        alert(clearScreen);
 
         var previousY = 0;
         var previousDY = 0;
