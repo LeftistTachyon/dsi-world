@@ -10,14 +10,16 @@ window.onload = function() {
     var previousY = 0, previousDY = 0, scrollCnt = 0, keyStr = '';
 
     document.addEventListener('scroll', function() {
+        alert(ctx.fillText);
+
         var topY = window.scrollY || document.body.scrollTop;
 
         clearScreen();
 
         ctx.fillStyle = '#000';
         ctx.fillText(topY, 10, 30 + topY);
-        try {
 
+        try {
             var currentDY = topY - previousY;
             ctx.fillText(currentDY, 10, 50 + topY);
 
