@@ -12,6 +12,8 @@ try{
 
         var previousY = 0, previousDY = 0, scrollCnt = 0, keyStr = "";
 
+        alert("Instantiation complete");
+
         document.addEventListener("scroll", function() {
             clearScreen();
 
@@ -39,6 +41,8 @@ try{
 
             previousDY = currentDY;
         }, false);
+
+        alert("Listener setup complete");
     });
 } catch(e) {
     alert(e);
