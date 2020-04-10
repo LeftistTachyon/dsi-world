@@ -1,4 +1,6 @@
 window.onload = function() {
+    alert(Math);
+
     var canvas = document.getElementById('bottomcanvas');
     var ctx = canvas.getContext('2d');
 
@@ -28,7 +30,7 @@ window.onload = function() {
             previousY = topY;
 
             var mag = Math.abs(currentDY); // magnitude of currentDY
-            console.log(mag);
+            // console.log(mag);
             if(mag > Math.abs(previousDY)) {
                 if(currentDY > 0) {
                     keyStr = mag + ' down';
