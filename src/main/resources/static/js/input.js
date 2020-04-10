@@ -1,22 +1,14 @@
-try{
-    window.onload = function() {
-        alert('Document is ready');
-
+window.onload = function() {
+    try {
         var canvas = document.getElementById('bottomcanvas');
-        alert(canvas + ' isNull=' + (canvas == null));
         var ctx = canvas.getContext('2d');
-        alert(ctx);
 
         function clearScreen() {
             ctx.fillStyle = '#fff';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
-        alert(clearScreen);
-
         var previousY = 0, previousDY = 0, scrollCnt = 0, keyStr = '';
-
-        alert('Instantiation complete');
 
         document.addEventListener('scroll', function() {
             clearScreen();
@@ -45,9 +37,7 @@ try{
 
             previousDY = currentDY;
         }, false);
-
-        alert('Listener setup complete');
-    };
-} catch(e) {
-    alert(e);
-}
+    } catch(e) {
+        alert(e);
+    }
+};
