@@ -1,14 +1,14 @@
 try{
     $(function() {
-        alert("Document is ready");
+        alert('Document is ready');
 
-        var canvas = document.getElementById("bottom-canvas");
-        alert(canvas);
-        var ctx = canvas.getContext("2d");
+        var canvas = document.getElementById('bottom-canvas');
+        alert(canvas + ' isNull=' + (canvas == null));
+        var ctx = canvas.getContext('2d');
         alert(ctx);
 
         function clearScreen() {
-            ctx.fillStyle = "#fff";
+            ctx.fillStyle = '#fff';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
@@ -17,14 +17,14 @@ try{
         var previousY = 0;
         var previousDY = 0;
         var scrollCnt = 0;
-        var keyStr = "";
+        var keyStr = '';
 
-        alert("Instantiation complete");
+        alert('Instantiation complete');
 
-        document.addEventListener("scroll", function() {
+        document.addEventListener('scroll', function() {
             clearScreen();
 
-            ctx.fillStyle = "#000";
+            ctx.fillStyle = '#000';
             ctx.fillText(window.scrollY, 10, 30 + window.scrollY);
 
             var currentDY = window.scrollY - previousY;
@@ -38,9 +38,9 @@ try{
             console.log(mag);
             if(mag > Math.abs(previousDY)) {
                 if(currentDY > 0) {
-                    keyStr = mag + " down";
+                    keyStr = mag + ' down';
                 } else {
-                    keyStr = mag + " up";
+                    keyStr = mag + ' up';
                 }
             }
 
@@ -49,7 +49,7 @@ try{
             previousDY = currentDY;
         }, false);
 
-        alert("Listener setup complete");
+        alert('Listener setup complete');
     });
 } catch(e) {
     alert(e);
