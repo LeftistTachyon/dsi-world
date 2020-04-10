@@ -10,7 +10,10 @@ try{
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
-        var previousY = 0, previousDY = 0, scrollCnt = 0, keyStr = "";
+        var previousY = 0;
+        var previousDY = 0;
+        var scrollCnt = 0;
+        var keyStr = "";
 
         alert("Instantiation complete");
 
