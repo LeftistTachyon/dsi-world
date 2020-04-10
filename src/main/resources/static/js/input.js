@@ -1,16 +1,16 @@
 window.onload = function() {
-    try {
-        var canvas = document.getElementById('bottomcanvas');
-        var ctx = canvas.getContext('2d');
+    var canvas = document.getElementById('bottomcanvas');
+    var ctx = canvas.getContext('2d');
 
-        function clearScreen() {
-            ctx.fillStyle = '#fff';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
+    function clearScreen() {
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
 
-        var previousY = 0, previousDY = 0, scrollCnt = 0, keyStr = '';
+    var previousY = 0, previousDY = 0, scrollCnt = 0, keyStr = '';
 
-        document.addEventListener('scroll', function() {
+    document.addEventListener('scroll', function() {
+        try {
             clearScreen();
 
             ctx.fillStyle = '#000';
@@ -36,8 +36,8 @@ window.onload = function() {
             ctx.fillText(keyStr, 10, 100 + window.scrollY);
 
             previousDY = currentDY;
-        }, false);
-    } catch(e) {
-        alert(e);
-    }
+        } catch(e) {
+            alert(e);
+        }
+    }, false);
 };
