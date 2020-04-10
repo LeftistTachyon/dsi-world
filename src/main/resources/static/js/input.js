@@ -1,6 +1,7 @@
 try{
     $(document).ready(function() {
         alert("Document is ready");
+
         var canvas = document.getElementById("bottom-canvas");
         var ctx = canvas.getContext("2d");
 
@@ -13,7 +14,7 @@ try{
 
         var previousY = 0, previousDY = 0, scrollCnt = 0, keyStr = "";
 
-        document.body.addEventListener("scroll", function() {
+        document.addEventListener("scroll", function() {
             clearScreen();
 
             ctx.fillStyle = "#000";
