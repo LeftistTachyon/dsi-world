@@ -1,6 +1,4 @@
 window.onload = function() {
-    alert(Math);
-
     var canvas = document.getElementById('bottomcanvas');
     var ctx = canvas.getContext('2d');
 
@@ -16,9 +14,9 @@ window.onload = function() {
 
         clearScreen();
 
+        ctx.fillStyle = '#000';
+        ctx.fillText(topY, 10, 30 + topY);
         try {
-            ctx.fillStyle = '#000';
-            ctx.fillText(topY, 10, 30 + topY);
 
             var currentDY = topY - previousY;
             ctx.fillText(currentDY, 10, 50 + topY);
