@@ -28,4 +28,8 @@ public final class ViewNames {
      * The name of the file containing the input detection page.
      */
     public static final String INPUT_DETECTION = "input-detection";
+    /**
+     * The name of the file containing the jQuery UI tests
+     */
+    public static final String JQUERY_UI = "jquery-ui";
 }

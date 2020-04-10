@@ -6,4 +6,6 @@
           th:href="@{__${T(com.github.leftisttachyon.dsiworld.util.SiteMappings).STYLE_TEST}__}"/>
     <attr sel="#input-detection-link"
           th:href="@{__${T(com.github.leftisttachyon.dsiworld.util.SiteMappings).INPUT_DETECTION}__}"/>
+    <attr sel="#jquery-ui-link"
+          th:href="@{__${T(com.github.leftisttachyon.dsiworld.util.SiteMappings).JQUERY_UI_TEST}__}"/>
 </thlogic>

@@ -5,8 +5,6 @@ try{
         var canvas = document.getElementById("bottom-canvas");
         var ctx = canvas.getContext("2d");
 
-        ctx.font = "15px monospace";
-
         function clearScreen() {
             ctx.fillStyle = "#fff";
             ctx.fillRect(0, 0, canvas.width, canvas.height);

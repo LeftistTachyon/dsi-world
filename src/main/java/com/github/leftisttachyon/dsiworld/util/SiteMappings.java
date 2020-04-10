@@ -29,4 +29,8 @@ public final class SiteMappings {
      * The URL for the input detection page.
      */
     public static final String INPUT_DETECTION = "/input-detection";
+    /**
+     * The URL for the jQuery UI test page.
+     */
+    public static final String JQUERY_UI_TEST = "/jquery-ui-test";
 }
