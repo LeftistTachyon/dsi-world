@@ -2,8 +2,6 @@ try{
     window.onload = function() {
         alert('Document is ready');
 
-        alert(document.getElementById);
-
         var canvas = document.getElementById('bottomcanvas');
         alert(canvas + ' isNull=' + (canvas == null));
         var ctx = canvas.getContext('2d');
