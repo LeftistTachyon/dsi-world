@@ -1,4 +1,4 @@
-$(function() {
+$(document).ready(function() {
 var canvas = document.getElementById("bottom-canvas");
 var ctx = canvas.getContext("2d");
 
@@ -38,4 +38,4 @@ document.body.addEventListener("scroll", function() {
 
     previousDY = currentDY;
 }, false);
-})
+});
