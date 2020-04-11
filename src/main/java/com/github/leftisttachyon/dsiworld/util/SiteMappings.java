@@ -33,4 +33,8 @@ public final class SiteMappings {
      * The URL for the jQuery UI test page.
      */
     public static final String JQUERY_UI_TEST = "/jquery-ui-test";
+    /**
+     * The URL for the JS playground
+     */
+    public static final String JS_PLAYGROUND = "/js-playground";
 }

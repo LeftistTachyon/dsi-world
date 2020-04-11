@@ -32,4 +32,8 @@ public final class ViewNames {
      * The name of the file containing the jQuery UI tests
      */
     public static final String JQUERY_UI = "jquery-ui";
+    /**
+     * The name of the file containing the JS playground
+     */
+    public static final String JS_PLAYGROUND = "js-playground";
 }

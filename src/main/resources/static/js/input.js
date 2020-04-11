@@ -57,7 +57,7 @@ CanvasRenderingContext2D.prototype.pixelNums = {
 };
 
 CanvasRenderingContext2D.prototype.fillNumber = function(num, x, y) {
-    var str = "" + Math.round(num, 2);
+    var str = "" + Math.round(num);
     for(var i = 0; i < str.length; i++) {
         var mat = ctx.pixelNums[str.charAt(i)];
         if(typeof mat === 'undefined') {
@@ -65,11 +65,11 @@ CanvasRenderingContext2D.prototype.fillNumber = function(num, x, y) {
             continue;
         }
 
-        for(var j = 0, y_ = y - 15; j < mat.length; j++, y_ += 3) {
+        for(var j = 0, y_ = y - 10; j < mat.length; j++, y_ += 2) {
             var arr = mat[j];
-            for(var k = 0, x_ = x + i * 12; k < arr.length; k++, x_ += 3) {
+            for(var k = 0, x_ = x + i * 8; k < arr.length; k++, x_ += 2) {
                 if(arr[k]) {
-                    ctx.fillRect(x_, y_, 3, 3);
+                    ctx.fillRect(x_, y_, 2, 2);
                 }
             }
         }
@@ -109,7 +109,7 @@ window.onload = function() {
                 key = mag;
             }
 
-            ctx.fillRect(10, 77 + topY, 80, 1);
+            ctx.fillRect(10, 79 + topY, 80, 2);
 
             ctx.fillNumber(key, 10, 100 + topY);
 
