@@ -10,9 +10,13 @@
             integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
             crossorigin="anonymous"></script>
     <script>
-    $(function() {
-        $("#draggable").draggable();
-    });
+    window.onload = function() {
+        try {
+            $("#draggable").draggable();
+        } catch(e) {
+            alert(e);
+        }
+    };
     </script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}"/>
