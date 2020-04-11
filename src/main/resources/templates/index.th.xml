@@ -8,4 +8,6 @@
           th:href="@{__${T(com.github.leftisttachyon.dsiworld.util.SiteMappings).INPUT_DETECTION}__}"/>
     <attr sel="#jquery-ui-link"
           th:href="@{__${T(com.github.leftisttachyon.dsiworld.util.SiteMappings).JQUERY_UI_TEST}__}"/>
+    <attr sel="#js-playground-link"
+          th:href="@{__${T(com.github.leftisttachyon.dsiworld.util.SiteMappings).JS_PLAYGROUND}__}"/>
 </thlogic>
