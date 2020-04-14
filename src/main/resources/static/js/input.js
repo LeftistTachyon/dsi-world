@@ -88,7 +88,7 @@ window.onload = function() {
     var previousY = 0, previousDY = 0, scrollCnt = 0, key = 0;
 
     document.addEventListener('scroll', function() {
-        var topY = window.scrollY || document.body.scrollTop;
+        var topY = window.scrollY || document.body.scrollTop || document.documentElement.scrollTop;
 
         clearScreen();
 
