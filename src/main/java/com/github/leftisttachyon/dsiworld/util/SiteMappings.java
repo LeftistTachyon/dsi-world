@@ -13,6 +13,7 @@ public final class SiteMappings {
     private SiteMappings() {
     }
 
+
     /**
      * The URL for the home page.
      */
@@ -37,4 +38,8 @@ public final class SiteMappings {
      * The URL for the JS playground
      */
     public static final String JS_PLAYGROUND = "/js-playground";
+    /**
+     * The URL for the page that converts an image to Base 64.
+     */
+    public static final String BASE64 = "/base64";
 }
