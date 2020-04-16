@@ -2,7 +2,6 @@ package com.github.leftisttachyon.dsiworld.controller;
 
 import com.github.leftisttachyon.dsiworld.util.SiteMappings;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,7 +25,6 @@ public class Base64Controller {
      * @return the Base 64 representation of the given image.
      * @throws IOException if something goes wrong while converting the image into a byte array
      */
-    @CrossOrigin(origins = "*")
     @ResponseBody
     @PostMapping(SiteMappings.BASE64)
     public String toBase64(@RequestParam("image") MultipartFile image) throws IOException {
