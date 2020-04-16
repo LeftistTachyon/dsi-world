@@ -26,7 +26,7 @@ public class Base64Controller {
      * @return the Base 64 representation of the given image.
      * @throws IOException if something goes wrong while converting the image into a byte array
      */
-    @CrossOrigin(origins = "http://dsipaint.com")
+    @CrossOrigin(origins = "*")
     @ResponseBody
     @PostMapping(SiteMappings.BASE64)
     public String toBase64(@RequestParam("image") MultipartFile image) throws IOException {
