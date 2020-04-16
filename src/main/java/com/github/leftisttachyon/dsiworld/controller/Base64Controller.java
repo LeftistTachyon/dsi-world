@@ -27,7 +27,7 @@ public class Base64Controller {
      * @throws IOException if something goes wrong while converting the image into a byte array
      */
     @ResponseBody
-    @PostMapping(SiteMappings.BASE64)
+    @GetMapping(SiteMappings.BASE64)
     public String toBase64(@RequestParam("image") MultipartFile image) throws IOException {
         byte[] bytes = image.getBytes();
         return "data:" + image.getContentType() + ";base64," +
@@ -40,7 +40,7 @@ public class Base64Controller {
      * @return a String that reads "Hello from Dsi World!"
      */
     @ResponseBody
-    @GetMapping(SiteMappings.BASE64)
+    @PostMapping(SiteMappings.BASE64)
     public String corsTest() {
         return "Hello from DSi World!";
     }
