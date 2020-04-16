@@ -2,6 +2,7 @@ package com.github.leftisttachyon.dsiworld.controller;
 
 import com.github.leftisttachyon.dsiworld.util.SiteMappings;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,5 +32,16 @@ public class Base64Controller {
         byte[] bytes = image.getBytes();
         return "data:" + image.getContentType() + ";base64," +
                 Base64.getEncoder().encodeToString(bytes);
+    }
+
+    /**
+     * A dummy page to test CORS.
+     *
+     * @return a String that reads "Hello from Dsi World!"
+     */
+    @ResponseBody
+    @GetMapping(SiteMappings.BASE64)
+    public String corsTest() {
+        return "Hello from DSi World!";
     }
 }
