@@ -36,4 +36,8 @@ public final class ViewNames {
      * The name of the file containing the JS playground
      */
     public static final String JS_PLAYGROUND = "js-playground";
+    /**
+     * The name of the file containing the framerate test
+     */
+    public static final String FRAMERATE = "framerate";
 }

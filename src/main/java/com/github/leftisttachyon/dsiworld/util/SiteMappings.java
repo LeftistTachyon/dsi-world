@@ -13,7 +13,6 @@ public final class SiteMappings {
     private SiteMappings() {
     }
 
-
     /**
      * The URL for the home page.
      */
@@ -42,4 +41,8 @@ public final class SiteMappings {
      * The URL for the page that converts an image to Base 64.
      */
     public static final String BASE64 = "/base64";
+    /**
+     * The URL for the framerate test
+     */
+    public static final String FRAMERATE = "/framerate";
 }

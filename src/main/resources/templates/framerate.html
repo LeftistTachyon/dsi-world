@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}"/>
+    <script src="../static/js/fillNumber.js" th:src="@{/js/fillNumber.js}"></script>
+    <script>
+    window.onload = function() {
+        var count = 0;
+        window.canvas = document.getElementById("canvas");
+        window.ctx = canvas.getContext("2d");
+        function increment() {
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#000";
+            ctx.fillNumber(count++, 2, 12);
+        }
+
+        setInterval("increment();", 1);
+    };
+    </script>
+    <title>Framerate Test</title>
+</head>
+<body>
+<canvas height="100px" width="100px" id="canvas"></canvas>
+</body>
+</html>
