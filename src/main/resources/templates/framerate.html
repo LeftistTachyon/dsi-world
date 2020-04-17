@@ -6,11 +6,13 @@
     <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}"/>
     <script src="../static/js/fillNumber.js" th:src="@{/js/fillNumber.js}"></script>
     <script>
+    var canvas, ctx, increment;
+
     window.onload = function() {
         var count = 0;
-        window.canvas = document.getElementById("canvas");
-        window.ctx = canvas.getContext("2d");
-        function increment() {
+        canvas = document.getElementById("canvas");
+        ctx = canvas.getContext("2d");
+        increment = function() {
             ctx.fillStyle = "#fff";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -18,12 +20,16 @@
             ctx.fillNumber(count++, 2, 12);
         }
 
-        setInterval("increment();", 1);
+        document.getElementById('start').onclick = function() {
+            setInterval("increment();", 1);
+        };
     };
     </script>
     <title>Framerate Test</title>
 </head>
 <body>
-<canvas height="100px" width="100px" id="canvas"></canvas>
+<canvas height="20px" width="100px" id="canvas"></canvas>
+<br>
+<button id="start">Start the test!</button>
 </body>
 </html>

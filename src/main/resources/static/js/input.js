@@ -1,6 +1,8 @@
+var canvas, ctx;
+
 window.onload = function() {
-    window.canvas = document.getElementById('bottom-canvas');
-    window.ctx = canvas.getContext('2d');
+    canvas = document.getElementById('bottom-canvas');
+    ctx = canvas.getContext('2d');
 
     function clearScreen() {
         ctx.fillStyle = '#fff';
