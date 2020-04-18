@@ -68,6 +68,7 @@ window.onload = function() {
                         break;
                     case 65: // [A]
                     case 32: // [Space]
+                    case 12: // [NumPad 5]
                         presses["A"] = long
                         break;
                     case undefined: // DS A button (?)
