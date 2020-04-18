@@ -55,21 +55,21 @@ window.onload = function() {
                 console.log(keyCode + " pressed");
                 switch(keyCode) {
                     case 38: // [^]
-                        presses["UP"] = long
+                        presses["UP"] = long;
                         break;
                     case 40: // [DOWN]
-                        presses["DOWN"] = long
+                        presses["DOWN"] = long;
                         break;
                     case 37: // [<-]
-                        presses["LEFT"] = long
+                        presses["LEFT"] = long;
                         break;
                     case 39: // [->]
-                        presses["RIGHT"] = long
+                        presses["RIGHT"] = long;
                         break;
                     case 65: // [A]
                     case 32: // [Space]
                     case 12: // [NumPad 5]
-                        presses["A"] = long
+                        presses["A"] = long;
                         break;
                     case undefined: // DS A button (?)
                         presses["A"] = short;
