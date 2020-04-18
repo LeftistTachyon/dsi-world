@@ -24,7 +24,16 @@
 
             ctx.fillPixelText("FPS: " + fps, 5, 27);
 
-            setTimeout("increment();", 0);
+            var chars = ctx.getSupportedChars(), str = "";
+            for(var i = 0; i < 300; i++) {
+                str += chars[chars.length * Math.random() << 0];
+                if(i > 0 && i % 15 == 0) {
+                    str += "\n";
+                }
+            }
+            ctx.fillPixelText(str, 5, 39);
+
+            setTimeout("increment();", 1);
         }
 
         document.getElementById('start').onclick = function() {
@@ -38,7 +47,7 @@
     <title>Framerate Test</title>
 </head>
 <body>
-<canvas height="32px" width="100px" id="canvas"></canvas>
+<canvas height="350px" width="240px" id="canvas"></canvas>
 <br>
 <button id="start">Start the test!</button>
 </body>

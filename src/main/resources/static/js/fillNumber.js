@@ -511,7 +511,7 @@ CanvasRenderingContext2D.prototype.fillPixelText = function(str, x, y) {
         var c = str.charAt(i);
         if(c == '\n') {
             baseX = x;
-            y += this.pixelSize * 9;
+            y += this.pixelSize * 8;
         }
 
         var mat = ctx.pixelChars[c];
