@@ -9,14 +9,14 @@
 <body>
 <h1>Welcome to the home page!</h1>
 <p>DSi World is currently under construction. Please check back later.</p>
-<p>For now, you can go check out the <a href="test.html" id="test-link">test page</a>.</p>
+<p>For now, you can go check out the <a href="test.html" th:href="@{/test}">test page</a>.</p>
 <p>If you want to see exactly what I'm working on, you can take a look at the
-    <a href="style-test.html" id="style-test-link">style testing page</a> and the
-    <a href="input-detection.html" id="input-detection-link">input detection page</a>.</p>
-<p>Oh, and the <a href="jquery-ui.html" id="jquery-ui-link">jQuery UI test page</a> for
+    <a href="style-test.html" th:href="@{/style-test}">style testing page</a> and the
+    <a href="input-detection.html" th:href="@{/input-detection}">input detection page</a>.</p>
+<p>Oh, and the <a href="jquery-ui.html" th:href="@{/jquery-ui}">jQuery UI test page</a> for
     some spicy things.</p>
 <p>I didn't want to keep on guessing and checking what would work, so I created a
-    <a href="js-playground.html" id="js-playground-link">JavaScript playground</a>.</p>
-<p><a href="framerate.html" id="framerate-link">Here's a framerate test for funsies.</a></p>
+    <a href="js-playground.html" th:href="@{/js-playground}">JavaScript playground</a>.</p>
+<p><a href="framerate.html" th:href="@{/framerate}">Here's a framerate test for funsies</a>.</p>
 </body>
 </html>

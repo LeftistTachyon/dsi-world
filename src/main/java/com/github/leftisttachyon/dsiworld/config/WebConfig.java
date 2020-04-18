@@ -1,7 +1,5 @@
 package com.github.leftisttachyon.dsiworld.config;
 
-import com.github.leftisttachyon.dsiworld.util.SiteMappings;
-import com.github.leftisttachyon.dsiworld.util.ViewNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -40,13 +38,13 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController(SiteMappings.HOME).setViewName(ViewNames.HOME);
-        registry.addViewController(SiteMappings.TEST).setViewName(ViewNames.TEST);
-        registry.addViewController(SiteMappings.STYLE_TEST).setViewName(ViewNames.STYLE_TEST);
-        registry.addViewController(SiteMappings.INPUT_DETECTION).setViewName(ViewNames.INPUT_DETECTION);
-        registry.addViewController(SiteMappings.JQUERY_UI_TEST).setViewName(ViewNames.JQUERY_UI);
-        registry.addViewController(SiteMappings.JS_PLAYGROUND).setViewName(ViewNames.JS_PLAYGROUND);
-        registry.addViewController(SiteMappings.FRAMERATE).setViewName(ViewNames.FRAMERATE);
+        registry.addViewController("/").setViewName("index");
+        registry.addViewController("/test").setViewName("test");
+        registry.addViewController("/style-test").setViewName("style-test");
+        registry.addViewController("/input-detection").setViewName("input-detection");
+        registry.addViewController("/jquery-ui-test").setViewName("jquery-ui");
+        registry.addViewController("/js-playground").setViewName("js-playground");
+        registry.addViewController("/framerate").setViewName("framerate");
     }
 
     /**
