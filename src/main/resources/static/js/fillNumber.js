@@ -512,6 +512,7 @@ CanvasRenderingContext2D.prototype.fillPixelText = function(str, x, y) {
         if(c == '\n') {
             baseX = x;
             y += this.pixelSize * 8;
+            continue;
         }
 
         var mat = ctx.pixelChars[c];
@@ -520,15 +521,19 @@ CanvasRenderingContext2D.prototype.fillPixelText = function(str, x, y) {
             continue;
         }
 
-        for(var j = 0, y_ = y - this.pixelSize * 5; j < mat.length; j++, y_ += this.pixelSize) {
-            var arr = mat[j];
-            for(var k = 0, x_ = baseX; k < arr.length; k++, x_ += this.pixelSize) {
-                if(arr[k]) {
-                    ctx.fillRect(x_, y_, this.pixelSize, this.pixelSize);
-                }
-            }
-        }
+        this.fillPixelMat(mat, baseX, y - this.pixelSize * 5);
 
         baseX += this.pixelSize * (mat[0].length + 1);
     }
-}
+};
+
+CanvasRenderingContext2D.prototype.fillPixelMat = function(mat, x, y) {
+    for(var j = 0, y_ = y; j < mat.length; j++, y_ += this.pixelSize) {
+        var arr = mat[j];
+        for(var k = 0, x_ = x; k < arr.length; k++, x_ += this.pixelSize) {
+            if(arr[k]) {
+                ctx.fillRect(x_, y_, this.pixelSize, this.pixelSize);
+            }
+        }
+    }
+};
