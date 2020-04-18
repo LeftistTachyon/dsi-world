@@ -45,6 +45,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/jquery-ui-test").setViewName("jquery-ui");
         registry.addViewController("/js-playground").setViewName("js-playground");
         registry.addViewController("/framerate").setViewName("framerate");
+        registry.addViewController("/input2").setViewName("input2");
     }
 
     /**
