@@ -9,12 +9,13 @@
     var canvas, ctx, increment, count, fps = 0, lastFPS = 0, updateFPS = function() {
         fps = count - lastFPS;
         lastFPS = count;
-    };
+    }, supported;
 
     window.onload = function() {
         count = 0;
         canvas = document.getElementById("canvas");
         ctx = canvas.getContext("2d");
+        chars = ctx.getSupportedChars();
         increment = function() {
             ctx.fillStyle = "#fff";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -24,7 +25,7 @@
 
             ctx.fillPixelText("FPS: " + fps, 5, 27);
 
-            var chars = ctx.getSupportedChars(), str = "";
+            var str = "";
             for(var i = 0; i < 300; i++) {
                 str += chars[chars.length * Math.random() << 0];
                 if(i > 0 && i % 15 == 0) {
@@ -37,10 +38,11 @@
         }
 
         document.getElementById('start').onclick = function() {
-            increment();
             this.style.display = "none";
 
             setInterval("updateFPS();", 1000);
+
+            increment();
         };
     };
     </script>
