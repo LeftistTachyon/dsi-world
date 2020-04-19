@@ -1,5 +1,6 @@
 package com.github.leftisttachyon.dsiworld.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.Base64;
  * @author Jed Wang
  * @since 1.0.0
  */
+@Slf4j
 @CrossOrigin(origins = "*")
 @Controller
 public class Base64Controller {
@@ -56,6 +58,7 @@ public class Base64Controller {
     @ResponseBody
     @PostMapping("/base64url")
     public String toBase64(@RequestParam("url") String url_) throws IOException {
+        log.info("Encoding image from url {}", url_);
         URL url = new URL(url_);
         File temp = Files.createTempFile("temp", "dat").toFile();
         FileUtils.copyURLToFile(url, temp);
