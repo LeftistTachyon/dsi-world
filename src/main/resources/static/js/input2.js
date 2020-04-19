@@ -1,4 +1,6 @@
 try {
+    console = console || {log: function(s){}};
+
     var canvas, ctx,
             presses = {"UP": 0, "DOWN": 0, "LEFT": 0, "RIGHT": 0, "A": 0};
     function drawFrame() {

@@ -1,10 +1,14 @@
 package com.github.leftisttachyon.dsiworld.controller;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
 import java.util.Base64;
 
 /**
@@ -40,5 +44,25 @@ public class Base64Controller {
     @GetMapping("/base64")
     public String corsTest() {
         return "Hello from DSi World!";
+    }
+
+    /**
+     * A page that converts an URL that links to an image to Base 64 and returns that.
+     *
+     * @param url_ the URL that points to the image to be converted
+     * @return the Base 64 representation of the given image
+     * @throws IOException if something goes wrong while converting the image to Base 64
+     */
+    @ResponseBody
+    @PostMapping("/base64url")
+    public String toBase64(@RequestParam("url") String url_) throws IOException {
+        URL url = new URL(url_);
+        File temp = Files.createTempFile("temp", "dat").toFile();
+        FileUtils.copyURLToFile(url, temp);
+
+        byte[] bytes = FileUtils.readFileToByteArray(temp);
+        String type = url.openConnection().getContentType();
+        return "data:" + type + ";base64," +
+                Base64.getEncoder().encodeToString(bytes);
     }
 }
