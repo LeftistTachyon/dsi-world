@@ -51,7 +51,7 @@ window.onload = function() {
 
         drawFrame();
 
-        document.addEventListener('keydown', function(evt) {
+        document.body.addEventListener('keydown', function(evt) {
             try {
                 var keyCode = evt.which || evt.keyCode;
                 console.log(keyCode + " pressed");
@@ -82,7 +82,7 @@ window.onload = function() {
             }
         }, false);
 
-        document.addEventListener('scroll', function(evt) {
+        document.body.addEventListener('scroll', function(evt) {
             try {
                 var dy = document.documentElement.scrollTop - 20,
                         dx = document.documentElement.scrollLeft - 20;
