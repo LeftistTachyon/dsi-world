@@ -1,5 +1,5 @@
 try {
-    console = console || {log: function(s){}};
+    window.console = window.console || {log: function(s){}};
 
     var canvas, ctx,
             presses = {"UP": 0, "DOWN": 0, "LEFT": 0, "RIGHT": 0, "A": 0};
@@ -51,7 +51,7 @@ window.onload = function() {
 
         drawFrame();
 
-        document.body.addEventListener('keydown', function(evt) {
+        document.addEventListener('keydown', function(evt) {
             try {
                 var keyCode = evt.which || evt.keyCode;
                 console.log(keyCode + " pressed");
@@ -82,7 +82,7 @@ window.onload = function() {
             }
         }, false);
 
-        document.body.addEventListener('scroll', function(evt) {
+        document.addEventListener('scroll', function(evt) {
             try {
                 var dy = document.documentElement.scrollTop - 20,
                         dx = document.documentElement.scrollLeft - 20;
