@@ -46,6 +46,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/js-playground").setViewName("js-playground");
         registry.addViewController("/framerate").setViewName("framerate");
         registry.addViewController("/input2").setViewName("input2");
+        registry.addViewController("/input3").setViewName("input3");
     }
 
     /**
