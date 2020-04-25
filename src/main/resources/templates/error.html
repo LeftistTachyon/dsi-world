@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}"/>
+    <title>Uh Oh!</title>
+</head>
+<body style="text-align:center">
+    <div style="display:inline-block">
+        <img src="../static/resources/notlikethis.png" th:src="@{/resources/notlikethis.png}">
+    </div>
+    <p>An error occurred. Not like this...</p>
+    <p>Return back to <a href="index.html" th:href="@{/}">the home page</a></p>
+</body>
+</html>
