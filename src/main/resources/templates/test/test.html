@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
     <title>Test page</title>
 </head>
 <body>
 So I'm going to put as many HTML5 tags as I can below, and I'll assess how they look on the DSi.
 <!-- Comment; you shouldn't see this --><br>
-<a href="index.html" th:href="@{/}">Link to home</a><br><br>
+<a href="../index.html" th:href="@{/}">Link to home</a><br><br>
 The <abbr title="World Health Organization">WHO</abbr> was founded in 1948.<br>
 <address>You can shoot me an email <a href="mailto:randydonaldjr@gmail.com">here</a>.</address>
 <br>
-<img src="../static/resources/dsi.jpg" th:src="@{/resources/dsi.jpg}" width="100" height="100" alt="Blue DSi" usemap="#testmap">
+<img src="../../static/resources/dsi.jpg" th:src="@{/resources/dsi.jpg}" width="100" height="100" alt="Blue DSi" usemap="#testmap">
 <map name="testmap">
     <area shape="rect" coords="31,14,69,43" href="javascript:alert('That\'s the top screen!');" alt="Top screen"/>
     <area shape="rect" coords="31,56,69,85" href="javascript:alert('That\'s the bottom screen!');" alt="Bottom screen"/>

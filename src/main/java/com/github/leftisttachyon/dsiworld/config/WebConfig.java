@@ -39,14 +39,14 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("index");
-        registry.addViewController("/test").setViewName("test");
-        registry.addViewController("/style-test").setViewName("style-test");
-        registry.addViewController("/input-detection").setViewName("input-detection");
-        registry.addViewController("/jquery-ui-test").setViewName("jquery-ui");
-        registry.addViewController("/js-playground").setViewName("js-playground");
-        registry.addViewController("/framerate").setViewName("framerate");
-        registry.addViewController("/input2").setViewName("input2");
-        registry.addViewController("/input3").setViewName("input3");
+        registry.addViewController("/test").setViewName("test/test");
+        registry.addViewController("/style-test").setViewName("test/style-test");
+        registry.addViewController("/input-detection").setViewName("test/input-detection");
+        registry.addViewController("/jquery-ui-test").setViewName("test/jquery-ui");
+        registry.addViewController("/js-playground").setViewName("test/js-playground");
+        registry.addViewController("/framerate").setViewName("test/framerate");
+        registry.addViewController("/input2").setViewName("test/input2");
+        registry.addViewController("/input3").setViewName("test/input3");
     }
 
     /**
