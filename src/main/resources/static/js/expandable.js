@@ -18,7 +18,8 @@ try {
             return false;
         });
 
-        item.setAttribute("data-sign", "+");
+        if(!item.getAttribute("data-sign"))
+            item.setAttribute("data-sign", "+");
     });
 } catch(err) {
     alert(err);

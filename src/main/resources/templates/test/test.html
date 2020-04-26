@@ -7,170 +7,181 @@
     <title>Test page</title>
 </head>
 <body>
-So I'm going to put as many HTML5 tags as I can below, and I'll assess how they look on the DSi.
-<!-- Comment; you shouldn't see this --><br>
-<a href="../index.html" th:href="@{/}">Link to home</a><br><br>
-The <abbr title="World Health Organization">WHO</abbr> was founded in 1948.<br>
-<address>You can shoot me an email <a href="mailto:randydonaldjr@gmail.com">here</a>.</address>
-<br>
-<img src="../../static/resources/dsi.jpg" th:src="@{/resources/dsi.jpg}" width="100" height="100" alt="Blue DSi" usemap="#testmap">
-<map name="testmap">
-    <area shape="rect" coords="31,14,69,43" href="javascript:alert('That\'s the top screen!');" alt="Top screen"/>
-    <area shape="rect" coords="31,56,69,85" href="javascript:alert('That\'s the bottom screen!');" alt="Bottom screen"/>
-</map>
-<br>
-<article>
-    World News, from the BBC.<br>
-    At 6 AM GMT, this is the Newsroom.
-</article>
-<br>
-<aside>I don't know why I did that last one.</aside>
-<br>
-<blockquote>
-    This is a blockquote.
-</blockquote>
-<br>
-<button onclick="javascript:alert('Hi!');">Click me!</button>
-<br>
-Canvas:
-<canvas id="test-canvas" width="100px" height="100px"></canvas>
-<br>
-<dl>
-    <dt>Coffee</dt>
-    <dd>Black hot drink</dd>
-    <dt>Milk</dt>
-    <dd>White cold drink</dd>
-</dl>
-<br>
-<del>Strike!</del>
-<br>
-<fieldset>
-    <legend>Personalia:</legend>
-    <label for="fname">First name:</label>
-    <input type="text" id="fname" name="fname"><br><br>
-    <label for="lname">Last name:</label>
-    <input type="text" id="lname" name="lname"><br><br>
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email"><br><br>
-    <label for="birthday">Birthday:</label>
-    <input type="date" id="birthday" name="birthday"><br><br>
-    <input type="submit" value="Submit">
-</fieldset>
-<br>
-<footer>Footer</footer>
-<br>
-<h1>Heading 1</h1>
-<br>
-<h2>Heading 2</h2>
-<br>
-<h3>Heading 3</h3>
-<br>
-<h4>Heading 4</h4>
-<br>
-<h5>Heading 5</h5>
-<br>
-<h6>Heading 6</h6>
-<br>
-<header>Header</header>
-<br>
-Horizontal
-<hr>
-Rule<br>
-<ins>Insert</ins>
-<br>
-<ol>
-    <li>Eggs</li>
-    <li>Bacon</li>
-    <li>Waffles</li>
-</ol>
-<br>
-<main>This is the main show.</main>
-<br>
-<mark>Highlighted/marked?</mark>
-<br>
-<nav>
-    <a href="https://www.google.com">Google</a>
-    <a href="https://github.com">GitHub</a>
-</nav>
-<br>
-<noscript>Looks like you don't support client-side scripts.</noscript>
-<br>
-<label for="cars">Choose a car:</label>
-<select id="cars">
-    <optgroup label="Swedish Cars">
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-    </optgroup>
-    <optgroup label="German Cars">
-        <option value="mercedes">Mercedes</option>
-        <option value="audi">Audi</option>
-    </optgroup>
-</select>
-<br>
-<form oninput="x.value=parseInt(a.value)+parseInt(b.value)">0
-    <input type="range" id="a" value="50">100
-    +<input type="number" id="b" value="50">
-    =
-    <output name="x" for="a b"></output>
-</form>
-<br>
-<p>This is a paragraph!</p>
-<br>
-<pre>Preformatted text
-Doesn't need
+    <button class="expandable" data-sign="-">Other test pages</button>
+    <div class="expand-content">
+        <a href="style-test.html" th:href="@{/style-test}">Style testing</a><br>
+        <a href="input-detection.html" th:href="@{/input-detection}">Input Detection</a><br>
+        <a href="jquery-ui.html" th:href="@{/jquery-ui-test}">jQuery UI test</a><br>
+        <a href="js-playground.html" th:href="@{/js-playground}">JS Playground</a><br>
+        <a href="framerate.html" th:href="@{/framerate}">Framerate test</a><br>
+        <a href="input2.html" th:href="@{/input2}">Input Detection 2</a><br>
+        <a href="input3.html" th:href="@{/input3}">Input Detection 3</a>
+    </div>
+    <p>So I'm going to put as many HTML5 tags as I can below, and I'll assess how they look on the DSi.</p>
+    <!-- Comment; you shouldn't see this --><br>
+    <a href="../index.html" th:href="@{/}">Link to home</a><br><br>
+    The <abbr title="World Health Organization">WHO</abbr> was founded in 1948.<br>
+    <address>You can shoot me an email <a href="mailto:randydonaldjr@gmail.com">here</a>.</address>
+    <br>
+    <img src="../../static/resources/dsi.jpg" th:src="@{/resources/dsi.jpg}" width="100" height="100" alt="Blue DSi" usemap="#testmap">
+    <map name="testmap">
+        <area shape="rect" coords="31,14,69,43" href="javascript:alert('That\'s the top screen!');" alt="Top screen"/>
+        <area shape="rect" coords="31,56,69,85" href="javascript:alert('That\'s the bottom screen!');" alt="Bottom screen"/>
+    </map>
+    <br>
+    <article>
+        World News, from the BBC.<br>
+        At 6 AM GMT, this is the Newsroom. I'm Nikki Bailey.
+    </article>
+    <br>
+    <aside>I don't know why I did that last one.</aside>
+    <br>
+    <blockquote>
+        This is a blockquote.
+    </blockquote>
+    <br>
+    <button onclick="javascript:alert('Hi!');">Click me!</button>
+    <br>
+    Canvas:
+    <canvas id="test-canvas" width="100px" height="100px"></canvas>
+    <br>
+    <dl>
+        <dt>Coffee</dt>
+        <dd>Black hot drink</dd>
+        <dt>Milk</dt>
+        <dd>White cold drink</dd>
+    </dl>
+    <br>
+    <del>Strike!</del>
+    <br>
+    <fieldset>
+        <legend>Personalia:</legend>
+        <label for="fname">First name:</label>
+        <input type="text" id="fname" name="fname"><br><br>
+        <label for="lname">Last name:</label>
+        <input type="text" id="lname" name="lname"><br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br><br>
+        <label for="birthday">Birthday:</label>
+        <input type="date" id="birthday" name="birthday"><br><br>
+        <input type="submit" value="Submit">
+    </fieldset>
+    <br>
+    <footer>Footer</footer>
+    <br>
+    <h1>Heading 1</h1>
+    <br>
+    <h2>Heading 2</h2>
+    <br>
+    <h3>Heading 3</h3>
+    <br>
+    <h4>Heading 4</h4>
+    <br>
+    <h5>Heading 5</h5>
+    <br>
+    <h6>Heading 6</h6>
+    <br>
+    <header>Header</header>
+    <br>
+    Horizontal
+    <hr>
+    Rule<br>
+    <ins>Insert</ins>
+    <br>
+    <ol>
+        <li>Eggs</li>
+        <li>Bacon</li>
+        <li>Waffles</li>
+    </ol>
+    <br>
+    <main>This is the main show.</main>
+    <br>
+    <mark>Highlighted/marked?</mark>
+    <br>
+    <nav>
+        <a href="https://www.google.com">Google</a>
+        <a href="https://github.com">GitHub</a>
+    </nav>
+    <br>
+    <noscript>Looks like you don't support client-side scripts.</noscript>
+    <br>
+    <label for="cars">Choose a car:</label>
+    <select id="cars">
+        <optgroup label="Swedish Cars">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+        </optgroup>
+        <optgroup label="German Cars">
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+        </optgroup>
+    </select>
+    <br>
+    <form oninput="x.value=parseInt(a.value)+parseInt(b.value)">0
+        <input type="range" id="a" value="50">100
+        +<input type="number" id="b" value="50">
+        =
+        <output name="x" for="a b"></output>
+    </form>
+    <br>
+    <p>This is a paragraph!</p>
+    <br>
+    <pre>Preformatted text
+    Doesn't need
 
-br tags lmoa</pre>
-<br>
-<q>Other sports run for punishment.</q> said the wise man.
-<br>
-<s>My car is blue.</s> It's actually silver now.<br>
-<section>The only lonely section</section>
-<br>
-<strong>STRENGTH!</strong>
-<br>
-Normal text <sub>Subscript</sub>
-<br>
-e<sup>absolutely nothing</sup>
-<br>
-<table>
-    <caption>Monthly savings</caption>
-    <thead>
-    <tr>
-        <th>Month</th>
-        <th>Savings</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>January</td>
-        <td>$100</td>
-    </tr>
-    <tr>
-        <td>February</td>
-        <td>$80</td>
-    </tr>
-    </tbody>
-    <tfoot>
-    <tr>
-        <td>Sum</td>
-        <td>$180</td>
-    </tr>
-    </tfoot>
-</table>
-<br>
-<template>You can't see me!</template>
-<br>
-<textarea></textarea>
-<br>
-<p>We open at <time>10:00</time> every morning.
-</p>
-<p>I have a date on <time datetime="2008-02-14 20:00">Valentines day</time>.</p>
-<br>
-<u>Stylistically different</u>
-<br>
-<ul>
-    <li>Unordered</li>
-    <li>List</li>
-</ul>
+    br tags lmoa</pre>
+    <br>
+    <q>Other sports run for punishment.</q> said the wise man.
+    <br>
+    <s>My car is blue.</s> It's actually silver now.<br>
+    <section>The only lonely section</section>
+    <br>
+    <strong>STRENGTH!</strong>
+    <br>
+    Normal text <sub>Subscript</sub>
+    <br>
+    e<sup>absolutely nothing</sup>
+    <br>
+    <table>
+        <caption>Monthly savings</caption>
+        <thead>
+        <tr>
+            <th>Month</th>
+            <th>Savings</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>January</td>
+            <td>$100</td>
+        </tr>
+        <tr>
+            <td>February</td>
+            <td>$80</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td>Sum</td>
+            <td>$180</td>
+        </tr>
+        </tfoot>
+    </table>
+    <br>
+    <template>You can't see me!</template>
+    <br>
+    <textarea></textarea>
+    <br>
+    <p>We open at <time>10:00</time> every morning.
+    </p>
+    <p>I have a date on <time datetime="2008-02-14 20:00">Valentines day</time>.</p>
+    <br>
+    <u>Stylistically different</u>
+    <br>
+    <ul>
+        <li>Unordered</li>
+        <li>List</li>
+    </ul>
+    <script src="../../static/js/expandable.js" th:src="@{/js/expandable.js}"></script>
 </body>
 </html>
