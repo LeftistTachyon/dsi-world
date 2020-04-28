@@ -56,7 +56,7 @@ public class Base64Controller {
      * @throws IOException if something goes wrong while converting the image to Base 64
      */
     @ResponseBody
-    @PostMapping("/base64url")
+    @GetMapping("/base64url")
     public String toBase64(@RequestParam("url") String url_) throws IOException {
         log.info("Encoding image from url {}", url_);
         URL url = new URL(url_);
