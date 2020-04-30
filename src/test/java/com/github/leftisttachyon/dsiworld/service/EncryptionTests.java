@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.SealedObject;
 import java.io.*;
-import java.nio.file.Files;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -42,7 +41,7 @@ public class EncryptionTests {
     public void encryptDecryptTest() throws IOException, InvalidAlgorithmParameterException, InvalidKeyException {
         String info = "This is a\nmulti-line\nnightmare";
 
-        File temp = Files.createTempFile("temp", "txt").toFile();
+        File temp = File.createTempFile("temp", "txt");
 
         System.out.print("Encrypting text... ");
         try (PrintWriter out = efs.getEncryptedPrintWriter(temp)) {
@@ -90,7 +89,7 @@ public class EncryptionTests {
         EncryptionService one = new EncryptionServiceImpl(seed);
         String info = "This is a\nmulti-line\nnightmare";
 
-        File temp = Files.createTempFile("temp", "txt").toFile();
+        File temp = File.createTempFile("temp", "txt");
 
         System.out.print("Encrypting text... ");
         try (PrintWriter out = one.getEncryptedPrintWriter(temp)) {
@@ -138,7 +137,7 @@ public class EncryptionTests {
     @Test
     public void objectEncryptionTest() throws IOException, InvalidKeyException, InvalidAlgorithmParameterException,
             ClassNotFoundException {
-        File temp = Files.createTempFile("temp", "txt").toFile();
+        File temp = File.createTempFile("temp", "txt");
 
         User u = new User();
         u.setUsername("Papyrus");
@@ -181,7 +180,7 @@ public class EncryptionTests {
     @Test
     public void sealedObjectTest() throws IOException, IllegalBlockSizeException, ClassNotFoundException,
             InvalidKeyException, NoSuchAlgorithmException {
-        File temp = Files.createTempFile("temp", "txt").toFile();
+        File temp = File.createTempFile("temp", "txt");
 
         User u = new User();
         u.setUsername("Papyrus");

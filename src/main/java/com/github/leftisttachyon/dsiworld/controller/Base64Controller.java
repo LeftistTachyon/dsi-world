@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.Base64;
 
 /**
@@ -60,7 +59,7 @@ public class Base64Controller {
     public String toBase64(@RequestParam("url") String url_) throws IOException {
         log.info("Encoding image from url {}", url_);
         URL url = new URL(url_);
-        File temp = Files.createTempFile("temp", "dat").toFile();
+        File temp = File.createTempFile("temp", "dat");
         FileUtils.copyURLToFile(url, temp);
 
         byte[] bytes = FileUtils.readFileToByteArray(temp);

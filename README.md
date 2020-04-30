@@ -5,5 +5,8 @@ Right now, there's not much on there, but I plan to put a lot of cool things on 
 ## Cool things in the works  
 These are things that either people have suggested or I thought might be cool to have on a DSi.
  - DSi-compatible email client
- - Git-like command line with in-built editor
+ - Git-compatible version control GUI with in-built editor
+   - Using JGit on the server side, and the web page to direct the server.
+   - Using [this page](https://www.vogella.com/tutorials/JGit/article.html) as a tutorial.
+   - It would also probably be good to look at [the cookbook](https://github.com/centic9/jgit-cookbook/).
  - Manga reader

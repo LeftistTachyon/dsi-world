@@ -22,6 +22,7 @@
         <java.version>11</java.version>
 
         <commons-io.version>2.6</commons-io.version>
+        <jgit.version>5.7.0.202003110725-r</jgit.version>
     </properties>
 
     <dependencies>
@@ -60,6 +61,13 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.eclipse.jgit/org.eclipse.jgit -->
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit</artifactId>
+            <version>${jgit.version}</version>
         </dependency>
 
         <dependency>
