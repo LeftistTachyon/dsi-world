@@ -1,16 +1,16 @@
 try {
-    Array.prototype.slice.call(document.getElementsByClassName("expandable"))
-            .forEach(function(item, idx){
+    var arr = document.getElementsByClassName("expandable");
+    for(var idx = 0; idx < arr.length; idx++) {
         alert("starting " + idx);
 
-        item.addEventListener("click", function() {
+        arr[idx].addEventListener("click", function() {
             // alert(this + " clicked")
 
             try {
                 // console.log("clicked " + idx);
                 var content;
                 if(this.getAttribute("data-content")) {
-                    content = document.getElementById(item.getAttribute("data-content"));
+                    content = document.getElementById(this.getAttribute("data-content"));
                 } else {
                     content = this.nextElementSibling;
                 }
@@ -29,11 +29,11 @@ try {
             return false;
         }, false);
 
-        if(!item.getAttribute("data-sign"))
-            item.setAttribute("data-sign", "+");
+        if(!arr[idx].getAttribute("data-sign"))
+            arr[idx].setAttribute("data-sign", "+");
 
         alert("done " + idx);
-    });
+    }
 } catch(err) {
     alert(err);
 }
