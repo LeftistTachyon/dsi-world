@@ -1,12 +1,4 @@
 try {
-    var contents = document.getElementsByClassName("expand-content");
-
-    alert(Array);
-    alert(Array.prototype);
-    alert(Array.prototype.slice);
-    alert(Array.prototype.slice.call);
-    alert(Array.prototype.forEach);
-
     Array.prototype.slice.call(document.getElementsByClassName("expandable"))
             .forEach(function(item, idx){
         alert("starting " + idx);
@@ -16,7 +8,12 @@ try {
 
             try {
                 // console.log("clicked " + idx);
-                var content = contents[idx];
+                var content;
+                if(this.getAttribute("data-content")) {
+                    content = document.getElementById(item.getAttribute("data-content"));
+                } else {
+                    content = this.nextElementSibling;
+                }
                 // alert(content + " " + content.style.display);
                 if (content.style.display == "none") {
                     this.setAttribute("data-sign", "-");
