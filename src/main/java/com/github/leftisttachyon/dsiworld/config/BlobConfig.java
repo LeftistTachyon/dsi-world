@@ -15,13 +15,7 @@ import org.springframework.context.annotation.Scope;
  */
 @Configuration
 @ComponentScan(basePackages = "com.github.leftisttachyon.dsiworld")
-public final class BlobConfig {
-    /**
-     * No instantiation >:(
-     */
-    private BlobConfig() {
-    }
-
+public class BlobConfig {
     /**
      * Returns the singleton instance of the meta storage container
      *
