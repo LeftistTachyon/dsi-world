@@ -14,6 +14,7 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <name>DSi World</name>
+    <url>dsi-world.herokuapp.com</url>
     <description>A Spring-backed website created for use by the DSi</description>
     <inceptionYear>2020</inceptionYear>
 
@@ -21,8 +22,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
 
+        <azure-blob.version>11.0.0</azure-blob.version>
         <commons-io.version>2.6</commons-io.version>
         <jgit.version>5.7.0.202003110725-r</jgit.version>
+        <sendgrid.version>4.4.1</sendgrid.version>
     </properties>
 
     <dependencies>
@@ -60,7 +63,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.6</version>
+            <version>${commons-io.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.eclipse.jgit/org.eclipse.jgit -->
@@ -68,6 +71,21 @@
             <groupId>org.eclipse.jgit</groupId>
             <artifactId>org.eclipse.jgit</artifactId>
             <version>${jgit.version}</version>
+        </dependency>
+
+        <!-- For Azure Blob -->
+        <dependency>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>azure-storage-blob</artifactId>
+            <version>${azure-blob.version}</version>
+        </dependency>
+
+        <!-- For sending emails -->
+        <!-- https://mvnrepository.com/artifact/com.sendgrid/sendgrid-java -->
+        <dependency>
+            <groupId>com.sendgrid</groupId>
+            <artifactId>sendgrid-java</artifactId>
+            <version>${sendgrid.version}</version>
         </dependency>
 
         <dependency>

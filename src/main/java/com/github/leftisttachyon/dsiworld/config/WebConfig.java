@@ -16,7 +16,7 @@ import javax.annotation.PostConstruct;
  * @since 1.0.0
  */
 @Configuration
-public class WebConfig implements WebMvcConfigurer {
+public final class WebConfig implements WebMvcConfigurer {
 
     @Autowired
     private RequestMappingHandlerAdapter requestMappingHandlerAdapter;
