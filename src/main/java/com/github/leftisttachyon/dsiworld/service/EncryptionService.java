@@ -5,7 +5,6 @@ import javax.crypto.CipherOutputStream;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.SealedObject;
 import java.io.*;
-import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -21,12 +20,9 @@ public interface EncryptionService {
      *
      * @param f the {@link File} to read from
      * @return a {@link CipherInputStream} that reads from the given {@link File}
-     * @throws InvalidKeyException                if an invalid key is instantiated
-     * @throws IOException                        if an invalid {@link File} is given
-     * @throws InvalidAlgorithmParameterException if the {@link CipherInputStream} could not be instantiated
+     * @throws IOException if an invalid {@link File} is given or if the file cannot be manipulated correctly
      */
-    CipherInputStream getCipherInputStream(File f) throws InvalidKeyException, IOException,
-            InvalidAlgorithmParameterException;
+    CipherInputStream getCipherInputStream(File f) throws IOException;
 
     /**
      * Returns a {@link BufferedReader} that wraps the {@link CipherInputStream} from
@@ -34,12 +30,9 @@ public interface EncryptionService {
      *
      * @param f the {@link File to read from}
      * @return a {@link BufferedReader} that reads encrypted data from the given {@link File}
-     * @throws InvalidKeyException                if an invalid key is instantiated
-     * @throws IOException                        if an invalid {@link File} is given
-     * @throws InvalidAlgorithmParameterException if the {@link CipherInputStream} could not be instantiated
+     * @throws IOException if an invalid {@link File} is given
      */
-    default BufferedReader getEncryptedBufferedReader(File f) throws InvalidKeyException, IOException,
-            InvalidAlgorithmParameterException {
+    default BufferedReader getEncryptedBufferedReader(File f) throws IOException {
         return new BufferedReader(new InputStreamReader(getCipherInputStream(f)));
     }
 
@@ -49,12 +42,9 @@ public interface EncryptionService {
      *
      * @param f the {@link File to read from}
      * @return a {@link ObjectInputStream} that reads encrypted data from the given {@link File}
-     * @throws InvalidKeyException                if an invalid key is instantiated
-     * @throws IOException                        if an invalid {@link File} is given
-     * @throws InvalidAlgorithmParameterException if the {@link CipherInputStream} could not be instantiated
+     * @throws IOException if an invalid {@link File} is given
      */
-    default ObjectInputStream getEncryptedObjectInputStream(File f) throws InvalidAlgorithmParameterException,
-            InvalidKeyException, IOException {
+    default ObjectInputStream getEncryptedObjectInputStream(File f) throws IOException {
         return new ObjectInputStream(getCipherInputStream(f));
     }
 
@@ -64,9 +54,8 @@ public interface EncryptionService {
      * @param f the {@link File} to write into
      * @return a {@link CipherOutputStream} that writes into the given {@link File}
      * @throws IOException         if something goes wrong with the file
-     * @throws InvalidKeyException if the key is incorrectly instantiated
      */
-    CipherOutputStream getCipherOutputStream(File f) throws IOException, InvalidKeyException;
+    CipherOutputStream getCipherOutputStream(File f) throws IOException;
 
     /**
      * Returns a {@link PrintWriter} that wraps the {@link CipherOutputStream}
@@ -75,9 +64,8 @@ public interface EncryptionService {
      * @param f the {@link File} to write into
      * @return a {@link PrintWriter} that writes encrypted file into the given {@link File}
      * @throws IOException         if something goes wrong with the file
-     * @throws InvalidKeyException if the key is incorrectly instantiated
      */
-    default PrintWriter getEncryptedPrintWriter(File f) throws IOException, InvalidKeyException {
+    default PrintWriter getEncryptedPrintWriter(File f) throws IOException {
         return new PrintWriter(getCipherOutputStream(f));
     }
 
@@ -88,9 +76,8 @@ public interface EncryptionService {
      * @param f the {@link File} to write into
      * @return a {@link ObjectOutputStream} that writes encrypted file into the given {@link File}
      * @throws IOException         if something goes wrong with the file
-     * @throws InvalidKeyException if the key is incorrectly instantiated
      */
-    default ObjectOutputStream getEncryptedObjectOutputStream(File f) throws IOException, InvalidKeyException {
+    default ObjectOutputStream getEncryptedObjectOutputStream(File f) throws IOException {
         return new ObjectOutputStream(getCipherOutputStream(f));
     }
 

@@ -24,7 +24,7 @@ import java.util.List;
  */
 @SuppressWarnings("ResultOfMethodCallIgnored")
 @Slf4j
-public final class ContainerModel implements Serializable {
+public class ContainerModel implements Serializable {
 
     private static final long serialVersionUID = -111L;
 
@@ -47,8 +47,8 @@ public final class ContainerModel implements Serializable {
     /**
      * Creates a ContainerModel and connects it to the cloud.
      *
-     * @param accountName the name of the storage account to connect to
-     * @param accountKey the key to
+     * @param accountName      the name of the storage account to connect to
+     * @param accountKey       the key to
      * @param containerName    the name of the container to create. This String
      *                         must abide by Azure's rules, or a {@link MalformedURLException} will be
      *                         thrown.
@@ -56,6 +56,8 @@ public final class ContainerModel implements Serializable {
      *                         container if it doesn't exist
      */
     ContainerModel(String accountName, String accountKey, String containerName, boolean checkForCreation) {
+        log.info("Creating container {}", accountName);
+
         SharedKeyCredentials creds = null;
         try {
             creds = new SharedKeyCredentials(accountName, accountKey);
@@ -66,6 +68,8 @@ public final class ContainerModel implements Serializable {
         if (creds == null) {
             throw new IllegalStateException("You cannot create a blob without credentials");
         }
+
+        log.debug("Found credentials for {}", accountName);
 
         ServiceURL serviceURL = null;
         try {

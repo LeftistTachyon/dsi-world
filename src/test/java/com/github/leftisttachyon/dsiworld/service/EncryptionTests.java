@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.SealedObject;
 import java.io.*;
-import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -33,12 +32,10 @@ public class EncryptionTests {
     /**
      * A test with an {@link EncryptionService}: encrypting and decrypting
      *
-     * @throws IOException                        if something goes wrong
-     * @throws InvalidAlgorithmParameterException if something goes wrong
-     * @throws InvalidKeyException                if something goes wrong
+     * @throws IOException if something goes wrong
      */
     @Test
-    public void encryptDecryptTest() throws IOException, InvalidAlgorithmParameterException, InvalidKeyException {
+    public void encryptDecryptTest() throws IOException {
         String info = "This is a\nmulti-line\nnightmare";
 
         File temp = File.createTempFile("temp", "txt");
@@ -79,12 +76,9 @@ public class EncryptionTests {
      * Tests encryption across instances of {@link EncryptionService}
      *
      * @throws IOException                        if something goes wrong
-     * @throws InvalidAlgorithmParameterException if something goes wrong
-     * @throws InvalidKeyException                if something goes wrong
      */
     @Test
-    public void crossInstanceEncryptionTest() throws IOException, InvalidAlgorithmParameterException,
-            InvalidKeyException {
+    public void crossInstanceEncryptionTest() throws IOException {
         final long seed = 125L;
         EncryptionService one = new EncryptionServiceImpl(seed);
         String info = "This is a\nmulti-line\nnightmare";
@@ -130,13 +124,10 @@ public class EncryptionTests {
      * {@link EncryptionService#getEncryptedObjectOutputStream(File)}.
      *
      * @throws IOException                        if something goes wrong with the file
-     * @throws InvalidKeyException                if something goes wrong
-     * @throws InvalidAlgorithmParameterException if something goes wrong
      * @throws ClassNotFoundException             if something goes wrong with reading the object
      */
     @Test
-    public void objectEncryptionTest() throws IOException, InvalidKeyException, InvalidAlgorithmParameterException,
-            ClassNotFoundException {
+    public void objectEncryptionTest() throws IOException, ClassNotFoundException {
         File temp = File.createTempFile("temp", "txt");
 
         User u = new User();

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public final class ContainerModelFactory {
+public class ContainerModelFactory {
     /**
      * The name of the storage account to connect to
      */

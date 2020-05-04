@@ -1,5 +1,12 @@
 package com.github.leftisttachyon.dsiworld.util;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
  * A final class that contains annotations to be used as bean markers.
  *
@@ -13,5 +20,15 @@ public final class BeanAnnotations {
     private BeanAnnotations() {
     }
 
-    // public static @interface IDBlob extends
+    @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Qualifier
+    public @interface MetaContainer {
+    }
+
+    @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Qualifier
+    public @interface IdBlob {
+    }
 }

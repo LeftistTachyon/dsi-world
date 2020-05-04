@@ -51,21 +51,31 @@ public class EncryptionServiceImpl implements EncryptionService {
     }
 
     @Override
-    public CipherInputStream getCipherInputStream(File f) throws InvalidKeyException, IOException, InvalidAlgorithmParameterException {
+    public CipherInputStream getCipherInputStream(File f) throws IOException {
         FileInputStream fIn = new FileInputStream(f);
 
         byte[] fileIv = new byte[16];
         if (fIn.read(fileIv) != 16) {
             log.warn("Something isn't right...");
         }
-        cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(fileIv));
+        try {
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(fileIv));
+        } catch (InvalidKeyException | InvalidAlgorithmParameterException e) {
+            log.error("An invalid key or algorithm was specified", e);
+            return null;
+        }
 
         return new CipherInputStream(fIn, cipher);
     }
 
     @Override
-    public CipherOutputStream getCipherOutputStream(File f) throws IOException, InvalidKeyException {
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+    public CipherOutputStream getCipherOutputStream(File f) throws IOException {
+        try {
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        } catch (InvalidKeyException e) {
+            log.warn("An invalid key was specified", e);
+            return null;
+        }
         byte[] iv = cipher.getIV();
 
         FileOutputStream fOut = new FileOutputStream(f);
@@ -75,14 +85,28 @@ public class EncryptionServiceImpl implements EncryptionService {
     }
 
     @Override
-    public SealedObject sealObject(Serializable s) throws IOException, IllegalBlockSizeException, InvalidKeyException {
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-        return new SealedObject(s, cipher);
+    public SealedObject sealObject(Serializable s) throws IOException {
+        try {
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        } catch (InvalidKeyException e) {
+            log.error("An invalid key was specified");
+            return null;
+        }
+        try {
+            return new SealedObject(s, cipher);
+        } catch (IllegalBlockSizeException e) {
+            log.error("An invalid block size was specified in the cipher", e);
+            return null;
+        }
     }
 
     @Override
-    public Object unsealObject(SealedObject so) throws ClassNotFoundException, NoSuchAlgorithmException,
-            InvalidKeyException, IOException {
-        return so.getObject(secretKey);
+    public Object unsealObject(SealedObject so) throws ClassNotFoundException, IOException {
+        try {
+            return so.getObject(secretKey);
+        } catch (NoSuchAlgorithmException | InvalidKeyException e) {
+            log.error("An invalid algorithm or key was specified", e);
+            return null;
+        }
     }
 }

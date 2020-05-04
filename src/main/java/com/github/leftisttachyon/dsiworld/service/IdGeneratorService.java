@@ -11,5 +11,5 @@ public interface IdGeneratorService {
      * Generates a new Azure blob-viable ID.
      * @return the newly generated ID
      */
-    String getNextID();
+    String getNextId();
 }
