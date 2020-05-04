@@ -56,8 +56,6 @@ public class ContainerModel implements Serializable {
      *                         container if it doesn't exist
      */
     ContainerModel(String accountName, String accountKey, String containerName, boolean checkForCreation) {
-        log.info("Creating container {}", accountName);
-
         SharedKeyCredentials creds = null;
         try {
             creds = new SharedKeyCredentials(accountName, accountKey);

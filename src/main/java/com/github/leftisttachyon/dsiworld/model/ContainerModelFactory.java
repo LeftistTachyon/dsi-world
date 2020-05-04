@@ -2,6 +2,7 @@ package com.github.leftisttachyon.dsiworld.model;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
  * @author Jed Wang
  * @since 1.0.0
  */
+@Scope("singleton")
 @Component
 @Slf4j
 public class ContainerModelFactory {

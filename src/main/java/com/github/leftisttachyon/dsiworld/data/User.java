@@ -1,6 +1,8 @@
 package com.github.leftisttachyon.dsiworld.data;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 
@@ -11,6 +13,7 @@ import java.io.Serializable;
  * @since 1.0.0
  */
 @Data
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public final class User implements Serializable {
     /**
      * The number to associate with this class
@@ -20,5 +23,9 @@ public final class User implements Serializable {
     /**
      * The username for this user.
      */
-    private String username;
+    private final String username;
+    /**
+     * A string that represents the id of this user
+     */
+    private final String id;
 }

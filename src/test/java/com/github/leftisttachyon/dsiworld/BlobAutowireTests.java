@@ -8,6 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
 /**
  * A collection of tests that test whether blob autowiring works as intended.
  *
@@ -22,6 +26,12 @@ public class BlobAutowireTests {
     @Autowired
     @BeanAnnotations.MetaContainer
     private ContainerModel metaContainer;
+    /**
+     * The id blob
+     */
+    @Autowired
+    @BeanAnnotations.IdBlob
+    private BlobModel idBlob;
 
     /**
      * Testing whether the container exists.
@@ -32,17 +42,37 @@ public class BlobAutowireTests {
     }
 
     /**
-     * The id blob
-     */
-    @Autowired
-    @BeanAnnotations.IdBlob
-    private BlobModel idBlob;
-
-    /**
      * Testing whether the blob exists.
      */
     @Test
     public void blobWireTest() {
         Assertions.assertNotNull(idBlob);
+    }
+
+    /**
+     * Testing whether it is possible to upload an entire folder using the current framework.<br>
+     * Results: it doesn't, so I'll have to think of another solution
+     *
+     * @throws IOException if something goes wrong while manipulating files
+     */
+    public void folderUploadTest() throws IOException {
+        File dir = Files.createTempDirectory("").toFile();
+        System.out.println("dir: " + dir.getCanonicalPath());
+        if (!dir.exists() && !dir.mkdir()) {
+            Assertions.fail("Unable to create parent directory");
+        }
+
+        for (int i = 1; i <= 5; i++) {
+            File f = new File(dir, "file" + i);
+            System.out.println("file #" + i + ": " + f.getCanonicalPath());
+            if (!f.exists() && !f.createNewFile()) {
+                Assertions.fail("Unable to create file #" + i);
+            }
+        }
+
+        System.out.println(dir.getName());
+        BlobModel blob = metaContainer.createBlob(dir.getName());
+
+        blob.uploadFile(dir);
     }
 }

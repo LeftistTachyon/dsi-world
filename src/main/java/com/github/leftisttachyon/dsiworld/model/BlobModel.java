@@ -150,7 +150,7 @@ public class BlobModel implements Closeable, Serializable {
      * @throws IOException the standard IOException reasons
      */
     public File getBlob() throws IOException {
-        download = File.createTempFile("savestate", ".schproj");
+        download = File.createTempFile("temp", ".txt");
         try {
             getBlob(blobURL, download);
         } catch (InterruptedException e) {

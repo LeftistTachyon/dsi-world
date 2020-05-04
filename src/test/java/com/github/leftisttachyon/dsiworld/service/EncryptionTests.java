@@ -1,6 +1,7 @@
 package com.github.leftisttachyon.dsiworld.service;
 
 import com.github.leftisttachyon.dsiworld.data.User;
+import com.github.leftisttachyon.dsiworld.data.UserFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,8 +27,16 @@ public class EncryptionTests {
      */
     @Autowired
     private EncryptionService efs;
+    /**
+     * The RNG seed
+     */
     @Value("${encryption.seed}")
     private long seed;
+    /**
+     * The UserFactory to create users with
+     */
+    @Autowired
+    private UserFactory factory;
 
     /**
      * A test with an {@link EncryptionService}: encrypting and decrypting
@@ -130,8 +139,7 @@ public class EncryptionTests {
     public void objectEncryptionTest() throws IOException, ClassNotFoundException {
         File temp = File.createTempFile("temp", "txt");
 
-        User u = new User();
-        u.setUsername("Papyrus");
+        User u = factory.createUser("Papyrus");
 
         System.out.print("Serializing object... ");
         try (ObjectOutputStream oos = efs.getEncryptedObjectOutputStream(temp)) {
@@ -173,8 +181,7 @@ public class EncryptionTests {
             InvalidKeyException, NoSuchAlgorithmException {
         File temp = File.createTempFile("temp", "txt");
 
-        User u = new User();
-        u.setUsername("Papyrus");
+        User u = factory.createUser("Papyrus");
 
         System.out.print("Serializing object... ");
         try (FileOutputStream fos = new FileOutputStream(temp);
