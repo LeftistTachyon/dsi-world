@@ -4,6 +4,7 @@ import com.github.leftisttachyon.dsiworld.model.BlobModel;
 import com.github.leftisttachyon.dsiworld.service.EncryptionService;
 import com.github.leftisttachyon.dsiworld.util.BeanAnnotations;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -86,9 +87,37 @@ public class UserList implements ApplicationContextAware {
         userInfoBlob.uploadFile(f);
     }
 
-//    public User attemptLogin(String username, String password) {
-//        for (User user : list) {
-//            if(username.equals(user.getUsername()) && password.equals())
-//        }
-//    }
+    /**
+     * Attempts a login with the given information and returns the corresponding
+     * {@link User} if the login is successful.
+     *
+     * @param username the username to attempt the login with
+     * @param password the password to attempt the login with
+     * @return the corresponding {@link User} if the credentials are correct, and {@code null} if they are not.
+     */
+    public User attemptLogin(String username, String password) {
+        for (User user : list) {
+            if (username.equals(user.getUsername()) &&
+                    password.equals(new String(ArrayUtils.toPrimitive(user.getPassword())))) {
+                return user;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Adds a {@link User} to the list of users and updates the cloud with the new info.
+     *
+     * @param user the {@link User} to add
+     */
+    public void addUser(User user) {
+        list.add(user);
+
+        try {
+            save();
+        } catch (IOException e) {
+            log.warn("Could not save user information due to IOException", e);
+        }
+    }
 }
