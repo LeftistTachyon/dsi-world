@@ -3,6 +3,7 @@ package com.github.leftisttachyon.dsiworld;
 import com.github.leftisttachyon.dsiworld.model.BlobModel;
 import com.github.leftisttachyon.dsiworld.model.ContainerModel;
 import com.github.leftisttachyon.dsiworld.util.BeanAnnotations;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,8 +72,13 @@ public class BlobAutowireTests {
         }
 
         System.out.println(dir.getName());
-        BlobModel blob = metaContainer.createBlob(dir.getName());
+        try (BlobModel blob = metaContainer.createBlob(dir.getName())) {
+            blob.uploadFile(dir);
+        }
+    }
 
-        blob.uploadFile(dir);
+    @AfterAll
+    public void cleanup() {
+        idBlob.close();
     }
 }

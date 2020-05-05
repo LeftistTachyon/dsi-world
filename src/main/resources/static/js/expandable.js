@@ -1,7 +1,7 @@
 try {
     var arr = document.getElementsByClassName("expandable");
     for(var idx = 0; idx < arr.length; idx++) {
-        alert("starting " + idx);
+//        alert("starting " + idx);
 
         arr[idx].addEventListener("click", function() {
             // alert(this + " clicked")
@@ -32,7 +32,7 @@ try {
         if(!arr[idx].getAttribute("data-sign"))
             arr[idx].setAttribute("data-sign", "+");
 
-        alert("done " + idx);
+//        alert("done " + idx);
     }
 } catch(err) {
     alert(err);

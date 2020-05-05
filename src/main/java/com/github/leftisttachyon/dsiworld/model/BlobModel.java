@@ -5,8 +5,8 @@ import com.microsoft.azure.storage.blob.CommonRestResponse;
 import com.microsoft.azure.storage.blob.ContainerURL;
 import com.microsoft.azure.storage.blob.TransferManager;
 import io.reactivex.Single;
+import lombok.extern.slf4j.Slf4j;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -19,7 +19,8 @@ import java.nio.file.StandardOpenOption;
  * @author Jed Wang
  * @since 1.0.0
  */
-public class BlobModel implements Closeable, Serializable {
+@Slf4j
+public class BlobModel implements AutoCloseable, Serializable {
 
     private static final long serialVersionUID = -11L;
     private final BlockBlobURL blobURL;
@@ -91,6 +92,12 @@ public class BlobModel implements Closeable, Serializable {
             // System.out.println("Completed download request.");
             // System.out.println("The blob was downloaded to " +
             // sourceFile.getAbsolutePath());
+            synchronized (LOCK) {
+                LOCK.notify();
+            }
+        }, throwable -> {
+            log.warn("The file could not be fetched");
+
             synchronized (LOCK) {
                 LOCK.notify();
             }
@@ -168,6 +175,7 @@ public class BlobModel implements Closeable, Serializable {
     public void close() {
         if (download != null) {
             download.delete();
+            download = null;
         }
     }
 }

@@ -515,7 +515,7 @@ CanvasRenderingContext2D.prototype.fillPixelText = function(str, x, y) {
             continue;
         }
 
-        var mat = ctx.pixelChars[c];
+        var mat = this.pixelChars[c];
         if(typeof mat === 'undefined') {
             console.log("Couldn't find " + str.charAt(i) + ", continuing");
             continue;
@@ -532,7 +532,7 @@ CanvasRenderingContext2D.prototype.fillPixelMat = function(mat, x, y) {
         var arr = mat[j];
         for(var k = 0, x_ = x; k < arr.length; k++, x_ += this.pixelSize) {
             if(arr[k]) {
-                ctx.fillRect(x_, y_, this.pixelSize, this.pixelSize);
+                this.fillRect(x_, y_, this.pixelSize, this.pixelSize);
             }
         }
     }

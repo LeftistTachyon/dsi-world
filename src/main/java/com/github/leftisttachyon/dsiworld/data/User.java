@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Data
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-public final class User implements Serializable {
+public final class User implements Serializable, AutoCloseable {
     /**
      * The number to associate with this class
      */
@@ -39,6 +39,10 @@ public final class User implements Serializable {
      * The password for this user
      */
     private Character[] password;
+    /**
+     * The email associated with this user
+     */
+    private String email;
     /**
      * A list of repositories that this user owns
      */
@@ -69,6 +73,13 @@ public final class User implements Serializable {
                 Repository repo = new Repository(userContainer.createBlob(item));
                 repositories.add(repo);
             }
+        }
+    }
+
+    @Override
+    public void close() {
+        for (Repository r : repositories) {
+            r.close();
         }
     }
 }

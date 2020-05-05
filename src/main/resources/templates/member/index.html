@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
+    <script src="../../static/js/pixelText.js" th:src="@{/js/pixelText.js}"></script>
+    <title>DSi World - Member Home</title>
+</head>
+<body>
+    <h1>Member Home</h1>
+    <p>I haven't really make stuff for members since I still need to work out the login system.<br>
+    Enjoy this little thing while I smooth out the wrinkles.</p>
+    <div style="border:1px solid #000" id="box">
+        <canvas height="150px" width="230px" id="canvas"></canvas>
+        <input type="checkbox" id="check" style="position:absolute">
+    </div>
+    <p><a href="../index.html" th:href="@{/}">Back to home</a></p>
+    <script src="../../static/js/taptap.js" th:src="@{/js/taptap.js}"></script>
+</body>
+</html>

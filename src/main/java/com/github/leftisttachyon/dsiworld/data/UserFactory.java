@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.ApplicationScope;
+
+import javax.annotation.PreDestroy;
 
 /**
  * A class that makes creating users very simple.
@@ -14,7 +16,7 @@ import org.springframework.stereotype.Component;
  * @author Jed Wang
  * @since 1.0.0
  */
-@Scope("singleton")
+@ApplicationScope
 @Component
 public class UserFactory implements ApplicationContextAware {
     /**
@@ -55,5 +57,13 @@ public class UserFactory implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
         beanFactory = applicationContext.getAutowireCapableBeanFactory();
+    }
+
+    /**
+     * Freeing up resources.
+     */
+    @PreDestroy
+    public void preDestroy() {
+        idService.close();
     }
 }

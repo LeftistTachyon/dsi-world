@@ -22,7 +22,7 @@ import java.nio.file.Files;
 @Data
 @Setter(AccessLevel.NONE)
 @Slf4j
-public class Repository {
+public class Repository implements AutoCloseable {
     /**
      * The blob that stores the repo on the cloud.
      */
@@ -68,5 +68,10 @@ public class Repository {
         }
 
         blob.uploadFile(zip);
+    }
+
+    @Override
+    public void close() {
+        blob.close();
     }
 }

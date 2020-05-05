@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
+import org.springframework.web.context.annotation.ApplicationScope;
 
 /**
  * A configuration class that handles blob beans.
@@ -40,7 +40,7 @@ public class BlobConfig {
      * @return the singleton instance of the meta storage container
      */
     @Bean
-    @Scope("singleton")
+    @ApplicationScope
     @BeanAnnotations.MetaContainer
     public ContainerModel getMetaContainer() {
         return factory.createContainerModel("meta-info");
@@ -54,7 +54,7 @@ public class BlobConfig {
      */
     @Bean
     @Autowired
-    @Scope("singleton")
+    @ApplicationScope
     @BeanAnnotations.IdBlob
     public BlobModel getIdBlob(@BeanAnnotations.MetaContainer ContainerModel metaContainer) {
         return metaContainer.createBlob("used-ids.dat");
@@ -68,7 +68,7 @@ public class BlobConfig {
      */
     @Bean
     @Autowired
-    @Scope("singleton")
+    @ApplicationScope
     @BeanAnnotations.UserInfoBlob
     public BlobModel getUserInfoBlob(@BeanAnnotations.MetaContainer ContainerModel metaContainer) {
         return metaContainer.createBlob("user-info.dat");

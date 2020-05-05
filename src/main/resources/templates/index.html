@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}"/>
-    <title>Home</title>
+    <title>DSi World - Home</title>
 </head>
 <body>
     <h1>Welcome to the home page!</h1>
+    <h2 th:if="${welcome_text != null}" th:text="${welcome_text}" style="color:blue">Hello there, tester!</h2>
     <p>DSi World is currently under construction. Please check back later.</p>
     <button class="expandable">Test stuff</button>
     <div class="expand-content" style="display:none">
@@ -27,6 +28,10 @@
             <a href="test/input3.html" th:href="@{/test/input3}">my input detection from DSi Paint</a>
             because I was tired of trying to make things work here.</p>
     </div>
+    <p>I've started work on some actual work now!</p>
+    <ul>
+        <li><a href="login.html" th:href="@{/login}">Experimental login page</a></li>
+    </ul>
     <script src="../static/js/expandable.js" th:src="@{/js/expandable.js}"></script>
 </body>
 </html>

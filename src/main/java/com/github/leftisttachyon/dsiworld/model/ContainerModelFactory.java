@@ -2,8 +2,8 @@ package com.github.leftisttachyon.dsiworld.model;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.context.annotation.ApplicationScope;
 
 
 /**
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * @author Jed Wang
  * @since 1.0.0
  */
-@Scope("singleton")
+@ApplicationScope
 @Repository
 @Slf4j
 public class ContainerModelFactory {
@@ -32,7 +32,7 @@ public class ContainerModelFactory {
      * @param accountName the name of the storage account to connect to
      * @param accountKey  the secret key needed to connect to the storage account
      */
-    private ContainerModelFactory(@Value("${azure.blob.name}") String accountName,
+    public ContainerModelFactory(@Value("${azure.blob.name}") String accountName,
                                   @Value("${azure.blob.key}") String accountKey) {
         this.accountName = accountName;
         this.accountKey = accountKey;

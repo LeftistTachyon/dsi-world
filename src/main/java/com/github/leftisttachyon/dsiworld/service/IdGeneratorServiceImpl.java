@@ -4,13 +4,10 @@ import com.github.leftisttachyon.dsiworld.model.BlobModel;
 import com.github.leftisttachyon.dsiworld.util.BeanAnnotations;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.ApplicationScope;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.HashSet;
 
 /**
@@ -21,7 +18,7 @@ import java.util.HashSet;
  */
 @Slf4j
 @Service
-@Scope("singleton")
+@ApplicationScope
 public class IdGeneratorServiceImpl implements IdGeneratorService {
     /**
      * The BlobModel to use when dealing with ID's
@@ -50,6 +47,9 @@ public class IdGeneratorServiceImpl implements IdGeneratorService {
             blob = idBlob.getBlob();
             try (ObjectInputStream ois = encryption.getEncryptedObjectInputStream(blob)) {
                 claimed = (HashSet<Long>) ois.readObject();
+            } catch (EOFException e) {
+                log.info("The ID file is improperly formatted or nonexistent");
+                claimed = new HashSet<>();
             } catch (IOException | ClassNotFoundException e) {
                 log.error("ID Generator could not be instantiated", e);
                 claimed = new HashSet<>();
@@ -75,6 +75,11 @@ public class IdGeneratorServiceImpl implements IdGeneratorService {
         }
 
         return Long.toString(id, 36);
+    }
+
+    @Override
+    public void close() {
+        idBlob.close();
     }
 
     /**

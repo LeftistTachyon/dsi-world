@@ -3,19 +3,20 @@ package com.github.leftisttachyon.dsiworld.data;
 import com.github.leftisttachyon.dsiworld.model.BlobModel;
 import com.github.leftisttachyon.dsiworld.service.EncryptionService;
 import com.github.leftisttachyon.dsiworld.util.BeanAnnotations;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.ApplicationScope;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import javax.annotation.PreDestroy;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -24,10 +25,10 @@ import java.util.List;
  * @author Jed Wang
  * @since 1.0.0
  */
-@Scope("singleton")
+@ApplicationScope
 @Component
 @Slf4j
-public class UserList implements ApplicationContextAware {
+public class UserList implements ApplicationContextAware, Iterable<User> {
     /**
      * The blob that stored information about users
      */
@@ -39,7 +40,8 @@ public class UserList implements ApplicationContextAware {
     /**
      * The internal list of users associated with this user list
      */
-    private List<User> list;
+    @Getter
+    private List<User> userList;
 
     /**
      * Creates a new {@link UserList}
@@ -61,15 +63,20 @@ public class UserList implements ApplicationContextAware {
         try {
             File f = userInfoBlob.getBlob();
             try (ObjectInputStream ois = encryptionService.getEncryptedObjectInputStream(f)) {
-                list = (List<User>) ois.readObject();
+                userList = (List<User>) ois.readObject();
+            } catch (EOFException e) {
+                log.info("The user info file is poorly formatted or nonexistant");
+                userList = new ArrayList<>();
+                return;
             }
 
-            for (User u : list) {
+            for (User u : userList) {
                 beanFactory.autowireBean(u);
                 beanFactory.initializeBean(u, "bean");
             }
         } catch (IOException | ClassNotFoundException e) {
             log.error("An exception occurred while fetching user data", e);
+            userList = new ArrayList<>();
         }
     }
 
@@ -81,7 +88,7 @@ public class UserList implements ApplicationContextAware {
     public void save() throws IOException {
         File f = File.createTempFile("user-info", ".dat");
         try (ObjectOutputStream oos = encryptionService.getEncryptedObjectOutputStream(f)) {
-            oos.writeObject(list);
+            oos.writeObject(userList);
         }
 
         userInfoBlob.uploadFile(f);
@@ -96,7 +103,11 @@ public class UserList implements ApplicationContextAware {
      * @return the corresponding {@link User} if the credentials are correct, and {@code null} if they are not.
      */
     public User attemptLogin(String username, String password) {
-        for (User user : list) {
+        if (userList == null) { // list doesn't exist...
+            return null; // ...so nobody can log in
+        }
+
+        for (User user : userList) {
             if (username.equals(user.getUsername()) &&
                     password.equals(new String(ArrayUtils.toPrimitive(user.getPassword())))) {
                 return user;
@@ -112,12 +123,25 @@ public class UserList implements ApplicationContextAware {
      * @param user the {@link User} to add
      */
     public void addUser(User user) {
-        list.add(user);
+        userList.add(user);
 
         try {
             save();
         } catch (IOException e) {
             log.warn("Could not save user information due to IOException", e);
         }
+    }
+
+    /**
+     * Freeing some resources.
+     */
+    @PreDestroy
+    public void preDestroy() {
+        userInfoBlob.close();
+    }
+
+    @Override
+    public Iterator<User> iterator() {
+        return userList.iterator();
     }
 }

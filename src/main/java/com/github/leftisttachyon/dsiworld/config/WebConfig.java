@@ -1,5 +1,6 @@
 package com.github.leftisttachyon.dsiworld.config;
 
+import com.github.leftisttachyon.dsiworld.interceptor.MemberInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -38,7 +39,7 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index");
+//        registry.addViewController("/").setViewName("index");
 
         // testing pages
         registry.addViewController("/test").setViewName("test/test");
@@ -49,17 +50,22 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/test/framerate").setViewName("test/framerate");
         registry.addViewController("/test/input2").setViewName("test/input2");
         registry.addViewController("/test/input3").setViewName("test/input3");
+
+        // site pages
+//        registry.addViewController("/login").setViewName("login");
+
+        // member pages
+        registry.addViewController("/member").setViewName("member/index");
     }
 
     /**
      * Adds handler interceptors to this application
      *
-     * @param registry the {@link InterceptorRegistry} to add handler
-     *                 interceptors to
+     * @param registry the {@link InterceptorRegistry} to add handler interceptors to
      * @see InterceptorRegistry
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new MemberInterceptor());
+        registry.addInterceptor(new MemberInterceptor());
     }
 }
