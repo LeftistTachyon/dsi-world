@@ -2,6 +2,9 @@ package com.github.leftisttachyon.dsiworld.data;
 
 import com.github.leftisttachyon.dsiworld.service.IdGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -13,11 +16,15 @@ import org.springframework.stereotype.Component;
  */
 @Scope("singleton")
 @Component
-public class UserFactory {
+public class UserFactory implements ApplicationContextAware {
     /**
      * The service that generates ID's for the users
      */
     private final IdGeneratorService idService;
+    /**
+     * The {@link AutowireCapableBeanFactory} associated with this application
+     */
+    private AutowireCapableBeanFactory beanFactory;
 
     /**
      * Creates a new UserFactory
@@ -37,6 +44,16 @@ public class UserFactory {
      */
     public User createUser(String username) {
         String newId = idService.getNextId();
-        return new User(username, newId);
+        User user = new User(username, newId);
+
+        beanFactory.autowireBean(user);
+        beanFactory.initializeBean(user, "bean");
+
+        return user;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        beanFactory = applicationContext.getAutowireCapableBeanFactory();
     }
 }

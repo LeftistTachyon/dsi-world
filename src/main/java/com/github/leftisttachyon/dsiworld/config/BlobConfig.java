@@ -49,6 +49,7 @@ public class BlobConfig {
     /**
      * Returns the singleton instance of the ID blob
      *
+     * @param metaContainer the {@link ContainerModel} to create the blob from
      * @return the singleton instance of the ID blob
      */
     @Bean
@@ -57,5 +58,19 @@ public class BlobConfig {
     @BeanAnnotations.IdBlob
     public BlobModel getIdBlob(@BeanAnnotations.MetaContainer ContainerModel metaContainer) {
         return metaContainer.createBlob("used-ids.dat");
+    }
+
+    /**
+     * Returns the single instance of the user info blob
+     *
+     * @param metaContainer the {@link ContainerModel} to create the blob from
+     * @return the single instance of the user info blob
+     */
+    @Bean
+    @Autowired
+    @Scope("singleton")
+    @BeanAnnotations.UserInfoBlob
+    public BlobModel getUserInfoBlob(@BeanAnnotations.MetaContainer ContainerModel metaContainer) {
+        return metaContainer.createBlob("user-info.dat");
     }
 }

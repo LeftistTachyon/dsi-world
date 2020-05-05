@@ -1,86 +1,96 @@
-package com.github.leftisttachyon.dsiworld;
+package com.github.leftisttachyon.dsiworld.service;
 
-import org.junit.jupiter.api.*;
+import lombok.extern.slf4j.Slf4j;
 
-import java.io.*;
-import java.nio.file.Files;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 /**
- * A collection of tests that experiment with zipping and unzipping files.
+ * A pseudo-service that zips and unzips files.
+ *
+ * @author Jed Wang
+ * @since 1.0.0
  */
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ZipTests {
+@Slf4j
+public final class ZipService {
     /**
-     * The file that contains the zipped info
+     * The one and only
      */
-    private static File zipped = null;
+    private static final ZipService INSTANCE = new ZipService();
 
     /**
-     * A test to figure out zipping a directory.<br>
-     * Result: success!
-     *
-     * @throws IOException if something goes wrong while manipulating files
+     * No instantiation
      */
-    @Test
-    @Order(1)
-    public void zipDirectoryTest() throws IOException {
-        System.out.println("=== ZIPPING ===");
-        File dir = Files.createTempDirectory("").toFile();
-        System.out.println("dir: " + dir.getCanonicalPath());
-        if (!dir.exists() && !dir.mkdir()) {
-            Assertions.fail("Unable to create parent directory");
-        }
-
-        for (int i = 1; i <= 5; i++) {
-            File f = new File(dir, "file" + i);
-            System.out.println("file #" + i + ": " + f.getCanonicalPath());
-            if (!f.exists() && !f.createNewFile()) {
-                Assertions.fail("Unable to create file #" + i);
-            }
-
-            try (PrintWriter out = new PrintWriter(f)) {
-                out.println("This is file #" + i);
-            }
-        }
-
-        zipped = File.createTempFile("compressed", ".zip");
-        try (FileOutputStream fos = new FileOutputStream(zipped);
-             ZipOutputStream zipOut = new ZipOutputStream(fos)) {
-            zipFile(dir, dir.getName(), zipOut);
-        }
-
-        System.out.println("You can find the zipped file @ " + zipped.getCanonicalPath());
+    private ZipService() {
     }
 
     /**
-     * A test to figure out unzipping a directory
+     * Returns an instance of a ZipService
      *
-     * @throws IOException whether something went wrong
+     * @return an instance of a ZipService
      */
-    @Test
-    @Order(2)
-    public void unzipDirectoryTest() throws IOException {
-        System.out.println("=== UNZIPPING ===");
-        Assertions.assertNotNull(zipped);
+    public static ZipService getInstance() {
+        return INSTANCE;
+    }
 
-        File destDir = Files.createTempDirectory("").toFile();
-        System.out.println("dir: " + destDir.getCanonicalPath());
-        if (!destDir.exists() && !destDir.mkdir()) {
-            Assertions.fail("Unable to create parent directory");
+    /**
+     * Zips the given source folder into the destination.<br>
+     * It should be noted that this zips the contents of the folder, not the folder itself.
+     *
+     * @param source      the source folder to compress
+     * @param destination the destination archive file to write data to
+     * @return whether the operation was successful
+     */
+    public boolean zipFolder(File source, File destination) {
+        if (!source.isDirectory()) {
+            return false;
         }
 
+        try (FileOutputStream fos = new FileOutputStream(destination);
+             ZipOutputStream zipOut = new ZipOutputStream(fos)) {
+            for (File f : Objects.requireNonNull(source.listFiles())) {
+                try {
+                    zipFile(f, f.getName(), zipOut);
+                } catch (IOException e) {
+                    log.warn("An IOException occurred while zipping file "
+                            + f.getName(), e);
+                    return false;
+                }
+            }
+
+            return true;
+        } catch (IOException e) {
+            log.warn("An IOException occurred while zipping files", e);
+
+            return false;
+        }
+    }
+
+    /**
+     * Unzips the given source file into the destination.
+     *
+     * @param source      the archive file to extract from
+     * @param destination the destination directory to place the extracted files into
+     * @return whether the operation was successful
+     */
+    public boolean unzipFile(File source, File destination) {
         byte[] buffer = new byte[1024];
-        try (ZipInputStream zis = new ZipInputStream(new FileInputStream(zipped))) {
+        try (ZipInputStream zis = new ZipInputStream(new FileInputStream(source))) {
             ZipEntry zipEntry = zis.getNextEntry();
             while (zipEntry != null) {
-                File newFile = newFile(destDir, zipEntry);
+                File newFile = newFile(destination, zipEntry);
                 System.out.println(newFile.getParent() + " || " + newFile.getName());
                 File parentFile = newFile.getParentFile();
                 if (!parentFile.exists() && !parentFile.mkdirs()) {
-                    Assertions.fail("Could not make parent directory for child file");
+                    log.warn("Could not make parent directory for child file");
+
+                    return false;
                 }
 
                 if (!zipEntry.isDirectory()) {
@@ -94,9 +104,13 @@ public class ZipTests {
                 zipEntry = zis.getNextEntry();
             }
             zis.closeEntry();
-        }
 
-        System.out.println("You can find the unzipped contents @ " + destDir);
+            return true;
+        } catch (IOException e) {
+            log.warn("An IOException occurred while extracting the files", e);
+
+            return false;
+        }
     }
 
     /**

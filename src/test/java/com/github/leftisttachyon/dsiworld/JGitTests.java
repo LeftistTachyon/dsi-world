@@ -6,12 +6,15 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -96,5 +99,57 @@ public class JGitTests {
             System.out.println("Head points to the following commit :"
                     + lastCommitId.getName());
         }
+    }
+
+    /**
+     * A simple test to see whether a system property exists
+     */
+    @Test
+    public void tempDirTest() {
+        String tempDir = System.getProperty("java.io.tmpdir");
+        System.out.println(tempDir);
+
+        Assertions.assertNotNull(tempDir);
+    }
+
+    /**
+     * A test to figure out whether {@link Files#list(Path)} or {@link File#listFiles()} is faster.
+     *
+     * @throws IOException if something goes wrong with file manipulation
+     */
+    @Test
+    public void listFilesSpeedtest() throws IOException {
+        String dirStr = /* System.getProperty("java.io.tmpdir") */ "C:/Windows/";
+        Assertions.assertNotNull(dirStr);
+
+        File dir = new File(dirStr);
+        Assertions.assertNotNull(dir);
+
+        double start, total;
+        StringBuilder file = new StringBuilder(),
+                files = new StringBuilder();
+
+        start = System.nanoTime();
+        for (File f : Objects.requireNonNull(dir.listFiles())) {
+            System.out.println(f.getName());
+            file.append(f.getName());
+            file.append('\n');
+        }
+        total = System.nanoTime() - start;
+        total /= 1_000_000;
+        System.out.printf("File method : %.3f ms%n", total);
+
+        start = System.nanoTime();
+        Files.list(dir.toPath()).map(p -> p.toFile().getName()).forEach(s -> {
+            System.out.println(s);
+            files.append(s);
+            files.append('\n');
+        });
+        total = System.nanoTime() - start;
+        total /= 1_000_000;
+        System.out.printf("Files method: %.3f ms%n", total);
+
+        Assertions.assertEquals(file.toString(), files.toString(),
+                "The two methods got different outputs");
     }
 }

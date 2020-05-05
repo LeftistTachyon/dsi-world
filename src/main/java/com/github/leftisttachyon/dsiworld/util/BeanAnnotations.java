@@ -31,4 +31,10 @@ public final class BeanAnnotations {
     @Qualifier
     public @interface IdBlob {
     }
+
+    @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Qualifier
+    public @interface UserInfoBlob {
+    }
 }
