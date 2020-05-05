@@ -38,7 +38,7 @@ public final class User implements Serializable {
     /**
      * The password for this user
      */
-    private char[] password;
+    private Character[] password;
     /**
      * A list of repositories that this user owns
      */
