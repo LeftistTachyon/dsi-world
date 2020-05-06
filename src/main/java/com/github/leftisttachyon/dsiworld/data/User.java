@@ -44,6 +44,10 @@ public final class User implements Serializable, AutoCloseable {
      */
     private String email;
     /**
+     * Whether this user has been verified
+     */
+    private boolean verified;
+    /**
      * A list of repositories that this user owns
      */
     private final transient List<Repository> repositories = new ArrayList<>();
