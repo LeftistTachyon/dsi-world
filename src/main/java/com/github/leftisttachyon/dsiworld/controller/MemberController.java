@@ -36,6 +36,11 @@ public class MemberController {
     @GetMapping("/member/repos")
     public String memberRepos(@SessionAttribute("user") User user, Model model) {
         model.addAttribute("username", user.getUsername());
+        model.addAttribute("id", user.getId());
+
+        user.loadRepositories();
+        model.addAttribute("repos", user.getRepositories());
+
         return "member/repos";
     }
 }

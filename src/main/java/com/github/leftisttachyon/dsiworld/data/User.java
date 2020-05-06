@@ -72,17 +72,19 @@ public final class User implements Serializable, AutoCloseable {
      * Loads all existing repositories into memory.
      */
     public void loadRepositories() {
-        repositories = new ArrayList<>();
+        if (repositories == null) {
+            repositories = new ArrayList<>();
 
-        List<BlobItem> blobItems = userContainer.blobList();
-        for (BlobItem item : blobItems) {
-            if (item.name().startsWith("repos/")) {
-                String name = item.name();
-                int before = name.indexOf('/') + 1,
-                        after = name.contains(".") ? name.indexOf('.') : name.length();
-                Repository repo = new Repository(userContainer.createBlob(item),
-                        name.substring(before, after));
-                repositories.add(repo);
+            List<BlobItem> blobItems = userContainer.blobList();
+            for (BlobItem item : blobItems) {
+                if (item.name().startsWith("repos/")) {
+                    String name = item.name();
+                    int before = name.indexOf('/') + 1,
+                            after = name.contains(".") ? name.indexOf('.') : name.length();
+                    Repository repo = new Repository(userContainer.createBlob(item),
+                            name.substring(before, after));
+                    repositories.add(repo);
+                }
             }
         }
     }
