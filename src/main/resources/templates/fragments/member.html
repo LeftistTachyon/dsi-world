@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
+    <title>Member Fragments</title>
+</head>
+<body>
+    <div th:fragment="top (username)" id="top">
+        <span style="color:#7092be" th:text="${'Welcome, ' + username + '!'}">Welcome, tester!</span>
+        <a href="index.html" th:href="@{/logout}" style="float:right">Logout</a><br>
+        <a href="../member/index.html" th:href="@{/member}">Member Home</a> |
+        <a href="../member/repos.html" th:href="@{/member/repos}">Repositories</a>
+    </div>
+</body>
+</html>

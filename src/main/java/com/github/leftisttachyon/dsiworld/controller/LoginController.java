@@ -1,12 +1,16 @@
 package com.github.leftisttachyon.dsiworld.controller;
 
 import com.github.leftisttachyon.dsiworld.data.User;
+import com.github.leftisttachyon.dsiworld.data.UserFactory;
 import com.github.leftisttachyon.dsiworld.data.UserList;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,15 +26,21 @@ public class LoginController {
      * The list of {@link com.github.leftisttachyon.dsiworld.data.User users} on this server
      */
     private final UserList userList;
+    /**
+     * A class that generates {@link User}s
+     */
+    private final UserFactory userFactory;
 
     /**
      * Creates a new {@link LoginController} instance
      *
-     * @param userList the list of users to use
+     * @param userList    the list of users to use
+     * @param userFactory the user factory to user
      */
     @Autowired
-    public LoginController(UserList userList) {
+    public LoginController(UserList userList, UserFactory userFactory) {
         this.userList = userList;
+        this.userFactory = userFactory;
     }
 
     /**
@@ -43,7 +53,11 @@ public class LoginController {
     @PostMapping("/login")
     public String doLogin(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String username = request.getParameter("username"), password = request.getParameter("password");
+        log.trace("username: {}", username);
+        log.trace("password: {}", password);
+
         User u = userList.attemptLogin(username, password);
+        log.trace("find ({}) vs login ({})", userList.getUser(username), u);
         if (u != null) {
             // get redirection directions
             String redirectTo = (String) request.getSession().getAttribute("redirectTo");
@@ -70,12 +84,56 @@ public class LoginController {
     }
 
     /**
+     * Validates the input data and then registers a user with the given info.
+     *
+     * @param username           the username to use for this user
+     * @param password1          the password to user for this user
+     * @param password2          the password, again
+     * @param email              the email associated with this user
+     * @param redirectAttributes the set of attributes to show the redirected view
+     * @return the next view to show the user
+     */
+    @PostMapping("/register")
+    public String doRegister(@RequestParam("username") String username, @RequestParam("password1") String password1,
+                             @RequestParam("password2") String password2, @RequestParam("email") String email,
+                             RedirectAttributes redirectAttributes) {
+        // run some server-side validation first
+        String regex = "^(?=.*?\\p{Lu})(?=.*?\\p{Ll})(?=.*?\\d).*$";
+        if (!password1.matches(regex) || !password2.matches(regex)) {
+            redirectAttributes.addFlashAttribute("reject_reason", "Please create a strong password as detailed above.");
+            return "redirect:/register";
+        } else if (!password1.equals(password2)) {
+            redirectAttributes.addFlashAttribute("reject_reason", "Your two passwords don't match.");
+            return "redirect:/register";
+        } else if (userList.getUser(username) != null) {
+            redirectAttributes.addFlashAttribute("reject_reason", username +
+                    " is already taken. Please choose another username.");
+            return "redirect:/register";
+        }
+
+        // if it's gotten to this point, then everything checks out
+        User newUser = userFactory.createUser(username);
+        newUser.setPassword(ArrayUtils.toObject(password1.toCharArray()));
+        newUser.setEmail(email);
+
+        userList.addUser(newUser);
+
+        redirectAttributes.addFlashAttribute("text", "Registration complete. Please log in.");
+        return "redirect:/login";
+    }
+
+    /**
      * Logs the current user out.
      *
+     * @param session the {@link HttpSession} associated with the current user
+     * @param user    the {@link User} object associated with this user
      * @return the next view to show the user
      */
     @GetMapping("/logout")
-    public String logout() {
+    public String logout(HttpSession session, @SessionAttribute("user") User user) {
+        user.close();
+        session.invalidate();
+
         return "redirect:/";
     }
 }

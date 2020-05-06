@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public final class User implements Serializable, AutoCloseable {
     /**
      * A list of repositories that this user owns
      */
-    private final transient List<Repository> repositories = new ArrayList<>();
+    private transient List<Repository> repositories;
     /**
      * The Azure storage container associated with this user
      */
@@ -71,11 +72,43 @@ public final class User implements Serializable, AutoCloseable {
      * Loads all existing repositories into memory.
      */
     public void loadRepositories() {
+        repositories = new ArrayList<>();
+
         List<BlobItem> blobItems = userContainer.blobList();
         for (BlobItem item : blobItems) {
             if (item.name().startsWith("repos/")) {
-                Repository repo = new Repository(userContainer.createBlob(item));
+                String name = item.name();
+                int before = name.indexOf('/') + 1,
+                        after = name.contains(".") ? name.indexOf('.') : name.length();
+                Repository repo = new Repository(userContainer.createBlob(item),
+                        name.substring(before, after));
                 repositories.add(repo);
+            }
+        }
+    }
+
+    /**
+     * Adds a repository to the list of repositories that this user owns
+     *
+     * @param r the {@link Repository} to add
+     */
+    public void addRepository(Repository r) {
+        if (repositories == null) {
+            repositories = new ArrayList<>();
+        }
+
+        repositories.add(r);
+    }
+
+    /**
+     * Saves all open repositories that are associated with this user.
+     *
+     * @throws IOException if something goes wrong while manipulating files
+     */
+    public void saveRepositories() throws IOException {
+        if (repositories != null) {
+            for (Repository r : repositories) {
+                if (r.isOpened()) r.save();
             }
         }
     }
@@ -85,5 +118,7 @@ public final class User implements Serializable, AutoCloseable {
         for (Repository r : repositories) {
             r.close();
         }
+
+        repositories = null;
     }
 }

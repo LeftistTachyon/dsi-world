@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="../../static/css/repo.css" th:href="@{/css/repo.css}"/>
+    <title>DSi World - Repositories</title>
+</head>
+<body>
+    <div th:replace="~{fragments/member.html::top(username=${username})}"></div>
+    <h1>Repositories</h1>
+    <button class="expandable" style="font-size:13px;line-height:16px">
+        Clone an existing repository
+    </button>
+    <form action="index.html" th:action="@{/member/clone}" method="POST" class="expand-content" style="display:none">
+        <p>Only HTTP and HTTPS cloning are supported for now.</p>
+        <p><span style="color:red">*</span>URL: <input name="url" type="url"
+                                                       placeholder="Location of repository" required></p>
+        <p>Give your repository a name that you can remember for later.</p>
+        <p><span style="color:red">*</span>Name: <input name="name" type="text" placeholder="Name for repository" required></p>
+        <p>Enter credentials below if it is needed to clone the repository.</p>
+        <p>Username: <input name="username" type="text" placeholder="Username"></p>
+        <p>Password: <input name="password" type="text" placeholder="Password"></p>
+        <p><input type="submit" value="Clone"></p>
+    </form>
+    <br>
+    <div th:remove="all-but-first" class="repo-list">
+        <div th:each="repo : ${repos}" class="repo-listing">
+            <h2 th:text="${repo.name}">test-repo-1</h2>
+            <form th:if="${!repo.open}" style="float:right" action="repo.html"
+                  th:action="@{/member/open-repo}" method="POST">
+                <input type="hidden" name="repo" th:value="${repo.name}" value="test-repo-1">
+                <input type="submit" value="Load repository">
+            </form>
+            <button th:if="${repo.open}" style="float:right">
+                <a href="repo.html" th:href="@{'/member/' + ${id} + '/' + ${repo.name}}">
+                    Open Repository
+                </a>
+            </button>
+        </div>
+        <div class="repo-listing">
+            <h2>test-repo-2</h2>
+            <form style="float:right" action="repo.html" method="POST">
+                <input type="hidden" name="repo" value="test-repo-2">
+                <input type="submit" value="Load repository">
+            </form>
+        </div>
+        <div class="repo-listing">
+            <h2>test-repo-3</h2>
+            <button style="float:right">
+                <a href="repo.html">
+                    Open Repository
+                </a>
+            </button>
+        </div>
+    </div>
+
+    <script src="../../static/js/expandable.js" th:src="@{/js/expandable.js}"></script>
+</body>
+</html>

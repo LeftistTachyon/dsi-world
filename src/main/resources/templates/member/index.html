@@ -8,11 +8,12 @@
     <title>DSi World - Member Home</title>
 </head>
 <body>
+    <div th:replace="~{fragments/member.html::top(username=${username})}"></div>
     <h1>Member Home</h1>
     <p>I haven't really make stuff for members since I still need to work out the login system.<br>
     Enjoy this little thing while I smooth out the wrinkles.</p>
     <div style="border:1px solid #000" id="box">
-        <canvas height="150px" width="230px" id="canvas"></canvas>
+        <canvas height="150px" width="220px" id="canvas" style="margin:1px"></canvas>
         <input type="checkbox" id="check" style="position:absolute">
     </div>
     <p><a href="../index.html" th:href="@{/}">Back to home</a></p>

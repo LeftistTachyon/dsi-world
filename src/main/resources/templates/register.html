@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}"/>
+    <title>DSi World - Register</title>
+    <script>
+        function isValidPassword(str) {
+            if(str.match(/[a-z]/g) === null) {
+                return "You must include one lowercase letter in your password.";
+            } else if(str.match(/[A-Z]/g) === null) {
+                return "You must include one uppercase letter in your password.";
+            } else if(str.match(/[0-9]/g) === null) {
+                return "You must include one number in your password.";
+            } else if(str.length < 5) {
+                return "Your password must be at least 5 characters long.";
+            } else return null;
+        }
+        function validate() {
+            var one = document.getElementById('one').value,
+                    two = document.getElementById('two').value,
+                    complaint = isValidPassword(one || two);
+            if(complaint !== null) {
+                reject.innerHTML = complaint;
+                return false;
+            } else if(one !== two) {
+                reject.innerHTML = 'Your passwords must match.';
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body style="text-align:center">
+    <h1>Register</h1>
+    <p>This site is currently in early registration.
+        No email verification is needed (mainly because I haven't implemented it yet :))!<br>
+        Entering an email address is still required in case I need to contact you.</p>
+    <p>Passwords need to be at least 5 characters long, have at one lowercase letter, one uppercase letter,
+        and one number.</p>
+    <form action="index.html" th:action="@{/register}" method="POST" onsubmit="return validate();">
+        <p><span style="color:red">*</span>Username: <input name="username" placeholder="Type your username here"
+                            required></p>
+        <p><span style="color:red">*</span>Password: <input name="password1" type="password"
+                            placeholder="Type your password here" required="required" id="one"></p>
+        <p><span style="color:red">*</span>Confirm password: <input name="password2" type="password"
+                                    placeholder="Retype your password here" required="required" id="two"></p>
+        <p><span style="color:red">*</span>Email: <input name="email" type="email"
+                                                         placeholder="Type a valid email here" required="required"></p>
+        <div id="reject" style="color:red" th:if="${reject_reason != null}" th:text="${reject_reason}"></div>
+        <p><input type="submit" value="Register"></p>
+    </form>
+    <p><a href="index.html" th:href="@{/}">Back to home</a></p>
+</body>
+</html>

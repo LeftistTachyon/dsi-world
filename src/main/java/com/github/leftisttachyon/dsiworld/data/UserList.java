@@ -133,6 +133,40 @@ public class UserList implements ApplicationContextAware, Iterable<User> {
     }
 
     /**
+     * Finds and returns a {@link User} that has the given username, if any exists.
+     *
+     * @param username the username to search for
+     * @return a {@link User} that has the given username, if they exist.<br>
+     * If none exist, then {@code null} is returned.
+     */
+    public User getUser(String username) {
+        for (User u : userList) {
+            if (u.getUsername().equals(username)) {
+                return u;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Finds and returns the {@link User} that has the given ID, if any exists.
+     *
+     * @param id the ID to look for
+     * @return the {@link User} that has the given ID, if they exist.<br>
+     * If none exist, then {@code null} is returned.
+     */
+    public User getUserById(String id) {
+        for (User u : userList) {
+            if (u.getId().equals(id)) {
+                return u;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Freeing some resources.
      */
     @PreDestroy

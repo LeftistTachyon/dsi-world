@@ -70,4 +70,25 @@ public class UserObjectTests {
             System.out.println(u.getUsername() + " <" + u.getEmail() + "> : " + u.getId());
         }
     }
+
+    /**
+     * A test to validate regex behavior
+     */
+    @Test
+    public void userInfoValidationTest() {
+//        Assertions.assertTrue("Abc".matches("[a-z]"));
+//        Assertions.assertFalse("ABC".matches("[a-z]"));
+//
+//        Assertions.assertTrue("Abc".matches("[A-Z]"));
+//        Assertions.assertFalse("abc".matches("[A-Z]"));
+//
+//        Assertions.assertTrue("Abc09".matches("[0-9]"));
+//        Assertions.assertFalse("abc".matches("[0-9]"));
+
+        String regex = "^(?=.*?\\p{Lu})(?=.*?\\p{Ll})(?=.*?\\d).*$";
+        Assertions.assertTrue("Abc09".matches(regex));
+        Assertions.assertFalse("abC".matches(regex));
+        Assertions.assertFalse("abc09".matches(regex));
+        Assertions.assertTrue("Éggos1!".matches(regex));
+    }
 }

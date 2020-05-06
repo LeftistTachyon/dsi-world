@@ -29,6 +29,10 @@ public class Repository implements AutoCloseable {
     @Getter(AccessLevel.NONE)
     private final BlobModel blob;
     /**
+     * The name of this repository.
+     */
+    private final String name;
+    /**
      * The file where the repository is stored locally
      */
     private File file;
@@ -61,6 +65,9 @@ public class Repository implements AutoCloseable {
      * @throws IOException if something goes wrong while manipulating files
      */
     public void save() throws IOException {
+        if(file == null)
+            return;
+
         File zip = File.createTempFile("repo", ".zip");
         if (!ZipService.getInstance().zipFolder(file, zip)) {
             log.warn("Repository could not be zipped");
@@ -70,8 +77,22 @@ public class Repository implements AutoCloseable {
         blob.uploadFile(zip);
     }
 
+    /**
+     * Returns whether this {@link Repository} has been fetched and not closed.
+     *
+     * @return whether this {@link Repository} has been fetched and not closed.
+     */
+    public boolean isOpened() {
+        return file != null;
+    }
+
     @Override
     public void close() {
         blob.close();
+
+        file.delete();
+        file = null;
+        git.close();
+        git = null;
     }
 }

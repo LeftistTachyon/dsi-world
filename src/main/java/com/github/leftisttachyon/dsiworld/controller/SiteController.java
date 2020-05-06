@@ -42,4 +42,15 @@ public class SiteController {
     public String login(@SessionAttribute(value = "user", required = false) User user) {
         return user == null ? "login" : "redirect:/member";
     }
+
+    /**
+     * Displays to the user the register page.
+     *
+     * @param user the {@link User} object associated with the session, if any exists
+     * @return the view to show the user
+     */
+    @GetMapping("/register")
+    public String register(@SessionAttribute(value = "user", required = false) User user) {
+        return user == null ? "register" : "redirect:/member";
+    }
 }
