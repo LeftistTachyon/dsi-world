@@ -25,19 +25,24 @@
         <p><input type="submit" value="Clone"></p>
     </form>
     <br>
-    <div th:remove="all-but-first" class="repo-list">
+    <h2>List of Repositories</h2>
+    <div th:if="${#lists.isEmpty(repos)}" style="text-align:center">
+        You don't have any repositories right now. Get started by cloning some above!
+    </div>
+    <div th:unless="${#lists.isEmpty(repos)}" th:remove="all-but-first" class="repo-list">
         <div th:each="repo : ${repos}" class="repo-listing">
             <h2 th:text="${repo.name}">test-repo-1</h2>
-            <form th:if="${!repo.open}" style="float:right" action="repo.html"
-                  th:action="@{/member/open-repo}" method="POST">
-                <input type="hidden" name="repo" th:value="${repo.name}" value="test-repo-1">
-                <input type="submit" value="Load repository">
-            </form>
+
             <button th:if="${repo.open}" style="float:right">
                 <a href="repo.html" th:href="@{'/member/' + ${id} + '/' + ${repo.name}}">
                     Open Repository
                 </a>
             </button>
+            <form th:unless="${repo.open}" style="float:right" action="repo.html"
+                  th:action="@{/member/open-repo}" method="POST">
+                <input type="hidden" name="repo" th:value="${repo.name}" value="test-repo-1">
+                <input type="submit" value="Load repository">
+            </form>
         </div>
         <div class="repo-listing">
             <h2>test-repo-2</h2>
