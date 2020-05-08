@@ -8,15 +8,11 @@
         </encoder>
     </appender>
 
-    <logger name="org.eclipse.jgit" level="info">
+    <logger name="com.github.leftisttachyon.dsiworld" level="debug" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
 
-    <logger name="com.github.leftisttachyon.dsiworld" level="debug">
-        <appender-ref ref="STDOUT" />
-    </logger>
-
-    <root level="info">
+    <root level="info" additivity="false">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

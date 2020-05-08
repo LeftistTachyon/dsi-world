@@ -85,7 +85,7 @@ public final class ZipService {
             ZipEntry zipEntry = zis.getNextEntry();
             while (zipEntry != null) {
                 File newFile = newFile(destination, zipEntry);
-                System.out.println(newFile.getParent() + " || " + newFile.getName());
+                log.trace("{} || {}", newFile.getParent(), newFile.getName());
                 File parentFile = newFile.getParentFile();
                 if (!parentFile.exists() && !parentFile.mkdirs()) {
                     log.warn("Could not make parent directory for child file");
@@ -122,10 +122,6 @@ public final class ZipService {
      * @throws IOException if something goes wrong while zipping the file
      */
     private void zipFile(File fileToZip, String fileName, ZipOutputStream zipOut) throws IOException {
-        if (fileToZip.isHidden()) {
-            return;
-        }
-
         if (fileToZip.isDirectory()) {
             if (fileName.endsWith("/")) {
                 zipOut.putNextEntry(new ZipEntry(fileName));

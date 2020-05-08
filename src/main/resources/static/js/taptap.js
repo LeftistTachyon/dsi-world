@@ -22,20 +22,24 @@ var animate = window.requestAnimationFrame ||
 context.pixelSize = 3;
 
 function draw() {
-    context.fillStyle = "#fff";
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    try {
+        context.fillStyle = "#fff";
+        context.fillRect(0, 0, canvas.width, canvas.height);
 
-    context.fillStyle = "#000";
-    context.fillNumber(cnt, 5, 20);
+        context.fillStyle = "#000";
+        context.fillNumber(cnt, 5, 20);
 
-    if (pb != -1) {
-        context.fillStyle = "#00f";
-        context.fillPixelText("PB: " + pb, 5, canvas.height - 5);
+        if (pb != -1) {
+            context.fillStyle = "#00f";
+            context.fillPixelText("PB: " + pb, 5, canvas.height - 5);
+        }
+
+        cnt++;
+
+        animate(draw);
+    } catch(e) {
+        alert(e);
     }
-
-    cnt++;
-
-    animate(draw);
 }
 
 check.addEventListener('input', function() {
@@ -49,4 +53,8 @@ check.addEventListener('input', function() {
 
 move();
 
-animate(draw);
+try {
+    animate(draw);
+} catch(e) {
+    alert(e);
+}

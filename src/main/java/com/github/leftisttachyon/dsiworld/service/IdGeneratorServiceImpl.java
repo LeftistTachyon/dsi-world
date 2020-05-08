@@ -37,7 +37,7 @@ public class IdGeneratorServiceImpl implements IdGeneratorService {
      * Creates a new IdGeneratorServiceImpl instance.
      */
     @Autowired
-    public IdGeneratorServiceImpl(@BeanAnnotations.IdBlob BlobModel idBlob,
+    IdGeneratorServiceImpl(@BeanAnnotations.IdBlob BlobModel idBlob,
                                   EncryptionService encryption) {
         this.idBlob = idBlob;
         this.encryption = encryption;
@@ -65,7 +65,7 @@ public class IdGeneratorServiceImpl implements IdGeneratorService {
         long id;
         do {
             id = getRandLong();
-        } while (claimed.contains(id));
+        } while (id == 541307 || claimed.contains(id));
         claimed.add(id);
 
         try {

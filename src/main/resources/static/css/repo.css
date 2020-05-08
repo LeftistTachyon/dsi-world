@@ -6,6 +6,11 @@
     margin-bottom: 10px;
 }
 
-.repo-list :nth-child(even) {
+.repo-list>:nth-child(even) {
     float: right;
+}
+
+.file-box {
+    width: 220px;
+    height: 300px;
 }

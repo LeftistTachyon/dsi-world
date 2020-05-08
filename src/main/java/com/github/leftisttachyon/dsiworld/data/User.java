@@ -1,5 +1,6 @@
 package com.github.leftisttachyon.dsiworld.data;
 
+import com.github.leftisttachyon.dsiworld.model.BlobModel;
 import com.github.leftisttachyon.dsiworld.model.ContainerModel;
 import com.github.leftisttachyon.dsiworld.model.ContainerModelFactory;
 import com.microsoft.azure.storage.blob.models.BlobItem;
@@ -113,6 +114,37 @@ public final class User implements Serializable, AutoCloseable {
                 if (r.isOpened()) r.save();
             }
         }
+    }
+
+    /**
+     * Finds and returns the {@link Repository} with the given name, if it exists.
+     *
+     * @param name the name to look for
+     * @return the {@link Repository} with the given name, or {@code null} if it could not be found
+     */
+    public Repository getRepository(String name) {
+        if (repositories == null) {
+            loadRepositories();
+        }
+
+        for (Repository r : repositories) {
+            if (r.getName().equals(name)) {
+                return r;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Creates and returns a new {@link BlobModel} for the given name.<br>
+     * If one already exists, then an the existing one is returned.
+     *
+     * @param name the name of the repo to create a blob for
+     * @return the new {@link BlobModel}
+     */
+    public BlobModel newRepoBlob(String name) {
+        return userContainer.createBlob("repos/" + name + ".zip");
     }
 
     @Override

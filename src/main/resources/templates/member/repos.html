@@ -10,6 +10,8 @@
 <body>
     <div th:replace="~{fragments/member.html::top(username=${username})}"></div>
     <h1>Repositories</h1>
+    <div style="color:red" th:if="${reject_reason != null}" th:text="${reject_reason}"></div>
+    <div th:if="${text != null}" th:text="${text}"></div>
     <button class="expandable" style="font-size:13px;line-height:16px">
         Clone an existing repository
     </button>
@@ -21,7 +23,7 @@
         <p><span style="color:red">*</span>Name: <input name="name" type="text" placeholder="Name for repository" required></p>
         <p>Enter credentials below if it is needed to clone the repository.</p>
         <p>Username: <input name="username" type="text" placeholder="Username"></p>
-        <p>Password: <input name="password" type="text" placeholder="Password"></p>
+        <p>Password: <input name="password" type="password" placeholder="Password"></p>
         <p><input type="submit" value="Clone"></p>
     </form>
     <br>
@@ -33,13 +35,12 @@
         <div th:each="repo : ${repos}" class="repo-listing">
             <h2 th:text="${repo.name}">test-repo-1</h2>
 
-            <button th:if="${repo.open}" style="float:right">
-                <a href="repo.html" th:href="@{'/member/' + ${id} + '/' + ${repo.name}}">
-                    Open Repository
-                </a>
-            </button>
-            <form th:unless="${repo.open}" style="float:right" action="repo.html"
-                  th:action="@{/member/open-repo}" method="POST">
+            <form th:if="${repo.opened}" style="float:right"
+                  action="repo.html" th:action="@{'/member/repos/' + ${id} + '/' + ${repo.name}}">
+                <input type="submit" value="Open Repository"/>
+            </form>
+            <form th:unless="${repo.opened}" style="float:right" action="repo.html"
+                  th:action="@{/member/load-repo}" method="POST">
                 <input type="hidden" name="repo" th:value="${repo.name}" value="test-repo-1">
                 <input type="submit" value="Load repository">
             </form>
@@ -53,11 +54,9 @@
         </div>
         <div class="repo-listing">
             <h2>test-repo-3</h2>
-            <button style="float:right">
-                <a href="repo.html">
-                    Open Repository
-                </a>
-            </button>
+            <form style="float:right" action="repo.html">
+                <input type="submit" value="Open Repository"/>
+            </form>
         </div>
     </div>
 

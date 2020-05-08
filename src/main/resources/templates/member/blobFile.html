@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="../../static/css/repo.css" th:href="@{/css/repo.css}"/>
+    <title th:text="${'DSi World - ' + name + '/' + path}">DSi World - test-repo/test.txt</title>
+</head>
+<body>
+    <div style="text-align:center">
+        <h1>Edit file</h1>
+        <h2 th:text="${name + '/' + path}">test-repo/test.txt</h2>
+    </div>
+    <hr>
+    <form action="repo.html" th:action="@{/member/save-repo}" method="POST">
+        <textarea th:each="chunk : ${chunks}" th:text="${chunk}" name="chunk" class="file-box">test material</textarea>
+        <input type="hidden" name="name" value="name of repo" th:value="${name}">
+        <input type="hidden" name="id" value="id of user" th:value="${id}">
+        <input type="hidden" name="redirect_to" value="blobFile.html" th:value="${redirect_to}">
+        <input type="submit" value="Save">
+    </form>
+    <p><a href="blobFolder.html" th:href="${'..'}">Back to folder</a></p>
+</body>
+</html>

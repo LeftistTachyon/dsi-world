@@ -8,10 +8,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * A class that represents a repository.
@@ -59,13 +62,62 @@ public class Repository implements AutoCloseable {
     }
 
     /**
+     * Clones the repository stored at the given url and stores it in memory.
+     *
+     * @param url the URL to clone the repo from
+     * @throws IOException if something goes wrong while manipulating files
+     */
+    public void clone(String url) throws IOException {
+        File parent = Files.createTempDirectory("").toFile();
+        try {
+            git = Git.cloneRepository()
+                    .setDirectory(parent)
+                    .setURI(url)
+                    .call();
+        } catch (GitAPIException e) {
+            log.warn("An error occurred while cloning the repo", e);
+            return;
+        }
+
+        file = parent;
+
+        save();
+    }
+
+    /**
+     * Clones the repository stored at the given url with the given credentials and stores it in memory.
+     *
+     * @param url      the URL to clone the repo from
+     * @param username the username to use as credentials
+     * @param password the password to use as credentials
+     * @throws IOException if something goes wrong while manipulating files
+     */
+    public void clone(String url, String username, String password) throws IOException {
+        File parent = Files.createTempDirectory("").toFile();
+        try {
+            git = Git.cloneRepository()
+                    .setDirectory(parent)
+                    .setURI(url)
+                    .setCredentialsProvider(new UsernamePasswordCredentialsProvider(username, password))
+                    .call();
+        } catch (GitAPIException e) {
+            log.warn("An error occurred while cloning the repo", e);
+            return;
+        }
+
+        file = parent;
+
+        save();
+    }
+
+    /**
      * Saves this repository onto the cloud.<br>
      * Note: this operation overwrites any preexisting data related to this repository with this information.
      *
      * @throws IOException if something goes wrong while manipulating files
      */
     public void save() throws IOException {
-        if(file == null)
+        if (file == null)
             return;
 
         File zip = File.createTempFile("repo", ".zip");
@@ -75,6 +127,20 @@ public class Repository implements AutoCloseable {
         }
 
         blob.uploadFile(zip);
+    }
+
+    /**
+     * Finds and returns the file found at the given relative path, if it exists.
+     *
+     * @param relPath the relative path to search the file for
+     * @return the file, if it exists. If it doesn't, then {@code null} is returned.
+     */
+    public File getFile(String relPath) {
+        log.debug("relPath: '{}'", relPath);
+        Path p = file.toPath().resolve(relPath);
+        log.debug("path: '{}'", p);
+        File file1 = p.toFile();
+        return file1.exists() ? file1 : null;
     }
 
     /**

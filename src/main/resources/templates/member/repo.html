@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
+    <title th:text="${'DSi World - ' + name}">DSi World - test-repo</title>
+</head>
+<body style="text-align:center">
+    <h1 th:text="${name}">test-repo</h1>
+    <a href="blobFolder.html" th:href="${name + '/blob/'}">Explore files</a>
+</body>
+</html>

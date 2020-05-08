@@ -152,4 +152,5 @@ public class JGitTests {
         Assertions.assertEquals(file.toString(), files.toString(),
                 "The two methods got different outputs");
     }
+
 }

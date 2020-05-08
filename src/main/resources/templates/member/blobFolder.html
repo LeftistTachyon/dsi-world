@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="../../static/css/repo.css" th:href="@{/css/repo.css}"/>
+    <title th:text="${'DSi World - ' + name + '/' + path}">DSi World - test-repo/</title>
+</head>
+<body>
+    <div style="text-align:center">
+        <h1>Repository navigator</h1>
+        <h2 th:text="${name + '/' + path}">test-repo/</h2>
+    </div>
+    <hr>
+    <div style="margin-bottom:10px">
+        <p th:unless="${#strings.isEmpty(path)}">
+            <img src="../../static/resources/folder.png" th:src="@{/resources/folder.png}">
+            <a href="blobFolder.html" th:href="${'..'}">..</a>
+        </p>
+        <p th:each="dir : ${dirs}">
+            <img src="../../static/resources/folder.png" th:src="@{/resources/folder.png}">
+            <a href="blobFolder.html" th:href="@{${dir.name} + '/'}" th:text="${dir.name}">test-folder</a>
+        </p>
+    </div>
+    <div style="margin-bottom:10px">
+        <p th:each="file : ${files}">
+            <img src="../../static/resources/file.png" th:src="@{/resources/file.png}">
+            <a href="blobFile.html" th:href="@{${file.name} + '/'}" th:text="${file.name}">test.txt</a>
+        </p>
+    </div>
+    <p>
+        <a href="repo.html" th:href="${base}">Back to repository page</a>
+    </p>
+</body>
+</html>
