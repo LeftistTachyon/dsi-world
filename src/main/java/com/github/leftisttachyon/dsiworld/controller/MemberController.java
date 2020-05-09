@@ -203,6 +203,11 @@ public class MemberController {
         int splitIdx = uri.indexOf("blob");
         String relPath = uri.substring(splitIdx + 5);
         File f = repo.getFile(relPath);
+        if (f == null) {
+            log.debug("Requested file '{}' that doesn't exist", relPath);
+            response.sendError(400); // bad request
+            return "error";
+        }
 
         model.addAttribute("name", repo.getName());
         model.addAttribute("path", relPath.isEmpty() ? ""

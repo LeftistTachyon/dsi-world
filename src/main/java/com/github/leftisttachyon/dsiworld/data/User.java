@@ -149,10 +149,12 @@ public final class User implements Serializable, AutoCloseable {
 
     @Override
     public void close() {
-        for (Repository r : repositories) {
-            r.close();
-        }
+        if (repositories != null) {
+            for (Repository r : repositories) {
+                r.close();
+            }
 
-        repositories = null;
+            repositories = null;
+        }
     }
 }
