@@ -17,7 +17,7 @@ try {
     var animate = window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
         window.mozRequestAnimationFrame ||
-        function(callback) { window.setTimeout("callback()", 166) },
+        function(callback) { window.setTimeout("draw()", 166) },
             context = canvas.getContext('2d');
 
     context.pixelSize = 3;
