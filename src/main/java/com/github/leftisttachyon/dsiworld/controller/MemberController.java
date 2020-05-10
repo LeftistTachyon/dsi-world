@@ -163,6 +163,7 @@ public class MemberController {
         }
 
         model.addAttribute("name", repo.getName());
+        model.addAttribute("username", user.getUsername());
         return "member/repo";
     }
 
@@ -180,7 +181,8 @@ public class MemberController {
      */
     @GetMapping("/member/repos/{id:[a-z\\d]{3,12}}/{name}/blob/**")
     public String showRepoBlob(@SessionAttribute("user") User user, @PathVariable String id, @PathVariable String name,
-                               HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+                               HttpServletRequest request, HttpServletResponse response, Model model)
+            throws IOException {
         if (!user.getId().equals(id)) {
             log.debug("Blocked request of somebody else's repo");
             response.sendError(404);
@@ -213,6 +215,8 @@ public class MemberController {
         model.addAttribute("path", relPath.isEmpty() ? ""
                 : relPath.substring(0, relPath.length() - 1).replace("/", " / "));
         model.addAttribute("username", user.getUsername());
+        model.addAttribute("id", id);
+        model.addAttribute("redirect_to", uri);
 
         if (f.isDirectory()) {
             // dirs, files
@@ -229,7 +233,7 @@ public class MemberController {
             model.addAttribute("files", files);
 
             // base
-            String base = uri.substring(splitIdx);
+            String base = uri.substring(0, splitIdx);
             model.addAttribute("base", base);
 
             return "member/blobFolder";
@@ -253,12 +257,6 @@ public class MemberController {
             chunks.add(builder.toString());
             model.addAttribute("chunks", chunks);
 
-            // id
-            model.addAttribute("id", id);
-
-            // redirect_to
-            model.addAttribute("redirect_to", uri);
-
             return "member/blobFile";
         }
     }
@@ -278,7 +276,102 @@ public class MemberController {
     @PostMapping("/member/save-repo")
     public String saveRepo(@SessionAttribute("user") User user, @RequestParam("chunk") List<String> chunks,
                            @RequestParam("id") String id, @RequestParam("name") String name,
-                           @RequestParam("redirect_to") String redirectTo, HttpServletResponse response) throws IOException {
+                           @RequestParam("redirect_to") String redirectTo, HttpServletResponse response)
+            throws IOException {
+        if (!user.getId().equals(id)) {
+            log.debug("Blocked request of somebody else's repo");
+            response.sendError(404);
+            return "error";
+        }
+
+        Repository repo = user.getRepository(name);
+        if (repo == null) {
+            log.debug("Requested repo that doesn't exist");
+            response.sendError(404);
+            return "error";
+        }
+
+        if (!repo.isOpened()) {
+            log.debug("Trying to read from an unopened repo?!");
+            return "redirect:/member/repos";
+        }
+
+        log.info("Saving {}/{}", user.getUsername(), repo.getName());
+
+        int splitIdx = redirectTo.indexOf("blob");
+        String relPath = redirectTo.substring(splitIdx + 5);
+        File f = repo.getFile(relPath);
+
+        try (PrintWriter out = new PrintWriter(f)) {
+//            log.debug("{}:", relPath);
+            for (String chunk : chunks) {
+                out.println(chunk);
+//                log.debug(chunk);
+            }
+        }
+
+        repo.save();
+
+        return "redirect:" + redirectTo;
+    }
+
+    /**
+     * Directs the server to create a new file.
+     *
+     * @param user               the user associated with this session
+     * @param fileName           the name of the file to create
+     * @param id                 the id of the user who owns this repo
+     * @param name               the name of the repo
+     * @param redirectTo         the url to redirect the user to afterwards
+     * @param response           a {@link HttpServletResponse} object to send back error codes as needed
+     * @param redirectAttributes attributes to show the redirected view
+     * @return the next view to show the user
+     * @throws IOException if something goes wrong with I/O operations
+     */
+    @PostMapping("/member/create-file")
+    public String createFile(@SessionAttribute("user") User user, @RequestParam("file-name") String fileName,
+                             @RequestParam("id") String id, @RequestParam("name") String name,
+                             @RequestParam("redirect_to") String redirectTo, HttpServletResponse response,
+                             RedirectAttributes redirectAttributes) throws IOException {
+        if (!user.getId().equals(id)) {
+            log.debug("Blocked request of somebody else's repo");
+            response.sendError(404);
+            return "error";
+        }
+
+        Repository repo = user.getRepository(name);
+        if (repo == null) {
+            log.debug("Requested repo that doesn't exist");
+            response.sendError(404);
+            return "error";
+        }
+
+        if (!repo.isOpened()) {
+            log.debug("Trying to read from an unopened repo?!");
+            return "redirect:/member/repos";
+        }
+
+        int splitIdx = redirectTo.indexOf("blob");
+        String relPath = redirectTo.substring(splitIdx + 5);
+        if (repo.createFile(relPath + File.separator + fileName)) {
+            // success!
+            repo.save();
+
+            redirectAttributes.addFlashAttribute("color", "#228B22");
+            redirectAttributes.addFlashAttribute("message", "File successfully created.");
+        } else {
+            // it failed
+            redirectAttributes.addFlashAttribute("color", "red");
+            redirectAttributes.addFlashAttribute("message", "The file could not be created.");
+        }
+
+        return "redirect:" + redirectTo;
+    }
+
+    @PostMapping("/member/delete-file")
+    public String deleteFile(@SessionAttribute("user") User user, @RequestParam("id") String id,
+                             @RequestParam("name") String name, @RequestParam("redirect_to") String redirectTo,
+                             HttpServletResponse response, RedirectAttributes redirectAttributes) throws IOException {
         if (!user.getId().equals(id)) {
             log.debug("Blocked request of somebody else's repo");
             response.sendError(404);
@@ -300,15 +393,35 @@ public class MemberController {
         int splitIdx = redirectTo.indexOf("blob");
         String relPath = redirectTo.substring(splitIdx + 5);
         File f = repo.getFile(relPath);
-
-        try (PrintWriter out = new PrintWriter(f)) {
-            for (String chunk : chunks) {
-                out.println(chunk);
+        boolean deleted = true;
+        if (f.isDirectory()) {
+            File[] files = f.listFiles();
+            if(files != null) for (File file : files) {
+                if(!file.delete()) {
+                    deleted = false;
+                    break;
+                }
             }
+
+            if(deleted) deleted = f.delete();
+        } else {
+            deleted = f.delete();
         }
 
-        repo.save();
+        if (deleted) {
+            // success!
+            repo.save();
 
-        return "redirect:/" + redirectTo;
+            redirectAttributes.addFlashAttribute("color", "#228B22");
+            redirectAttributes.addFlashAttribute("message", "The file has been successfully deleted.");
+
+            return "redirect:" + redirectTo + "..";
+        } else {
+            // it failed
+            redirectAttributes.addFlashAttribute("color", "red");
+            redirectAttributes.addFlashAttribute("message", "This file could not be deleted.");
+
+            return "redirect:" + redirectTo;
+        }
     }
 }

@@ -144,6 +144,25 @@ public class Repository implements AutoCloseable {
     }
 
     /**
+     * Creates a blank file at the given relative path.
+     *
+     * @param relPath the relative path at which to create the file
+     * @return whether the operation was successful, or if the file already exists, {@code true}.
+     * @throws IOException if something goes wrong while manipulating files
+     */
+    public boolean createFile(String relPath) throws IOException {
+        File toCreate = new File(file.toString() + relPath);
+        log.debug("toCreate: '{}'", toCreate);
+        if (toCreate.exists()) return true;
+
+        File parentFile = toCreate.getParentFile();
+        log.debug("parentFile: '{}'", parentFile);
+        if (parentFile == null || !(parentFile.exists() || parentFile.mkdirs())) return false;
+
+        return toCreate.createNewFile();
+    }
+
+    /**
      * Returns whether this {@link Repository} has been fetched and not closed.
      *
      * @return whether this {@link Repository} has been fetched and not closed.

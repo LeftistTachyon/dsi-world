@@ -44,11 +44,11 @@
         <p><span style="color:red">*</span>Username: <input name="username" placeholder="Type your username here"
                             required></p>
         <p><span style="color:red">*</span>Password: <input name="password1" type="password"
-                            placeholder="Type your password here" required="required" id="one"></p>
+                            placeholder="Type your password here" required id="one"></p>
         <p><span style="color:red">*</span>Retype password: <input name="password2" type="password"
-                                    placeholder="Retype your password here" required="required" id="two"></p>
+                                    placeholder="Retype your password here" required id="two"></p>
         <p><span style="color:red">*</span>Email: <input name="email" type="email"
-                                                         placeholder="Type a valid email here" required="required"></p>
+                                                         placeholder="Type a valid email here" required></p>
         <div id="reject" style="color:red" th:if="${reject_reason != null}" th:text="${reject_reason}"></div>
         <p><input type="submit" value="Register"></p>
     </form>

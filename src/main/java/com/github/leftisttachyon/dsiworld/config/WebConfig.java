@@ -3,12 +3,15 @@ package com.github.leftisttachyon.dsiworld.config;
 import com.github.leftisttachyon.dsiworld.interceptor.MemberInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 import javax.annotation.PostConstruct;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * A configuration class to set various things up for the application.
@@ -67,5 +70,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new MemberInterceptor());
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.removeConvertible(String.class, Collection.class);
+        registry.addConverter(String.class, Collection.class, Collections::singletonList);
     }
 }

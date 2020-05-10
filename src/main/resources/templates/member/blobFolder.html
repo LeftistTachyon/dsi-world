@@ -5,29 +5,47 @@
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" href="../../static/css/repo.css" th:href="@{/css/repo.css}"/>
-    <title th:text="${'DSi World - ' + name + '/' + path}">DSi World - test-repo/</title>
+    <title th:text="${'DSi World - ' + name + ' / ' + path}">DSi World - test-repo / </title>
 </head>
 <body>
     <div th:replace="~{fragments/member.html::top(username=${username})}"></div>
     <div style="text-align:center">
         <h1>Repository navigator</h1>
-        <h2 th:text="${name + '/' + path}">test-repo/</h2>
+        <h2 th:text="${name + ' / ' + path}">test-repo/</h2>
     </div>
+    <hr>
+    <div th:style="'color:' + ${color}" th:text="${message}"></div>
+    <form action="blobFolder.html" th:action="@{/member/create-file}" method="POST">
+        <input type="text" name="file-name" placeholder="File name">
+        <input type="hidden" name="name" value="name of repo" th:value="${name}">
+        <input type="hidden" name="id" value="id of user" th:value="${id}">
+        <input type="hidden" name="redirect_to" value="blobFile.html" th:value="${redirect_to}">
+        <input type="submit" value="Create file" style="float:right"/>
+    </form>
+    <form th:unless="${path.empty}"
+          action="blobFolder.html" th:action="@{/member/delete-file}" method="POST"
+          onsubmit="return confirm('This action cannot be undone. Are you sure you want to proceed?');"
+          class="clearfix" style="margin-top:5px">
+        <input type="hidden" name="name" value="name of repo" th:value="${name}">
+        <input type="hidden" name="id" value="id of user" th:value="${id}">
+        <input type="hidden" name="redirect_to" value="blobFile.html" th:value="${redirect_to}">
+        <button style="color:red;float:right">Delete</button>
+    </form>
     <hr>
     <div style="margin-bottom:10px">
         <p th:unless="${#strings.isEmpty(path)}">
             <img src="../../static/resources/folder.png" th:src="@{/resources/folder.png}">
-            <a href="blobFolder.html" th:href="${'..'}">..</a>
+            <a href="blobFolder.html" th:href="@{..}">..</a>
         </p>
         <p th:each="dir : ${dirs}">
             <img src="../../static/resources/folder.png" th:src="@{/resources/folder.png}">
-            <a href="blobFolder.html" th:href="@{${dir.name} + '/'}" th:text="${dir.name}">test-folder</a>
+            <a href="blobFolder.html" th:href="${dir.name + '/'}" th:text="${dir.name}">test-folder</a>
         </p>
     </div>
     <div style="margin-bottom:10px">
         <p th:each="file : ${files}">
             <img src="../../static/resources/file.png" th:src="@{/resources/file.png}">
-            <a href="blobFile.html" th:href="@{${file.name} + '/'}" th:text="${file.name}">test.txt</a>
+            <a href="blobFile.html" th:href="${file.name + '/'}" th:text="${file.name}">test.txt</a>
         </p>
     </div>
     <p>

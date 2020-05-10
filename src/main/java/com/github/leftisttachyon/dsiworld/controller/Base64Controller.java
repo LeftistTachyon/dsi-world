@@ -59,7 +59,7 @@ public class Base64Controller {
     public String toBase64(@RequestParam("url") String url_) throws IOException {
         log.info("Encoding image from url {}", url_);
         URL url = new URL(url_);
-        File temp = File.createTempFile("temp", "dat");
+        File temp = File.createTempFile("temp", ".dat");
         FileUtils.copyURLToFile(url, temp);
 
         byte[] bytes = FileUtils.readFileToByteArray(temp);

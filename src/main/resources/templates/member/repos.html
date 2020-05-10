@@ -36,26 +36,26 @@
             <h2 th:text="${repo.name}">test-repo-1</h2>
 
             <form th:if="${repo.opened}" style="float:right"
-                  action="repo.html" th:action="@{'/member/repos/' + ${id} + '/' + ${repo.name}}">
-                <input type="submit" value="Open Repository"/>
+                  action="repo.html" th:action="@{'/member/repos/' + ${id} + '/' + ${repo.name} + '/'}">
+                <button>Open<br>repository</button>
             </form>
             <form th:unless="${repo.opened}" style="float:right" action="repo.html"
                   th:action="@{/member/load-repo}" method="POST">
                 <input type="hidden" name="repo" th:value="${repo.name}" value="test-repo-1">
-                <input type="submit" value="Load repository">
+                <button>Load<br>repository</button>
             </form>
         </div>
         <div class="repo-listing">
             <h2>test-repo-2</h2>
             <form style="float:right" action="repo.html" method="POST">
                 <input type="hidden" name="repo" value="test-repo-2">
-                <input type="submit" value="Load repository">
+                <button>Load<br>repository</button>
             </form>
         </div>
         <div class="repo-listing">
             <h2>test-repo-3</h2>
             <form style="float:right" action="repo.html">
-                <input type="submit" value="Open Repository"/>
+                <button>Open<br>repository</button>
             </form>
         </div>
     </div>

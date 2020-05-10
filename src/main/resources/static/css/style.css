@@ -79,3 +79,9 @@ button.expandable:after {
 #top a {
     color: #aaa;
 }
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}

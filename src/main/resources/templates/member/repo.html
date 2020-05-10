@@ -10,8 +10,8 @@
     <div th:replace="~{fragments/member.html::top(username=${username})}"></div>
     <div style="text-align:center">
         <h1 th:text="${name}">test-repo</h1>
-        <a href="blobFolder.html" th:href="${name + '/blob/'}">Explore files</a>
-        <a href="repos.html" th:href="@{/member/repos}"></a>
+        <p><a href="blobFolder.html" th:href="@{blob/}">Explore files</a></p>
+        <p><a href="repos.html" th:href="@{/member/repos}">Back to repository list</a></p>
     </div>
 </body>
 </html>
