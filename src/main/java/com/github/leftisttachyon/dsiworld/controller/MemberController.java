@@ -212,6 +212,7 @@ public class MemberController {
         model.addAttribute("name", repo.getName());
         model.addAttribute("path", relPath.isEmpty() ? ""
                 : relPath.substring(0, relPath.length() - 1).replace("/", " / "));
+        model.addAttribute("username", user.getUsername());
 
         if (f.isDirectory()) {
             // dirs, files

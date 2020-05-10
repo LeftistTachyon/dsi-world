@@ -6,8 +6,12 @@
     <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
     <title th:text="${'DSi World - ' + name}">DSi World - test-repo</title>
 </head>
-<body style="text-align:center">
-    <h1 th:text="${name}">test-repo</h1>
-    <a href="blobFolder.html" th:href="${name + '/blob/'}">Explore files</a>
+<body>
+    <div th:replace="~{fragments/member.html::top(username=${username})}"></div>
+    <div style="text-align:center">
+        <h1 th:text="${name}">test-repo</h1>
+        <a href="blobFolder.html" th:href="${name + '/blob/'}">Explore files</a>
+        <a href="repos.html" th:href="@{/member/repos}"></a>
+    </div>
 </body>
 </html>

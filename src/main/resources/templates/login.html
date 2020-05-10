@@ -9,8 +9,8 @@
 <body style="text-align:center">
     <h1>Login</h1>
     <form action="index.html" th:action="@{/login}" method="POST">
-        <p>Username: <input type="text" name="username" placeholder="Enter your username"/></p>
-        <p>Password: <input type="password" name="password" placeholder="Enter your password"/></p>
+        <p>Username: <input type="text" name="username" placeholder="Enter your username" required/></p>
+        <p>Password: <input type="password" name="password" placeholder="Enter your password" required/></p>
         <div th:if="${reject_reason != null}" th:text="${reject_reason}" style="color:red"></div>
         <div th:if="${text != null}" th:text="${text}"></div>
         <p><input type="submit" value="Login"/></p>

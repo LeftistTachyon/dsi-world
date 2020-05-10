@@ -8,6 +8,7 @@
     <title th:text="${'DSi World - ' + name + '/' + path}">DSi World - test-repo/test.txt</title>
 </head>
 <body>
+    <div th:replace="~{fragments/member.html::top(username=${username})}"></div>
     <div style="text-align:center">
         <h1>Edit file</h1>
         <h2 th:text="${name + '/' + path}">test-repo/test.txt</h2>
