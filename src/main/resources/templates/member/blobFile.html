@@ -14,7 +14,7 @@
         <h2 th:text="${name + ' / ' + path}">test-repo/test.txt</h2>
     </div>
     <hr>
-    <div th:style="'color:' + ${color}" th:text="${message}"></div>
+    <div th:style="${'color:' + color}" th:text="${message}"></div>
     <form action="blobFolder.html" th:action="@{/member/delete-file}" method="POST"
           onsubmit="return confirm('This action cannot be undone. Are you sure you want to proceed?');"
           class="clearfix">
