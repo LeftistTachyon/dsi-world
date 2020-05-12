@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../../../static/css/style.css" th:href="@{/css/style.css}"/>
+    <title th:text="${'DSi World - ' + name}">DSi World - test-repo</title>
+</head>
+<body>
+    <div th:replace="~{fragments/member.html::top(username=${username})}"></div>
+    <div style="text-align:center">
+        <h1 th:text="${name}">test-repo</h1>
+        <p><a href="blobFolder.html" th:href="@{blob/}">Explore files</a></p>
+        <p><a href="repos.html" th:href="@{/member/repos}">Back to repository list</a></p>
+        <hr>
+        <h2>Git</h2>
+        <p th:text="${'On branch ' + branch}">On branch master</p>
+        <div th:unless="${#lists.isEmpty(staged)}" style="margin:5px 0;">
+            <button class="expandable">Staged changes</button>
+            <div class="expand-content" style="display:none;color:#8EBF24">
+                <p th:each="file : ${staged}" th:text="${file}">
+                    src/staged.txt
+                </p>
+            </div>
+        </div>
+        <div th:unless="${#lists.isEmpty(unstaged)}" style="margin:5px 0;">
+            <button class="expandable">Unstaged changes</button>
+            <div class="expand-content" style="display:none;color:#F6533E">
+                <p th:each="file : ${unstaged}" th:text="${file}">
+                    src/unstaged.txt
+                </p>
+            </div>
+        </div>
+        <p><a href="log.html" th:href="@{log/}">View commit history</a></p>
+        <script src="../../../static/js/expandable.js" th:src="@{/js/expandable.js}"></script>
+    </div>
+</body>
+</html>

@@ -4,6 +4,11 @@ import com.github.leftisttachyon.dsiworld.data.Repository;
 import com.github.leftisttachyon.dsiworld.data.User;
 import com.github.leftisttachyon.dsiworld.model.BlobModel;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.Status;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +17,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * A class that acts as a controller for member-controlled pages.
@@ -50,7 +56,7 @@ public class MemberController {
         user.loadRepositories();
         model.addAttribute("repos", user.getRepositories());
 
-        return "member/repos";
+        return "member/repo/repos";
     }
 
     /**
@@ -139,11 +145,12 @@ public class MemberController {
      * @param response a {@link HttpServletResponse} object to send back error codes if necessary
      * @param model    attributes to show the view
      * @return the next view to show the user
-     * @throws IOException if something goes wrong with I/O operations
+     * @throws IOException     if something goes wrong with I/O operations
+     * @throws GitAPIException if something goes wrong with Git
      */
     @GetMapping("/member/repos/{id:[a-z\\d]{3,12}}/{name}")
     public String showRepo(@SessionAttribute("user") User user, @PathVariable String id, @PathVariable String name,
-                           HttpServletResponse response, Model model) throws IOException {
+                           HttpServletResponse response, Model model) throws IOException, GitAPIException {
         if (!user.getId().equals(id)) {
             log.debug("Blocked request of somebody else's repo");
             response.sendError(404);
@@ -162,9 +169,23 @@ public class MemberController {
             return "redirect:/member/repos";
         }
 
+        Git git = repo.getGit();
+        Status status = git.status().call();
+        Set<String> unstaged = status.getUncommittedChanges()
+                .stream().map(s -> s.replace("/", "/\u200B")).collect(Collectors.toSet()),
+                staged = status.getAdded().stream().map(s -> s.replace("/", "/\u200B")).collect(Collectors.toSet());
+
+        log.trace("unstaged: {}", unstaged);
+        model.addAttribute("unstaged", unstaged);
+        log.trace("staged: {}", staged);
+        model.addAttribute("staged", staged);
+
+        String branch = git.getRepository().getBranch();
+        model.addAttribute("branch", branch);
+
         model.addAttribute("name", repo.getName());
         model.addAttribute("username", user.getUsername());
-        return "member/repo";
+        return "member/repo/repo";
     }
 
     /**
@@ -218,6 +239,10 @@ public class MemberController {
         model.addAttribute("id", id);
         model.addAttribute("redirect_to", uri);
 
+        // base
+        String base = uri.substring(0, splitIdx);
+        model.addAttribute("base", base);
+
         if (f.isDirectory()) {
             // dirs, files
             List<File> dirs = new ArrayList<>(), files = new ArrayList<>();
@@ -232,11 +257,7 @@ public class MemberController {
             model.addAttribute("dirs", dirs);
             model.addAttribute("files", files);
 
-            // base
-            String base = uri.substring(0, splitIdx);
-            model.addAttribute("base", base);
-
-            return "member/blobFolder";
+            return "member/repo/blobFolder";
         } else {
             // chunks
             List<String> chunks = new ArrayList<>();
@@ -257,7 +278,7 @@ public class MemberController {
             chunks.add(builder.toString());
             model.addAttribute("chunks", chunks);
 
-            return "member/blobFile";
+            return "member/repo/blobFile";
         }
     }
 
@@ -273,9 +294,9 @@ public class MemberController {
      * @return the view to show the user
      * @throws IOException if something goes wrong with I/O operations
      */
-    @PostMapping("/member/save-repo")
+    @PostMapping("/member/repos/{id:[a-z\\d]{3,12}}/{name}/save-repo")
     public String saveRepo(@SessionAttribute("user") User user, @RequestParam("chunk") List<String> chunks,
-                           @RequestParam("id") String id, @RequestParam("name") String name,
+                           @PathVariable String id, @PathVariable String name,
                            @RequestParam("redirect_to") String redirectTo, HttpServletResponse response)
             throws IOException {
         if (!user.getId().equals(id)) {
@@ -328,9 +349,9 @@ public class MemberController {
      * @return the next view to show the user
      * @throws IOException if something goes wrong with I/O operations
      */
-    @PostMapping("/member/create-file")
+    @PostMapping("/member/repos/{id:[a-z\\d]{3,12}}/{name}/create-file")
     public String createFile(@SessionAttribute("user") User user, @RequestParam("file-name") String fileName,
-                             @RequestParam("id") String id, @RequestParam("name") String name,
+                             @PathVariable String id, @PathVariable String name,
                              @RequestParam("redirect_to") String redirectTo, HttpServletResponse response,
                              RedirectAttributes redirectAttributes) throws IOException {
         if (!user.getId().equals(id)) {
@@ -368,9 +389,21 @@ public class MemberController {
         return "redirect:" + redirectTo;
     }
 
-    @PostMapping("/member/delete-file")
-    public String deleteFile(@SessionAttribute("user") User user, @RequestParam("id") String id,
-                             @RequestParam("name") String name, @RequestParam("redirect_to") String redirectTo,
+    /**
+     * Deletes the given file from the given repo.
+     *
+     * @param user               the user trying to delete the file
+     * @param id                 the id of the user who owns this repo
+     * @param name               the name of the repository
+     * @param redirectTo         where to redirect to after everything is done
+     * @param response           the {@link HttpServletResponse} object used to send back error codes, if needed
+     * @param redirectAttributes attributes to show the redirected page
+     * @return the next view to show the user
+     * @throws IOException if something goes wrong while manipulating files
+     */
+    @PostMapping("/member/repos/{id:[a-z\\d]{3,12}}/{name}/delete-file")
+    public String deleteFile(@SessionAttribute("user") User user, @PathVariable String id,
+                             @PathVariable String name, @RequestParam("redirect_to") String redirectTo,
                              HttpServletResponse response, RedirectAttributes redirectAttributes) throws IOException {
         if (!user.getId().equals(id)) {
             log.debug("Blocked request of somebody else's repo");
@@ -396,14 +429,14 @@ public class MemberController {
         boolean deleted = true;
         if (f.isDirectory()) {
             File[] files = f.listFiles();
-            if(files != null) for (File file : files) {
-                if(!file.delete()) {
+            if (files != null) for (File file : files) {
+                if (!file.delete()) {
                     deleted = false;
                     break;
                 }
             }
 
-            if(deleted) deleted = f.delete();
+            if (deleted) deleted = f.delete();
         } else {
             deleted = f.delete();
         }
@@ -423,5 +456,69 @@ public class MemberController {
 
             return "redirect:" + redirectTo;
         }
+    }
+
+    /**
+     * Shows a log of previous commits.
+     *
+     * @param user     the user trying to access the log of this repository
+     * @param id       the id of the owner of the repository
+     * @param name     the name of the repository
+     * @param num      the number of log entries to show
+     * @param response a {@link HttpServletResponse} object used to send back error codes
+     * @param model    attributes to show the view
+     * @return the view to show the user
+     * @throws IOException     if something goes wrong with I/O operations
+     * @throws GitAPIException if something goes wrong with the git command
+     */
+    @GetMapping("/member/repos/{id:[a-z\\d]{3,12}}/{name}/log")
+    public String showLog(@SessionAttribute User user, @PathVariable String id, @PathVariable String name,
+                          @RequestParam(value = "num", defaultValue = "10") int num, HttpServletResponse response,
+                          Model model) throws IOException, GitAPIException {
+        if (!user.getId().equals(id)) {
+            log.debug("Blocked request of somebody else's repo");
+            response.sendError(404);
+            return "error";
+        }
+
+        Repository repo = user.getRepository(name);
+        if (repo == null) {
+            log.debug("Requested repo that doesn't exist");
+            response.sendError(404);
+            return "error";
+        }
+
+        if (!repo.isOpened()) {
+            log.debug("Trying to read from an unopened repo?!");
+            return "redirect:/member/repos";
+        }
+
+        Git git = repo.getGit();
+        if (git == null) {
+            log.error("Yo tf it's opened but git is null?!");
+            return "redirect:/member/repos";
+        }
+
+        List<String[]> commitData = new LinkedList<>();
+        Iterator<RevCommit> iter = git.log().call().iterator();
+        for (int i = 0; i < num && iter.hasNext(); i++) {
+            RevCommit r = iter.next();
+
+            // need full SHA1 hash, author, date, full message
+            PersonIdent author = r.getAuthorIdent();
+            int commitTime = r.getCommitTime();
+            OffsetDateTime offsetTime = OffsetDateTime.ofInstant(Instant.ofEpochSecond(commitTime),
+                    author.getTimeZone().toZoneId());
+
+            commitData.add(new String[]{
+                    r.name(), /* SHA1 hash */
+                    author.getName() + " <" + author.getEmailAddress() + ">", /* author into */
+                    offsetTime.toString(), /* date / time */
+                    r.getFullMessage() /* full message */
+            });
+        }
+        model.addAttribute("commit_data", commitData);
+
+        return "member/repo/log";
     }
 }

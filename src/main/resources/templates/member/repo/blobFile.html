@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
-    <link rel="stylesheet" href="../../static/css/repo.css" th:href="@{/css/repo.css}"/>
+    <link rel="stylesheet" href="../../../static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="../../../static/css/repo.css" th:href="@{/css/repo.css}"/>
     <title th:text="${'DSi World - ' + name + ' / ' + path}">DSi World - test-repo / test.txt</title>
 </head>
 <body>
@@ -15,7 +15,7 @@
     </div>
     <hr>
     <div th:style="${'color:' + color}" th:text="${message}"></div>
-    <form action="blobFolder.html" th:action="@{/member/delete-file}" method="POST"
+    <form action="blobFolder.html" th:action="${base + 'delete-file'}" method="POST"
           onsubmit="return confirm('This action cannot be undone. Are you sure you want to proceed?');"
           class="clearfix">
         <input type="hidden" name="name" value="name of repo" th:value="${name}">
@@ -24,7 +24,7 @@
         <button style="color:red;float:right">Delete</button>
     </form>
     <hr>
-    <form action="repo.html" th:action="@{/member/save-repo}" method="POST">
+    <form action="repo.html" th:action="${base + 'save-repo'}" method="POST">
         <textarea th:each="chunk : ${chunks}" th:text="${chunk}" name="chunk" class="file-box">test material</textarea>
         <input type="hidden" name="name" value="name of repo" th:value="${name}">
         <input type="hidden" name="id" value="id of user" th:value="${id}">

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../../../static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="../../../static/css/repo.css" th:href="@{/css/repo.css}"/>
+    <title th:text="${name + ': log'}">test-repository: log</title>
+</head>
+<body>
+    <div th:replace="~{fragments/member.html::top(username=${username})}"></div>
+    <div style="text-align:center">
+        <h1>Repository navigator</h1>
+        <a href="repo.html" th:href="@{..}">Back to repo page</a>
+    </div>
+    <hr>
+    <div th:each="commit : ${commit_data}" style="padding:5px">
+        <p>
+            <span style="color:blue" th:text="${'commit ' + commit[0]}">commit be4367d9650de12862ae94591f91d903bb056746</span><br>
+            <th:block th:text="${'Author: ' + commit[1]}">Author: Gui Guy &lt;guiguy1999@gmail.com&gt;</th:block><br>
+            <th:block th:text="${'Date: ' + commit[2]}">Date: Sat May 9 22:31:07 2020 -0500</th:block>
+        </p>
+        <blockquote th:text="${commit[3]}">Shoutouts to the testers</blockquote>
+    </div>
+</body>
+</html>
