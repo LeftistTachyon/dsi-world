@@ -38,8 +38,7 @@ try {
 window.onload = function() {
     try {
         function resetScroll() {
-            document.documentElement.scrollTop = 20;
-            document.documentElement.scrollLeft = 20;
+            window.scrollTo(20, 20);
         }
 
         resetScroll();
