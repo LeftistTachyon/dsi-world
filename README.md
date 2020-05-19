@@ -10,3 +10,8 @@ These are things that either people have suggested or I thought might be cool to
    - Using [this page](https://www.vogella.com/tutorials/JGit/article.html) as a tutorial.
    - It would also probably be good to look at [the cookbook](https://github.com/centic9/jgit-cookbook/).
  - Manga reader
+   - Pulls from Manga Panda given an identifier or a search term
+   - Allows navigation of episodes and individual pages, with scaling to ensure that the device doesn't run out of memory rendering the image
+ - Calculator
+   - At least 4-function, maybe even scientific?
+   - If I can emulate Desmos' scientific calculator, that'd be AWESOME
