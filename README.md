@@ -14,4 +14,5 @@ These are things that either people have suggested or I thought might be cool to
    - Allows navigation of episodes and individual pages, with scaling to ensure that the device doesn't run out of memory rendering the image
  - Calculator
    - At least 4-function, maybe even scientific?
-   - If I can emulate Desmos' scientific calculator, that'd be AWESOME
+   - If I can emulate an IRL scientific calculator, that'd be AWESOME
+   - Use d-pad to select which set of buttons to show (e.g. standard/up are numbers/4-func while right are trig functions)
