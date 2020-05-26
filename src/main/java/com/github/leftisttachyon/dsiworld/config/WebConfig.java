@@ -1,6 +1,5 @@
 package com.github.leftisttachyon.dsiworld.config;
 
-import com.github.leftisttachyon.dsiworld.interceptor.MemberInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -69,7 +68,7 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new MemberInterceptor());
+//        registry.addInterceptor(new MemberInterceptor());
     }
 
     @Override

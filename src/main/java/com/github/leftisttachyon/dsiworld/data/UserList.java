@@ -5,12 +5,14 @@ import com.github.leftisttachyon.dsiworld.service.EncryptionService;
 import com.github.leftisttachyon.dsiworld.util.BeanAnnotations;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.ApplicationScope;
 
 import javax.annotation.PreDestroy;
@@ -26,9 +28,9 @@ import java.util.List;
  * @since 1.0.0
  */
 @ApplicationScope
-@Component
+@Service
 @Slf4j
-public class UserList implements ApplicationContextAware, Iterable<User> {
+public class UserList implements ApplicationContextAware, Iterable<User>, UserDetailsService {
     /**
      * The blob that stored information about users
      */
@@ -109,7 +111,7 @@ public class UserList implements ApplicationContextAware, Iterable<User> {
 
         for (User user : userList) {
             if (username.equals(user.getUsername()) &&
-                    password.equals(new String(ArrayUtils.toPrimitive(user.getPassword())))) {
+                    password.equals(user.getPassword())) {
                 return user;
             }
         }
@@ -177,5 +179,16 @@ public class UserList implements ApplicationContextAware, Iterable<User> {
     @Override
     public Iterator<User> iterator() {
         return userList.iterator();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        for (User u : userList) {
+            if (u.getUsername().equals(username)) {
+                return u;
+            }
+        }
+
+        throw new UsernameNotFoundException("The username " + username + " could not be found");
     }
 }

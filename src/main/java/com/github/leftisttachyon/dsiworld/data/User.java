@@ -8,11 +8,16 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,7 +28,7 @@ import java.util.List;
  */
 @Data
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-public final class User implements Serializable, AutoCloseable {
+public final class User implements Serializable, AutoCloseable, UserDetails {
     /**
      * The number to associate with this class
      */
@@ -156,5 +161,39 @@ public final class User implements Serializable, AutoCloseable {
 
             repositories = null;
         }
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton((GrantedAuthority) () -> "USER");
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    /**
+     * Returns the password of this user
+     *
+     * @return the password of this user
+     */
+    public String getPassword() {
+        return new String(ArrayUtils.toPrimitive(password));
     }
 }
