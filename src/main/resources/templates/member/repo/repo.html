@@ -32,6 +32,30 @@
             </div>
         </div>
         <p><a href="log.html" th:href="@{log/}">View commit history</a></p>
+        <h3>git add</h3>
+        <form action="repo.html" th:action="@{add/}" method="POST">
+            Pattern: <input type="text" name="pattern" required/><br>
+            <input type="submit" value="Add files"/>
+        </form>
+        <h3>git commit</h3>
+        <form action="repo.html" th:action="@{commit/}" method="POST">
+            <p>Author: <input type="text" name="authorName" required/><br>
+                (email): <input type="email" name="authorEmail"></p>
+            <p>Commiter: <input type="text" name="commiterName" required/><br>
+                (email): <input type="email" name="commiterEmail"/></p>
+            <p>Message: <textarea name="message"></textarea></p>
+            <input type="submit" value="Commit changes"/>
+        </form>
+        <h3>git push</h3>
+        <form action="repo.html" th:action="@{push/}" method="POST">
+            <button th:text="${'Push to ' + branch}">Push to master</button>
+        </form>
+        <h3>git pull</h3>
+        <form action="repo.html" th:action="@{pull/}" method="POST">
+            <button th:text="${'Pull from ' + branch}">Pull from master</button>
+        </form>
+        <hr>
+        <p><a href="repos.html" th:href="@{/member/repos}">Back to repository list</a></p>
         <script src="../../../static/js/expandable.js" th:src="@{/js/expandable.js}"></script>
     </div>
 </body>

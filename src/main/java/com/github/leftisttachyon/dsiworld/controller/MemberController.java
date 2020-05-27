@@ -172,8 +172,8 @@ public class MemberController {
         Git git = repo.getGit();
         Status status = git.status().call();
         Set<String> unstaged = status.getUncommittedChanges()
-                .stream().map(s -> s.replace("/", "/\u200B")).collect(Collectors.toSet()),
-                staged = status.getAdded().stream().map(s -> s.replace("/", "/\u200B")).collect(Collectors.toSet());
+                .stream().map(s -> s.replace("/", " / ")).collect(Collectors.toSet()),
+                staged = status.getAdded().stream().map(s -> s.replace("/", " / ")).collect(Collectors.toSet());
 
         log.trace("unstaged: {}", unstaged);
         model.addAttribute("unstaged", unstaged);
@@ -520,5 +520,193 @@ public class MemberController {
         model.addAttribute("commit_data", commitData);
 
         return "member/repo/log";
+    }
+
+    /**
+     * Adds files in the repository that match the given file pattern.
+     *
+     * @param user     the user trying to access the log of this repository
+     * @param id       the id of the owner of the repository
+     * @param name     the name of the repository
+     * @param response a {@link HttpServletResponse} object used to send back error codes
+     * @param pattern  the file pattern to match
+     * @return the next view to show the user
+     * @throws IOException     if I/O operations cannot be completed successfully
+     * @throws GitAPIException if something goes wrong with calling Git
+     */
+    @PostMapping("/member/repos/{id:[a-z\\d]{3,12}}/{name}/add")
+    public String addFiles(@SessionAttribute User user, @PathVariable String id, @PathVariable String name,
+                           @RequestParam("pattern") String pattern, HttpServletResponse response)
+            throws IOException, GitAPIException {
+        if (!user.getId().equals(id)) {
+            log.debug("Blocked request of somebody else's repo");
+            response.sendError(404);
+            return "error";
+        }
+
+        Repository repo = user.getRepository(name);
+        if (repo == null) {
+            log.debug("Requested repo that doesn't exist");
+            response.sendError(404);
+            return "error";
+        }
+
+        if (!repo.isOpened()) {
+            log.debug("Trying to read from an unopened repo?!");
+            return "redirect:/member/repos";
+        }
+
+        Git git = repo.getGit();
+        if (git == null) {
+            log.error("Yo tf it's opened but git is null?!");
+            return "redirect:/member/repos";
+        }
+
+        log.debug("Adding file pattern '{}'", pattern);
+        git.add().addFilepattern(pattern).call();
+        git.add().setUpdate(true).addFilepattern(pattern).call();
+
+        return "redirect:..";
+    }
+
+    /**
+     * Commits the currently staged files of the repository onto the working tree.
+     *
+     * @param user          the user who is attempting to perform the action
+     * @param id            the ID of the user who owns the repository
+     * @param name          the name of the repository
+     * @param authorName    the name of the author of the commit
+     * @param authorEmail   the email of the author of the commit
+     * @param commiterName  the name of the commiter
+     * @param commiterEmail the email of the commiter
+     * @param response      the {@link HttpServletResponse} object to send back error codes with
+     * @return the next view to show the user
+     * @throws IOException     if something goes wrong with I/O operations
+     * @throws GitAPIException if something goes wrong with calling Git
+     */
+    @PostMapping("/member/repos/{id:[a-z\\d]{3,12}}/{name}/commit")
+    public String commit(@SessionAttribute User user, @PathVariable String id, @PathVariable String name,
+                         @RequestParam("authorName") String authorName,
+                         @RequestParam(value = "authorEmail", required = false) String authorEmail,
+                         @RequestParam("commiterName") String commiterName,
+                         @RequestParam(value = "commiterEmail", required = false) String commiterEmail,
+                         HttpServletResponse response)
+            throws IOException, GitAPIException {
+        if (!user.getId().equals(id)) {
+            log.debug("Blocked request of somebody else's repo");
+            response.sendError(404);
+            return "error";
+        }
+
+        Repository repo = user.getRepository(name);
+        if (repo == null) {
+            log.debug("Requested repo that doesn't exist");
+            response.sendError(404);
+            return "error";
+        }
+
+        if (!repo.isOpened()) {
+            log.debug("Trying to read from an unopened repo?!");
+            return "redirect:/member/repos";
+        }
+
+        Git git = repo.getGit();
+        if (git == null) {
+            log.error("Yo tf it's opened but git is null?!");
+            return "redirect:/member/repos";
+        }
+
+        git.commit()
+                .setAuthor(authorName, authorEmail)
+                .setCommitter(commiterName, commiterEmail)
+                .call();
+
+        return "redirect:..";
+    }
+
+    /**
+     * Pushes the current working tree to the remote repository.
+     *
+     * @param user     the user trying to access the repository
+     * @param id       the ID of the user who owns this repo
+     * @param name     the name of the repo
+     * @param response the {@link HttpServletResponse} object to send back error codes with
+     * @return the next view to show the user
+     * @throws IOException     if something goes wrong with I/O operations
+     * @throws GitAPIException if something goes wrong with Git
+     */
+    @PostMapping("/member/repos/{id:[a-z\\d]{3,12}}/{name}/push")
+    public String push(@SessionAttribute User user, @PathVariable String id, @PathVariable String name,
+                       HttpServletResponse response) throws IOException, GitAPIException {
+        if (!user.getId().equals(id)) {
+            log.debug("Blocked request of somebody else's repo");
+            response.sendError(404);
+            return "error";
+        }
+
+        Repository repo = user.getRepository(name);
+        if (repo == null) {
+            log.debug("Requested repo that doesn't exist");
+            response.sendError(404);
+            return "error";
+        }
+
+        if (!repo.isOpened()) {
+            log.debug("Trying to read from an unopened repo?!");
+            return "redirect:/member/repos";
+        }
+
+        Git git = repo.getGit();
+        if (git == null) {
+            log.error("Yo tf it's opened but git is null?!");
+            return "redirect:/member/repos";
+        }
+
+        git.push().setCredentialsProvider(repo.getCreds()).call();
+
+        return "redirect:..";
+    }
+
+    /**
+     * Pulls changes from the remote repository.
+     *
+     * @param user     the user trying to access the repository
+     * @param id       the ID of the user who owns this repo
+     * @param name     the name of the repo
+     * @param response the {@link HttpServletResponse} object to send back error codes with
+     * @return the next view to show the user
+     * @throws IOException     if something goes wrong with I/O operations
+     * @throws GitAPIException if something goes wrong with Git
+     */
+    @PostMapping("/member/repos/{id:[a-z\\d]{3,12}}/{name}/pull")
+    public String pull(@SessionAttribute User user, @PathVariable String id, @PathVariable String name,
+                       HttpServletResponse response) throws IOException, GitAPIException {
+        if (!user.getId().equals(id)) {
+            log.debug("Blocked request of somebody else's repo");
+            response.sendError(404);
+            return "error";
+        }
+
+        Repository repo = user.getRepository(name);
+        if (repo == null) {
+            log.debug("Requested repo that doesn't exist");
+            response.sendError(404);
+            return "error";
+        }
+
+        if (!repo.isOpened()) {
+            log.debug("Trying to read from an unopened repo?!");
+            return "redirect:/member/repos";
+        }
+
+        Git git = repo.getGit();
+        if (git == null) {
+            log.error("Yo tf it's opened but git is null?!");
+            return "redirect:/member/repos";
+        }
+
+        git.pull().call();
+
+        return "redirect:..";
     }
 }

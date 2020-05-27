@@ -26,11 +26,24 @@
     <hr>
     <form action="repo.html" th:action="${base + 'save-repo'}" method="POST">
         <textarea th:each="chunk : ${chunks}" th:text="${chunk}" name="chunk" class="file-box">test material</textarea>
+        <button id="add">Add text box</button>
         <input type="hidden" name="name" value="name of repo" th:value="${name}">
         <input type="hidden" name="id" value="id of user" th:value="${id}">
         <input type="hidden" name="redirect_to" value="blobFile.html" th:value="${redirect_to}">
         <input type="submit" value="Save">
     </form>
     <p><a href="blobFolder.html" th:href="@{..}">Back to folder</a></p>
+    <script>
+        document.getElementById("add").onclick = function(event) {
+            event.preventDefault();
+
+            var a = document.createElement("textarea");
+            a.name = "chunk";
+            a.className = "file-box";
+            this.parentElement.insertBefore(a, this);
+
+            return false;
+        };
+    </script>
 </body>
 </html>

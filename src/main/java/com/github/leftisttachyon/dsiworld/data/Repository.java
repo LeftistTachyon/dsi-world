@@ -9,6 +9,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 import java.io.File;
@@ -43,6 +44,10 @@ public class Repository implements AutoCloseable {
      * The {@link Git} object that represents the repository.
      */
     private Git git;
+    /**
+     * The {@link CredentialsProvider} associated with this repo
+     */
+    private CredentialsProvider creds;
 
     /**
      * Downloads and unzips the repository from the cloud.<br>
@@ -98,7 +103,7 @@ public class Repository implements AutoCloseable {
             git = Git.cloneRepository()
                     .setDirectory(parent)
                     .setURI(url)
-                    .setCredentialsProvider(new UsernamePasswordCredentialsProvider(username, password))
+                    .setCredentialsProvider(creds = new UsernamePasswordCredentialsProvider(username, password))
                     .call();
         } catch (GitAPIException e) {
             log.warn("An error occurred while cloning the repo", e);
