@@ -616,10 +616,7 @@ public class MemberController {
             return "redirect:/member/repos";
         }
 
-        git.commit()
-                .setAuthor(authorName, authorEmail)
-                .setCommitter(commiterName, commiterEmail)
-                .call();
+        repo.commit(authorName, authorEmail, commiterName, commiterEmail);
 
         return "redirect:..";
     }

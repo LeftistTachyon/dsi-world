@@ -167,6 +167,25 @@ public class Repository implements AutoCloseable {
         return toCreate.createNewFile();
     }
 
+
+    /**
+     * Commits the staged changes to the working tree.
+     *
+     * @param authorName    the name of the author
+     * @param authorEmail   the email of the author
+     * @param commiterName  the name of the commiter
+     * @param commiterEmail the email of the commiter
+     * @throws GitAPIException if something goes wrong while calling Git
+     */
+    public void commit(String authorName, String authorEmail, String commiterName, String commiterEmail)
+            throws GitAPIException {
+        if (git == null) {
+            throw new UninstantiatedRepositoryException("Internal git object is null!");
+        }
+
+        git.commit().setAuthor(authorName, authorEmail).setCommitter(commiterName, commiterEmail).call();
+    }
+
     /**
      * Returns whether this {@link Repository} has been fetched and not closed.
      *
