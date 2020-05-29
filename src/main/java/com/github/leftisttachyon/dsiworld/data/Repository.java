@@ -179,11 +179,45 @@ public class Repository implements AutoCloseable {
      */
     public void commit(String authorName, String authorEmail, String commiterName, String commiterEmail)
             throws GitAPIException {
-        if (git == null) {
-            throw new UninstantiatedRepositoryException("Internal git object is null!");
-        }
+        verifyInstantiated();
 
         git.commit().setAuthor(authorName, authorEmail).setCommitter(commiterName, commiterEmail).call();
+    }
+
+    /**
+     * Pulls all commits from the upstream branch.
+     *
+     * @throws GitAPIException if something goes wrong while calling Git
+     */
+    public void pull() throws GitAPIException {
+        verifyInstantiated();
+
+        git.pull().call();
+    }
+
+    /**
+     * Pushes all commits to the upstream branch.
+     *
+     * @throws GitAPIException if something goes wrong while calling Git
+     */
+    public void push() throws GitAPIException {
+        verifyInstantiated();
+
+        git.push().setCredentialsProvider(getCreds()).call();
+    }
+
+    /**
+     * Stages the given file pattern for committing later.
+     *
+     * @param pattern the file pattern to add
+     * @throws GitAPIException if something goes wrong while calling Git
+     */
+    public void add(String pattern) throws GitAPIException {
+        verifyInstantiated();
+
+        log.debug("Adding file pattern '{}'", pattern);
+        git.add().addFilepattern(pattern).call();
+        git.add().setUpdate(true).addFilepattern(pattern).call();
     }
 
     /**
@@ -203,5 +237,16 @@ public class Repository implements AutoCloseable {
         file = null;
         git.close();
         git = null;
+    }
+
+    /**
+     * Verifies that the internal Git object is not null and instantiated.
+     *
+     * @throws GitAPIException if the internal Git object is null
+     */
+    private void verifyInstantiated() throws GitAPIException {
+        if (git == null) {
+            throw new UninstantiatedRepositoryException("Internal git object is null!");
+        }
     }
 }

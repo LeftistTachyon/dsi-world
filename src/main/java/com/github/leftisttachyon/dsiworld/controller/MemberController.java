@@ -562,9 +562,7 @@ public class MemberController {
             return "redirect:/member/repos";
         }
 
-        log.debug("Adding file pattern '{}'", pattern);
-        git.add().addFilepattern(pattern).call();
-        git.add().setUpdate(true).addFilepattern(pattern).call();
+        repo.add(pattern);
 
         return "redirect:..";
     }
@@ -659,7 +657,7 @@ public class MemberController {
             return "redirect:/member/repos";
         }
 
-        git.push().setCredentialsProvider(repo.getCreds()).call();
+        repo.push();
 
         return "redirect:..";
     }
@@ -702,7 +700,7 @@ public class MemberController {
             return "redirect:/member/repos";
         }
 
-        git.pull().call();
+        repo.pull();
 
         return "redirect:..";
     }
