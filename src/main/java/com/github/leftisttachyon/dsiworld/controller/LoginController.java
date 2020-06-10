@@ -18,6 +18,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  * A class that acts as a controller for logging in, logging out, and other various user actions.
+ *
+ * @author Jed Wang
+ * @since 1.0.0
  */
 @Slf4j
 @Controller
