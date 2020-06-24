@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}"/>
+    <title>DSi Scientific Calculator</title>
+    <style>
+    .screen {
+        width: 240px;
+        height: 176px;
+        overflow: hidden;
+        border: 1px inset #000;
+        padding: 5px;
+    }
+    body {
+        margin: 0;
+    }
+    </style>
+    <script>
+    window.onload = function() {
+        window.setInterval("scrollTo(0, 240);", 500);
+    };
+    </script>
+</head>
+<body>
+    <div class="screen">
+        <p>Hello there</p>
+        <p>Obi Wan Kenobi</p>
+    </div>
+    <div class="screen">
+        <table style="width:100%;table-layout:fixed">
+            <tr>
+                <td>
+                    <table>
+                        <tbody id="up" style="display:table-row-group">
+                        <tr>
+                            <td>Standard Functions</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button>2nd</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tbody id="right" style="display:none">
+                        <tr>
+                            <td>Extra Functions</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button>1st</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <p>Insert image here, preferably in table?</p>
+                </td>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <button>Enter</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        document.addEventListener('keydown', function(e) {
+            var up = document.getElementById('up'),
+                    right = document.getElementById('right');
+            if(e.keyCode == 38) { // up
+                up.style.display = 'table-row-group';
+                right.style.display = 'none';
+            } else if(e.keyCode == 39) { // right
+                up.style.display = 'none';
+                right.style.display = 'table-row-group';
+            }
+        }, false);
+    </script>
+</body>
+</html>
