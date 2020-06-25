@@ -23,6 +23,7 @@
         padding: 1px 2px;
     }
     </style>
+    <script src="../static/js/polyfill.js" th:src="@{/js/polyfill.js}"></script>
     <script>
     window.onload = function() {
         window.setInterval("scrollTo(0, 176);", 500);
@@ -56,13 +57,13 @@
             </tr>
             <tr>
                 <td>
-                    <button>10ˣ</button>
+                    <button onclick="pow10()">10ˣ</button>
                 </td>
                 <td>
-                    <button>log</button>
+                    <button onclick="log()">log</button>
                 </td>
                 <td>
-                    <button>ln</button>
+                    <button onclick="ln()">ln</button>
                 </td>
             </tr>
             <tr>
@@ -73,15 +74,15 @@
                     <button onclick="insertPi()">π</button>
                 </td>
                 <td>
-                    <button onclick="insertRand()">rand</button>
+                    <button onclick="insertRand()">rnd</button>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <button>√x</button>
+                    <button onclick="sqrt()">√x</button>
                 </td>
                 <td>
-                    <button>∛x</button>
+                    <button onclick="cbrt()">∛x</button>
                 </td>
                 <td>
                     <button>ʸ√x</button>
@@ -89,24 +90,24 @@
             </tr>
             <tr>
                 <td>
-                    <button>2ˣ</button>
+                    <button onclick="pow2()">2ˣ</button>
                 </td>
                 <td>
                     <button>logᵧx</button>
                 </td>
                 <td>
-                    <button>eˣ</button>
+                    <button onclick="powE()">eˣ</button>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <button>1/x</button>
+                    <button onclick="inv()">1/x</button>
                 </td>
                 <td>
-                    <button>|x|</button>
+                    <button onclick="abs()">|x|</button>
                 </td>
                 <td>
-                    <button>n!</button>
+                    <button onclick="fact()">n!</button>
                 </td>
             </tr>
             <tr>
@@ -130,7 +131,7 @@
                     <button>sin</button>
                 </td>
                 <td>
-                    <button>sin⁻¹</button>
+                    <button>asin</button>
                 </td>
             </tr>
             <tr>
@@ -138,7 +139,7 @@
                     <button>cos</button>
                 </td>
                 <td>
-                    <button>cos⁻¹</button>
+                    <button>acos</button>
                 </td>
             </tr>
             <tr>
@@ -146,7 +147,7 @@
                     <button>tan</button>
                 </td>
                 <td>
-                    <button>tan⁻¹</button>
+                    <button>atan</button>
                 </td>
             </tr>
             <tr>
@@ -154,7 +155,7 @@
                     <button>sec</button>
                 </td>
                 <td>
-                    <button>sec⁻¹</button>
+                    <button>asec</button>
                 </td>
             </tr>
             <tr>
@@ -162,7 +163,7 @@
                     <button>csc</button>
                 </td>
                 <td>
-                    <button>csc⁻¹</button>
+                    <button>acsc</button>
                 </td>
             </tr>
             <tr>
@@ -170,7 +171,7 @@
                     <button>cot</button>
                 </td>
                 <td>
-                    <button>cot⁻¹</button>
+                    <button>acot</button>
                 </td>
             </tr>
             <tr>
@@ -191,7 +192,7 @@
                     <button>sinh</button>
                 </td>
                 <td>
-                    <button>sinh⁻¹</button>
+                    <button>asinh</button>
                 </td>
             </tr>
             <tr>
@@ -199,7 +200,7 @@
                     <button>cosh</button>
                 </td>
                 <td>
-                    <button>cosh⁻¹</button>
+                    <button>acosh</button>
                 </td>
             </tr>
             <tr>
@@ -207,7 +208,7 @@
                     <button>tanh</button>
                 </td>
                 <td>
-                    <button>tanh⁻¹</button>
+                    <button>atanh</button>
                 </td>
             </tr>
             <tr>
@@ -215,7 +216,7 @@
                     <button>sech</button>
                 </td>
                 <td>
-                    <button>sech⁻¹</button>
+                    <button>asech</button>
                 </td>
             </tr>
             <tr>
@@ -223,7 +224,7 @@
                     <button>csch</button>
                 </td>
                 <td>
-                    <button>csch⁻¹</button>
+                    <button>acsch</button>
                 </td>
             </tr>
             <tr>
@@ -231,7 +232,7 @@
                     <button>coth</button>
                 </td>
                 <td>
-                    <button>coth⁻¹</button>
+                    <button>acoth</button>
                 </td>
             </tr>
             <tr>
@@ -385,7 +386,7 @@
                     <button>%</button>
                 </td>
                 <td>
-                    <button>E</button>
+                    <button onclick="typeCharacter('E')">E</button>
                 </td>
             </tr>
             <tr>
@@ -399,7 +400,7 @@
                     <button onclick="typeCharacter('9')">9</button>
                 </td>
                 <td>
-                    <button>÷</button>
+                    <button>/</button>
                 </td>
                 <td>
                     <button id="clear-button">C</button>
@@ -416,7 +417,7 @@
                     <button onclick="typeCharacter('6')">6</button>
                 </td>
                 <td>
-                    <button>×</button>
+                    <button>x</button>
                 </td>
                 <td>
                     <button onclick="deleteCharacter()">⌫</button>
