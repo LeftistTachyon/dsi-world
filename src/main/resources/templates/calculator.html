@@ -7,82 +7,455 @@
     <title>DSi Scientific Calculator</title>
     <style>
     .screen {
-        width: 240px;
+        width: 234px;
         height: 176px;
         overflow: hidden;
-        border: 1px inset #000;
-        padding: 5px;
+        border: 1px solid #000;
+        padding: 2px;
     }
     body {
         margin: 0;
+        width: 240px;
+    }
+    td button {
+        width: 100%;
+        height: 100%;
+        padding: 1px 2px;
     }
     </style>
     <script>
     window.onload = function() {
-        window.setInterval("scrollTo(0, 240);", 500);
+        window.setInterval("scrollTo(0, 176);", 500);
     };
     </script>
 </head>
 <body>
     <div class="screen">
-        <p>Hello there</p>
-        <p>Obi Wan Kenobi</p>
+        <p>Try pressing L + <img src="../static/resources/dpad/dpad_E.png"
+                                 th:src="@{/resources/dpad/dpad_E.png}" width="16px"> for extra functionality!</p>
+        <p>L + <img src="../static/resources/dpad/dpad_N.png"
+                                 th:src="@{/resources/dpad/dpad_N.png}" width="16px"> to go back.</p>
+        <p id="display">0</p>
     </div>
     <div class="screen">
-        <table style="width:100%;table-layout:fixed">
+        <table style="display:inline-block;width:40%">
+            <tbody id="up" style="display:table-row-group">
+            <tr>
+                <td colspan="3">Standard Functions</td>
+            </tr>
             <tr>
                 <td>
-                    <table>
-                        <tbody id="up" style="display:table-row-group">
-                        <tr>
-                            <td>Standard Functions</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button>2nd</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                        <tbody id="right" style="display:none">
-                        <tr>
-                            <td>Extra Functions</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button>1st</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <br>
-                    <p>Insert image here, preferably in table?</p>
+                    <button onclick="square()">x²</button>
                 </td>
                 <td>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td>
-                                <button>Enter</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <button onclick="cube()">x³</button>
+                </td>
+                <td>
+                    <button>xʸ</button>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <button>10ˣ</button>
+                </td>
+                <td>
+                    <button>log</button>
+                </td>
+                <td>
+                    <button>ln</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button onclick="insertE()">e</button>
+                </td>
+                <td>
+                    <button onclick="insertPi()">π</button>
+                </td>
+                <td>
+                    <button onclick="insertRand()">rand</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>√x</button>
+                </td>
+                <td>
+                    <button>∛x</button>
+                </td>
+                <td>
+                    <button>ʸ√x</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>2ˣ</button>
+                </td>
+                <td>
+                    <button>logᵧx</button>
+                </td>
+                <td>
+                    <button>eˣ</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>1/x</button>
+                </td>
+                <td>
+                    <button>|x|</button>
+                </td>
+                <td>
+                    <button>n!</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>⌊x⌋</button>
+                </td>
+                <td>
+                    <button>⌈x⌉</button>
+                </td>
+                <td>
+                    <button>{x}</button>
+                </td>
+            </tr>
+            </tbody>
+            <tbody id="right" style="display:none">
+            <tr>
+                <td colspan="3">Trigonometry</td>
+            </tr>
+            <tr>
+                <td>
+                    <button>sin</button>
+                </td>
+                <td>
+                    <button>sin⁻¹</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>cos</button>
+                </td>
+                <td>
+                    <button>cos⁻¹</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>tan</button>
+                </td>
+                <td>
+                    <button>tan⁻¹</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>sec</button>
+                </td>
+                <td>
+                    <button>sec⁻¹</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>csc</button>
+                </td>
+                <td>
+                    <button>csc⁻¹</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>cot</button>
+                </td>
+                <td>
+                    <button>cot⁻¹</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>toDeg</button>
+                </td>
+                <td>
+                    <button>toRad</button>
+                </td>
+            </tr>
+            </tbody>
+            <tbody id="down" style="display:none">
+            <tr>
+                <td colspan="3">Hyperbolic Trig</td>
+            </tr>
+            <tr>
+                <td>
+                    <button>sinh</button>
+                </td>
+                <td>
+                    <button>sinh⁻¹</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>cosh</button>
+                </td>
+                <td>
+                    <button>cosh⁻¹</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>tanh</button>
+                </td>
+                <td>
+                    <button>tanh⁻¹</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>sech</button>
+                </td>
+                <td>
+                    <button>sech⁻¹</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>csch</button>
+                </td>
+                <td>
+                    <button>csch⁻¹</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>coth</button>
+                </td>
+                <td>
+                    <button>coth⁻¹</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>toDeg</button>
+                </td>
+                <td>
+                    <button>toRad</button>
+                </td>
+            </tr>
+            </tbody>
+            <tbody id="left" style="display:none">
+            <tr>
+                <td colspan="3">Variables</td>
+            </tr>
+            <tr>
+                <td>
+                    <button style="color:#F0F" class="var-button">A</button>
+                </td>
+                <td>
+                    <button class="var-button">B</button>
+                </td>
+                <td>
+                    <button class="var-button">C</button>
+                </td>
+                <td>
+                    <button class="var-button">D</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="var-button">E</button>
+                </td>
+                <td>
+                    <button class="var-button">F</button>
+                </td>
+                <td>
+                    <button class="var-button">G</button>
+                </td>
+                <td>
+                    <button class="var-button">H</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="var-button">I</button>
+                </td>
+                <td>
+                    <button class="var-button">J</button>
+                </td>
+                <td>
+                    <button class="var-button">K</button>
+                </td>
+                <td>
+                    <button class="var-button">L</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="var-button">M</button>
+                </td>
+                <td>
+                    <button class="var-button">N</button>
+                </td>
+                <td>
+                    <button class="var-button">O</button>
+                </td>
+                <td>
+                    <button class="var-button">P</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="var-button">Q</button>
+                </td>
+                <td>
+                    <button class="var-button">R</button>
+                </td>
+                <td>
+                    <button class="var-button">S</button>
+                </td>
+                <td>
+                    <button class="var-button">T</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="var-button">U</button>
+                </td>
+                <td>
+                    <button class="var-button">V</button>
+                </td>
+                <td>
+                    <button class="var-button">W</button>
+                </td>
+                <td>
+                    <button class="var-button">X</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="var-button">Y</button>
+                </td>
+                <td>
+                    <button class="var-button">Z</button>
+                </td>
+                <td colspan="2">
+                    <button style="color:#F00">Clear</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table style="display:inline-block;float:right;width:60%">
+            <tbody style="float:right">
+            <tr>
+                <td colspan="2">
+                    <button>Deg</button>
+                </td>
+                <td>
+                    <button>Ans</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>MC</button>
+                </td>
+                <td>
+                    <button>MR</button>
+                </td>
+                <td>
+                    <button>M+</button>
+                </td>
+                <td>
+                    <button>M-</button>
+                </td>
+                <td>
+                    <button>MS</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button>R0</button>
+                </td>
+                <td>
+                    <button>R2</button>
+                </td>
+                <td>
+                    <button>mod</button>
+                </td>
+                <td>
+                    <button>%</button>
+                </td>
+                <td>
+                    <button>E</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button onclick="typeCharacter('7')">7</button>
+                </td>
+                <td>
+                    <button onclick="typeCharacter('8')">8</button>
+                </td>
+                <td>
+                    <button onclick="typeCharacter('9')">9</button>
+                </td>
+                <td>
+                    <button>÷</button>
+                </td>
+                <td>
+                    <button id="clear-button">C</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button onclick="typeCharacter('4')">4</button>
+                </td>
+                <td>
+                    <button onclick="typeCharacter('5')">5</button>
+                </td>
+                <td>
+                    <button onclick="typeCharacter('6')">6</button>
+                </td>
+                <td>
+                    <button>×</button>
+                </td>
+                <td>
+                    <button onclick="deleteCharacter()">⌫</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button onclick="typeCharacter('1')">1</button>
+                </td>
+                <td>
+                    <button onclick="typeCharacter('2')">2</button>
+                </td>
+                <td>
+                    <button onclick="typeCharacter('3')">3</button>
+                </td>
+                <td>
+                    <button>-</button>
+                </td>
+                <td rowspan="2">
+                    <button style="height:26px">=</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button onclick="negate();">±</button>
+                </td>
+                <td>
+                    <button onclick="typeCharacter('0')">0</button>
+                </td>
+                <td>
+                    <button onclick="typeCharacter('.')">.</button>
+                </td>
+                <td>
+                    <button>+</button>
+                </td>
+            </tr>
+            </tbody>
         </table>
     </div>
-    <script>
-        document.addEventListener('keydown', function(e) {
-            var up = document.getElementById('up'),
-                    right = document.getElementById('right');
-            if(e.keyCode == 38) { // up
-                up.style.display = 'table-row-group';
-                right.style.display = 'none';
-            } else if(e.keyCode == 39) { // right
-                up.style.display = 'none';
-                right.style.display = 'table-row-group';
-            }
-        }, false);
-    </script>
+    <script src="../static/js/calculator.js" th:src="@{/js/calculator.js}"></script>
 </body>
 </html>
