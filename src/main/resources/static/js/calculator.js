@@ -70,7 +70,7 @@ function typeCharacter(c) {
 }
 
 function deleteCharacter() {
-    if(value !== "0") {
+    if(!clear) {
         value = value.substring(0, value.length - 1);
         if(value === "") {
             value = "0";
@@ -510,7 +510,9 @@ function clearMems() {
             memory = {};
 
             for(var i = 0; i < varButtons.length; i++) {
-                varButtons[i].style.color = '#000';
+                if(varButtons[i].innerHTML !== selected) {
+                    varButtons[i].style.color = '#000';
+                }
             }
 
             document.getElementById('mr').disabled = true;

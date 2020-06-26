@@ -8,7 +8,7 @@
     <style>
     .screen {
         width: 234px;
-        height: 176px;
+        height: 170px;
         overflow: hidden;
         border: 1px solid #000;
         padding: 2px;
@@ -46,18 +46,26 @@
             </tr>
             <tr>
                 <td>
-                    <button onclick="square()">x²</button>
+                    <button onclick="square()">
+                        <img src="../static/resources/calc/square.png" th:src="@{/calc/square.png}">
+                    </button>
                 </td>
                 <td>
-                    <button onclick="cube()">x³</button>
+                    <button onclick="cube()">
+                        <img src="../static/resources/calc/cube.png" th:src="@{/calc/cube.png}">
+                    </button>
                 </td>
                 <td>
-                    <button>xʸ</button>
+                    <button>
+                        <img src="../static/resources/calc/xy.png" th:src="@{/calc/xy.png}">
+                    </button>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <button onclick="pow10()">10ˣ</button>
+                    <button onclick="pow10()">
+                        <img src="../static/resources/calc/10x.png" th:src="@{/calc/10x.png}">
+                    </button>
                 </td>
                 <td>
                     <button onclick="log()">log</button>
@@ -79,32 +87,54 @@
             </tr>
             <tr>
                 <td>
-                    <button onclick="sqrt()">√x</button>
+                    <button onclick="sqrt()">
+                        <img src="../static/resources/calc/sqrt.png" th:src="@{/calc/sqrt.png}"
+                             style="vertical-align:bottom">
+                    </button>
                 </td>
                 <td>
-                    <button onclick="cbrt()">∛x</button>
+                    <button onclick="cbrt()">
+                        <img src="../static/resources/calc/cbrt.png" th:src="@{/calc/cbrt.png}"
+                             style="vertical-align:bottom">
+                    </button>
                 </td>
                 <td>
-                    <button>ʸ√x</button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button onclick="pow2()">2ˣ</button>
-                </td>
-                <td>
-                    <button>logᵧx</button>
-                </td>
-                <td>
-                    <button onclick="powE()">eˣ</button>
+                    <button>
+                        <img src="../static/resources/calc/yroot.png" th:src="@{/calc/yroot.png}"
+                             style="vertical-align:bottom">
+                    </button>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <button onclick="inv()">1/x</button>
+                    <button onclick="pow2()">
+                        <img src="../static/resources/calc/2x.png" th:src="@{/calc/2x.png}">
+                    </button>
                 </td>
                 <td>
-                    <button onclick="abs()">|x|</button>
+                    <button>
+                        <img src="../static/resources/calc/logyx.png" th:src="@{/calc/logyx.png}"
+                             style="vertical-align:bottom">
+                    </button>
+                </td>
+                <td>
+                    <button onclick="powE()">
+                        <img src="../static/resources/calc/ex.png" th:src="@{/calc/ex.png}">
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button onclick="inv()">
+                        <img src="../static/resources/calc/inv.png" th:src="@{/calc/inv.png}"
+                             style="display:block;margin:auto">
+                    </button>
+                </td>
+                <td>
+                    <button onclick="abs()">
+                        <img src="../static/resources/calc/abs.png" th:src="@{/calc/abs.png}"
+                             style="vertical-align:middle">
+                    </button>
                 </td>
                 <td>
                     <button onclick="fact()">n!</button>
@@ -112,10 +142,16 @@
             </tr>
             <tr>
                 <td>
-                    <button onclick="floor()">⌊x⌋</button>
+                    <button onclick="floor()">
+                        <img src="../static/resources/calc/floor.png" th:src="@{/calc/floor.png}"
+                             style="vertical-align:bottom">
+                    </button>
                 </td>
                 <td>
-                    <button onclick="ceiling()">⌈x⌉</button>
+                    <button onclick="ceiling()">
+                        <img src="../static/resources/calc/ceil.png" th:src="@{/calc/ceil.png}"
+                             style="vertical-align:bottom">
+                    </button>
                 </td>
                 <td>
                     <button onclick="decimal()">{x}</button>
@@ -412,7 +448,10 @@
                     <button>x</button>
                 </td>
                 <td>
-                    <button onclick="deleteCharacter()">⌫</button>
+                    <button onclick="deleteCharacter()">
+                        <img src="../static/resources/calc/backspace.png" th:src="@{/calc/backspace.png}"
+                             style="vertical-align:middle">
+                    </button>
                 </td>
             </tr>
             <tr>
