@@ -32,7 +32,8 @@ try {
 
 var display = document.getElementById('display'),
         clearButton = document.getElementById('clear-button');
-var value = "0", ans = null, clear = true;
+var value = "0", ans = null, clear = true,
+        lastOperation = null, mode = "Deg";
 
 function updateDisplay() {
     display.innerHTML = value;
@@ -93,13 +94,13 @@ function negate() {
 }
 
 function square() {
-    value = value * value + "";
+    ans = value = value * value + "";
     clear = true;
     updateDisplay();
 }
 
 function cube() {
-    value = value * value * value + "";
+    ans = value = value * value * value + "";
     clear = true;
     updateDisplay();
 }
@@ -132,55 +133,55 @@ function insertRand() {
 }
 
 function pow10() {
-    value = Math.pow(10, value) + "";
+    ans = value = Math.pow(10, value) + "";
     clear = true;
     updateDisplay();
 }
 
 function log() {
-    value = Math.log10(value) + "";
+    ans = value = Math.log10(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function ln() {
-    value = Math.log(value) + "";
+    ans = value = Math.log(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function sqrt() {
-    value = Math.sqrt(value) + "";
+    ans = value = Math.sqrt(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function cbrt() {
-    value = Math.cbrt(value) + "";
+    ans = value = Math.cbrt(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function pow2() {
-    value = Math.pow(2, value) + "";
+    ans = value = Math.pow(2, value) + "";
     clear = true;
     updateDisplay();
 }
 
 function powE() {
-    value = Math.exp(value) + "";
+    ans = value = Math.exp(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function inv() {
-    value = 1/value + "";
+    ans = value = 1/value + "";
     clear = true;
     updateDisplay();
 }
 
 function abs() {
-    value = Math.abs(value) + "";
+    ans = value = Math.abs(value) + "";
     clear = true;
     updateDisplay();
 }
@@ -209,11 +210,311 @@ function fact() {
         for(var i = 2; i <= value; i++) {
             a *= i;
         }
-        value = a + "";
+        ans = value = a + "";
     } else {
-        value = gamma(++value) + "";
+        ans = value = gamma(++value) + "";
     }
 
     clear = true;
     updateDisplay();
+}
+
+function floor() {
+    ans = value = Math.floor(value) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function ceiling() {
+    ans = value = Math.ceil(value) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function decimal() {
+    ans = value = value - Math.floor(value) + "";
+    clear = true;
+    updateDisplay();
+}
+
+// angle manipulation
+function toDegrees(ang, from) {
+    if(from === undefined)
+        from = mode;
+    switch(from) {
+        case "Deg":
+            return ang;
+        case "Rad":
+            return ang*180/Math.PI;
+        case "Grad":
+            return ang * 10 / 9;
+    }
+}
+
+function toRadians(ang, from) {
+    if(from === undefined)
+        from = mode;
+    switch(from) {
+        case "Deg":
+            return ang/180*Math.PI;
+        case "Rad":
+            return ang;
+        case "Grad":
+            return ang/200*Math.PI;
+    }
+}
+
+document.getElementById('mode-button').addEventListener('click', function() {
+    switch(mode) {
+        case "Deg":
+            mode = "Rad";
+            break;
+        case "Rad":
+            mode = "Grad";
+            break;
+        case "Grad":
+            mode = "Deg";
+            break;
+    }
+    this.innerHTML = mode;
+}, false);
+
+// TRIG
+function sin() {
+    ans = value = Math.sin(toRadians(value)) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function cos() {
+    ans = value = Math.cos(toRadians(value)) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function tan() {
+    ans = value = Math.tan(toRadians(value)) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function csc() {
+    ans = value = 1/Math.sin(toRadians(value)) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function sec() {
+    ans = value = 1/Math.cos(toRadians(value)) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function cot() {
+    ans = value = 1/Math.tan(toRadians(value)) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function asin() {
+    ans = value = Math.asin(toRadians(value)) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function acos() {
+    ans = value = Math.acos(toRadians(value)) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function atan() {
+    ans = value = Math.atan(toRadians(value)) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function acsc() {
+    ans = value = Math.asin(1/toRadians(value)) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function asec() {
+    ans = value = Math.acos(1/toRadians(value)) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function acot() {
+    ans = value = Math.atan(1/toRadians(value)) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function toDeg() {
+    value = toDegrees(value, 'Rad');
+    clear = true;
+    updateDisplay();
+}
+
+function toRad() {
+    value = toRadians(value, 'Deg');
+    clear = true;
+    updateDisplay();
+}
+
+function sinh() {
+    ans = value = Math.sinh(value) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function cosh() {
+    ans = value = Math.cosh(value) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function tanh() {
+    ans = value = Math.tanh(value) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function csch() {
+    ans = value = 1/Math.sinh(value) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function sech() {
+    ans = value = 1/Math.cosh(value) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function coth() {
+    ans = value = 1/Math.tanh(value) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function asinh() {
+    ans = value = Math.asinh(value) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function acosh() {
+    ans = value = Math.acosh(value) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function atanh() {
+    ans = value = Math.atanh(value) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function acsch() {
+    ans = value = Math.asinh(1/value) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function asech() {
+    ans = value = Math.acosh(1/value) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function acoth() {
+    ans = value = Math.atanh(1/value) + "";
+    clear = true;
+    updateDisplay();
+}
+
+// variable setup /w memory
+var memory = {}, selected = 'A';
+
+function memClear() {
+    delete memory[selected];
+    document.getElementById('mr').disabled = true;
+    document.getElementById('mc').disabled = true;
+}
+
+function memRead() {
+    if(typeof memory[selected] !== 'undefined') {
+        value = memory[selected];
+        updateDisplay();
+    }
+}
+
+function memAdd() {
+    if(typeof memory[selected] === 'undefined') {
+        document.getElementById('mr').disabled = false;
+        document.getElementById('mc').disabled = false;
+
+        memory[selected] = value;
+    } else {
+        memory[selected] = Number(memory[selected]) + Number(value) + "";
+    }
+}
+
+function memSubtract() {
+    if(typeof memory[selected] === 'undefined') {
+        document.getElementById('mr').disabled = false;
+        document.getElementById('mc').disabled = false;
+
+        memory[selected] = -value + "";
+    } else {
+        memory[selected] = Number(memory[selected]) - Number(value) + "";
+    }
+}
+
+function memStore() {
+    if(typeof memory[selected] === 'undefined') {
+        document.getElementById('mr').disabled = false;
+        document.getElementById('mc').disabled = false;
+    }
+
+    memory[selected] = value;
+}
+
+var varButtons = document.getElementsByClassName('var-button');
+for(var i = 0; i < varButtons.length; i++) {
+    varButtons[i].addEventListener('click', function(e) {
+        for(var j = 0; j < varButtons.length; j++) {
+            var button = varButtons[j];
+            if(typeof memory[button.innerHTML] === 'undefined') {
+                button.style.color = '#000';
+            } else {
+                button.style.color = '#00F';
+            }
+        }
+
+        selected = this.innerHTML;
+        this.style.color = '#F0F';
+
+        var disabled = typeof memory[selected] === 'undefined';
+        document.getElementById('mr').disabled = disabled;
+        document.getElementById('mc').disabled = disabled;
+    }, false);
+}
+
+function clearMems() {
+    try {
+        if(confirm("Are you sure you want to delete all saved variables?")) {
+            memory = {};
+
+            for(var i = 0; i < varButtons.length; i++) {
+                varButtons[i].style.color = '#000';
+            }
+
+            document.getElementById('mr').disabled = true;
+            document.getElementById('mc').disabled = true;
+        }
+    } catch(e) {alert(e);}
 }

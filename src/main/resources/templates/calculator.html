@@ -42,7 +42,7 @@
         <table style="display:inline-block;width:40%">
             <tbody id="up" style="display:table-row-group">
             <tr>
-                <td colspan="3">Standard Functions</td>
+                <td colspan="3">Basic Functions</td>
             </tr>
             <tr>
                 <td>
@@ -112,13 +112,13 @@
             </tr>
             <tr>
                 <td>
-                    <button>⌊x⌋</button>
+                    <button onclick="floor()">⌊x⌋</button>
                 </td>
                 <td>
-                    <button>⌈x⌉</button>
+                    <button onclick="ceiling()">⌈x⌉</button>
                 </td>
                 <td>
-                    <button>{x}</button>
+                    <button onclick="decimal()">{x}</button>
                 </td>
             </tr>
             </tbody>
@@ -128,58 +128,58 @@
             </tr>
             <tr>
                 <td>
-                    <button>sin</button>
+                    <button onclick="sin()">sin</button>
                 </td>
                 <td>
-                    <button>asin</button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button>cos</button>
-                </td>
-                <td>
-                    <button>acos</button>
+                    <button onclick="asin()">asin</button>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <button>tan</button>
+                    <button onclick="cos()">cos</button>
                 </td>
                 <td>
-                    <button>atan</button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button>sec</button>
-                </td>
-                <td>
-                    <button>asec</button>
+                    <button onclick="acos()">acos</button>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <button>csc</button>
+                    <button onclick="tan()">tan</button>
                 </td>
                 <td>
-                    <button>acsc</button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button>cot</button>
-                </td>
-                <td>
-                    <button>acot</button>
+                    <button onclick="atan()">atan</button>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <button>toDeg</button>
+                    <button onclick="sec()">sec</button>
                 </td>
                 <td>
-                    <button>toRad</button>
+                    <button onclick="asec()">asec</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button onclick="csc()">csc</button>
+                </td>
+                <td>
+                    <button onclick="acsc()">acsc</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button onclick="cot()">cot</button>
+                </td>
+                <td>
+                    <button onclick="acot()">acot</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button onclick="toDeg()">toDeg</button>
+                </td>
+                <td>
+                    <button onclick="toRad()">toRad</button>
                 </td>
             </tr>
             </tbody>
@@ -189,58 +189,50 @@
             </tr>
             <tr>
                 <td>
-                    <button>sinh</button>
+                    <button onclick="sinh()">sinh</button>
                 </td>
                 <td>
-                    <button>asinh</button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button>cosh</button>
-                </td>
-                <td>
-                    <button>acosh</button>
+                    <button onclick="asinh()">asinh</button>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <button>tanh</button>
+                    <button onclick="cosh()">cosh</button>
                 </td>
                 <td>
-                    <button>atanh</button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button>sech</button>
-                </td>
-                <td>
-                    <button>asech</button>
+                    <button onclick="acosh()">acosh</button>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <button>csch</button>
+                    <button onclick="tanh()">tanh</button>
                 </td>
                 <td>
-                    <button>acsch</button>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button>coth</button>
-                </td>
-                <td>
-                    <button>acoth</button>
+                    <button onclick="atanh()">atanh</button>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <button>toDeg</button>
+                    <button onclick="sech()">sech</button>
                 </td>
                 <td>
-                    <button>toRad</button>
+                    <button onclick="asech()">asech</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button onclick="csch()">csch</button>
+                </td>
+                <td>
+                    <button onclick="acsch()">acsch</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button onclick="coth()">coth</button>
+                </td>
+                <td>
+                    <button onclick="acoth()">acoth</button>
                 </td>
             </tr>
             </tbody>
@@ -340,7 +332,7 @@
                     <button class="var-button">Z</button>
                 </td>
                 <td colspan="2">
-                    <button style="color:#F00">Clear</button>
+                    <button style="color:#F00" onclick="clearMems()">Clear</button>
                 </td>
             </tr>
             </tbody>
@@ -349,7 +341,7 @@
             <tbody style="float:right">
             <tr>
                 <td colspan="2">
-                    <button>Deg</button>
+                    <button id="mode-button">Deg</button>
                 </td>
                 <td>
                     <button>Ans</button>
@@ -357,19 +349,19 @@
             </tr>
             <tr>
                 <td>
-                    <button>MC</button>
+                    <button id="mc" onclick="memClear()" disabled>MC</button>
                 </td>
                 <td>
-                    <button>MR</button>
+                    <button id="mr" onclick="memRead()" disabled>MR</button>
                 </td>
                 <td>
-                    <button>M+</button>
+                    <button onclick="memAdd()">M+</button>
                 </td>
                 <td>
-                    <button>M-</button>
+                    <button onclick="memSubtract()">M-</button>
                 </td>
                 <td>
-                    <button>MS</button>
+                    <button onclick="memStore()">MS</button>
                 </td>
             </tr>
             <tr>
