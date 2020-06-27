@@ -22,6 +22,12 @@
         height: 100%;
         padding: 1px 2px;
     }
+    #display {
+        border: #000 solid 2px;
+        padding: 10px 5px;
+        overflow: hidden;
+        font-size: 15px;
+    }
     </style>
     <script src="../static/js/polyfill.js" th:src="@{/js/polyfill.js}"></script>
     <script>
@@ -31,12 +37,21 @@
     </script>
 </head>
 <body>
-    <div class="screen">
-        <p>Try pressing L + <img src="../static/resources/dpad/dpad_E.png"
-                                 th:src="@{/resources/dpad/dpad_E.png}" width="16px"> for extra functionality!</p>
-        <p>L + <img src="../static/resources/dpad/dpad_N.png"
-                                 th:src="@{/resources/dpad/dpad_N.png}" width="16px"> to go back.</p>
-        <p id="display">0</p>
+    <div class="screen" style="position:relative">
+        <div id="display">0</div>
+        <div style="position:absolute;bottom:0">
+            Menus:
+            <ul style="margin-top:0">
+                <li>L + <img src="../static/resources/dpad/dpad_N.png"
+                             th:src="@{/resources/dpad/dpad_N.png}" width="16px"> for basic functions</li>
+                <li>L + <img src="../static/resources/dpad/dpad_E.png"
+                             th:src="@{/resources/dpad/dpad_E.png}" width="16px"> for trig functions</li>
+                <li>L + <img src="../static/resources/dpad/dpad_S.png"
+                             th:src="@{/resources/dpad/dpad_S.png}" width="16px"> for hyperbolic trig functions</li>
+                <li>L + <img src="../static/resources/dpad/dpad_W.png"
+                             th:src="@{/resources/dpad/dpad_W.png}" width="16px"> for variables</li>
+            </ul>
+        </div>
     </div>
     <div class="screen">
         <table style="display:inline-block;width:40%">
@@ -56,7 +71,7 @@
                     </button>
                 </td>
                 <td>
-                    <button>
+                    <button onclick="xy()">
                         <img src="../static/resources/calc/xy.png" th:src="@{/calc/xy.png}">
                     </button>
                 </td>
@@ -99,7 +114,7 @@
                     </button>
                 </td>
                 <td>
-                    <button>
+                    <button onclick="yroot()">
                         <img src="../static/resources/calc/yroot.png" th:src="@{/calc/yroot.png}"
                              style="vertical-align:bottom">
                     </button>
@@ -112,7 +127,7 @@
                     </button>
                 </td>
                 <td>
-                    <button>
+                    <button onclick="logyx()">
                         <img src="../static/resources/calc/logyx.png" th:src="@{/calc/logyx.png}"
                              style="vertical-align:bottom">
                     </button>
@@ -380,7 +395,7 @@
                     <button id="mode-button">Deg</button>
                 </td>
                 <td>
-                    <button>Ans</button>
+                    <button onclick="insertAns()">Ans</button>
                 </td>
             </tr>
             <tr>
@@ -402,16 +417,16 @@
             </tr>
             <tr>
                 <td>
-                    <button>R0</button>
+                    <button onclick="round0()">R0</button>
                 </td>
                 <td>
-                    <button>R2</button>
+                    <button onclick="round2()">R2</button>
                 </td>
                 <td>
-                    <button>mod</button>
+                    <button onclick="mod()">mod</button>
                 </td>
                 <td>
-                    <button>%</button>
+                    <button onclick="percent()">%</button>
                 </td>
                 <td>
                     <button onclick="typeCharacter('E')">E</button>
@@ -428,7 +443,7 @@
                     <button onclick="typeCharacter('9')">9</button>
                 </td>
                 <td>
-                    <button>/</button>
+                    <button onclick="divide()">/</button>
                 </td>
                 <td>
                     <button id="clear-button">C</button>
@@ -445,7 +460,7 @@
                     <button onclick="typeCharacter('6')">6</button>
                 </td>
                 <td>
-                    <button>x</button>
+                    <button onclick="multiply()">x</button>
                 </td>
                 <td>
                     <button onclick="deleteCharacter()">
@@ -465,10 +480,10 @@
                     <button onclick="typeCharacter('3')">3</button>
                 </td>
                 <td>
-                    <button>-</button>
+                    <button onclick="subtract()">-</button>
                 </td>
                 <td rowspan="2">
-                    <button style="height:26px">=</button>
+                    <button style="height:26px" onclick="execute()">=</button>
                 </td>
             </tr>
             <tr>
@@ -482,7 +497,12 @@
                     <button onclick="typeCharacter('.')">.</button>
                 </td>
                 <td>
-                    <button>+</button>
+                    <button onclick="add()">+</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <a href="index.html" th:href="@{/}">Back to home</a>
                 </td>
             </tr>
             </tbody>

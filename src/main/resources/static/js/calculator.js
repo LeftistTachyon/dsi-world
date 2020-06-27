@@ -33,7 +33,7 @@ try {
 var display = document.getElementById('display'),
         clearButton = document.getElementById('clear-button');
 var value = "0", ans = null, clear = true,
-        lastOperation = null, mode = "Deg";
+        lastOperation = null, operands = [], mode = "Deg";
 
 function updateDisplay() {
     display.innerHTML = value;
@@ -94,20 +94,22 @@ function negate() {
 }
 
 function square() {
-    ans = value = value * value + "";
+    value = value * value + "";
     clear = true;
     updateDisplay();
 }
 
 function cube() {
-    ans = value = value * value * value + "";
+    value = value * value * value + "";
     clear = true;
     updateDisplay();
 }
 
 clearButton.addEventListener('click', function(e) {
     if(this.innerHTML === 'C') {
-        ans = null;
+        null;
+        lastOperation = null;
+        operands = [];
     }
 
     value = "0";
@@ -133,55 +135,55 @@ function insertRand() {
 }
 
 function pow10() {
-    ans = value = Math.pow(10, value) + "";
+    value = Math.pow(10, value) + "";
     clear = true;
     updateDisplay();
 }
 
 function log() {
-    ans = value = Math.log10(value) + "";
+    value = Math.log10(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function ln() {
-    ans = value = Math.log(value) + "";
+    value = Math.log(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function sqrt() {
-    ans = value = Math.sqrt(value) + "";
+    value = Math.sqrt(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function cbrt() {
-    ans = value = Math.cbrt(value) + "";
+    value = Math.cbrt(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function pow2() {
-    ans = value = Math.pow(2, value) + "";
+    value = Math.pow(2, value) + "";
     clear = true;
     updateDisplay();
 }
 
 function powE() {
-    ans = value = Math.exp(value) + "";
+    value = Math.exp(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function inv() {
-    ans = value = 1/value + "";
+    value = 1/value + "";
     clear = true;
     updateDisplay();
 }
 
 function abs() {
-    ans = value = Math.abs(value) + "";
+    value = Math.abs(value) + "";
     clear = true;
     updateDisplay();
 }
@@ -210,9 +212,9 @@ function fact() {
         for(var i = 2; i <= value; i++) {
             a *= i;
         }
-        ans = value = a + "";
+        value = a + "";
     } else {
-        ans = value = gamma(++value) + "";
+        value = gamma(++value) + "";
     }
 
     clear = true;
@@ -220,19 +222,19 @@ function fact() {
 }
 
 function floor() {
-    ans = value = Math.floor(value) + "";
+    value = Math.floor(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function ceiling() {
-    ans = value = Math.ceil(value) + "";
+    value = Math.ceil(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function decimal() {
-    ans = value = value - Math.floor(value) + "";
+    value = value - Math.floor(value) + "";
     clear = true;
     updateDisplay();
 }
@@ -281,73 +283,73 @@ document.getElementById('mode-button').addEventListener('click', function() {
 
 // TRIG
 function sin() {
-    ans = value = Math.sin(toRadians(value)) + "";
+    value = Math.sin(toRadians(value)) + "";
     clear = true;
     updateDisplay();
 }
 
 function cos() {
-    ans = value = Math.cos(toRadians(value)) + "";
+    value = Math.cos(toRadians(value)) + "";
     clear = true;
     updateDisplay();
 }
 
 function tan() {
-    ans = value = Math.tan(toRadians(value)) + "";
+    value = Math.tan(toRadians(value)) + "";
     clear = true;
     updateDisplay();
 }
 
 function csc() {
-    ans = value = 1/Math.sin(toRadians(value)) + "";
+    value = 1/Math.sin(toRadians(value)) + "";
     clear = true;
     updateDisplay();
 }
 
 function sec() {
-    ans = value = 1/Math.cos(toRadians(value)) + "";
+    value = 1/Math.cos(toRadians(value)) + "";
     clear = true;
     updateDisplay();
 }
 
 function cot() {
-    ans = value = 1/Math.tan(toRadians(value)) + "";
+    value = 1/Math.tan(toRadians(value)) + "";
     clear = true;
     updateDisplay();
 }
 
 function asin() {
-    ans = value = Math.asin(toRadians(value)) + "";
+    value = Math.asin(toRadians(value)) + "";
     clear = true;
     updateDisplay();
 }
 
 function acos() {
-    ans = value = Math.acos(toRadians(value)) + "";
+    value = Math.acos(toRadians(value)) + "";
     clear = true;
     updateDisplay();
 }
 
 function atan() {
-    ans = value = Math.atan(toRadians(value)) + "";
+    value = Math.atan(toRadians(value)) + "";
     clear = true;
     updateDisplay();
 }
 
 function acsc() {
-    ans = value = Math.asin(1/toRadians(value)) + "";
+    value = Math.asin(1/toRadians(value)) + "";
     clear = true;
     updateDisplay();
 }
 
 function asec() {
-    ans = value = Math.acos(1/toRadians(value)) + "";
+    value = Math.acos(1/toRadians(value)) + "";
     clear = true;
     updateDisplay();
 }
 
 function acot() {
-    ans = value = Math.atan(1/toRadians(value)) + "";
+    value = Math.atan(1/toRadians(value)) + "";
     clear = true;
     updateDisplay();
 }
@@ -365,73 +367,73 @@ function toRad() {
 }
 
 function sinh() {
-    ans = value = Math.sinh(value) + "";
+    value = Math.sinh(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function cosh() {
-    ans = value = Math.cosh(value) + "";
+    value = Math.cosh(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function tanh() {
-    ans = value = Math.tanh(value) + "";
+    value = Math.tanh(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function csch() {
-    ans = value = 1/Math.sinh(value) + "";
+    value = 1/Math.sinh(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function sech() {
-    ans = value = 1/Math.cosh(value) + "";
+    value = 1/Math.cosh(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function coth() {
-    ans = value = 1/Math.tanh(value) + "";
+    value = 1/Math.tanh(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function asinh() {
-    ans = value = Math.asinh(value) + "";
+    value = Math.asinh(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function acosh() {
-    ans = value = Math.acosh(value) + "";
+    value = Math.acosh(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function atanh() {
-    ans = value = Math.atanh(value) + "";
+    value = Math.atanh(value) + "";
     clear = true;
     updateDisplay();
 }
 
 function acsch() {
-    ans = value = Math.asinh(1/value) + "";
+    value = Math.asinh(1/value) + "";
     clear = true;
     updateDisplay();
 }
 
 function asech() {
-    ans = value = Math.acosh(1/value) + "";
+    value = Math.acosh(1/value) + "";
     clear = true;
     updateDisplay();
 }
 
 function acoth() {
-    ans = value = Math.atanh(1/value) + "";
+    value = Math.atanh(1/value) + "";
     clear = true;
     updateDisplay();
 }
@@ -518,5 +520,141 @@ function clearMems() {
             document.getElementById('mr').disabled = true;
             document.getElementById('mc').disabled = true;
         }
+    } catch(e) {alert(e);}
+}
+
+function round0() {
+    value = Math.round(value) + "";
+    clear = true;
+    updateDisplay();
+}
+
+function round2() {
+    value = Math.round(value*100)/100 + "";
+    clear = true;
+    updateDisplay();
+}
+
+function percent() {
+    value = value/100 + "";
+    clear = true;
+    updateDisplay();
+}
+
+function insertAns() {
+    if(ans) {
+        value = ans;
+        clear = true;
+        updateDisplay();
+    }
+}
+// end of single-operand functions
+
+// double-operand functions
+// flow of memory:
+//  - type in first operand (do single operand stuff if needed), ans is cleared or from previous operation
+//  - press operator button => shifts value into operand[0], clear set to true, lastOperation changes
+//    - if another operator button is pressed immediately after, !matter since operator remains in value slot
+//  - type in second operand (do single operand stuff if needed), ans in same state
+//  - press "=" => shifts value into operand[1] (or operand[0] second time around), executes operation,
+//        result is stored in value & ans, clear set to true
+//  (operand[1] is stored)
+
+var first = true;
+
+function add() {
+    operands[0] = value;
+    clear = true;
+    first = true;
+
+    lastOperation = function() {
+        return Number(operands[0]) + Number(operands[1]);
+    };
+}
+
+function execute() {
+    try {
+        if(!lastOperation || !operands.length) {
+            console.log('No operation/operands found');
+            return;
+        }
+        operands[first ? 1 : 0] = value;
+
+        ans = value = lastOperation();
+        first = false;
+        clear = true;
+        updateDisplay();
+    } catch(e) {alert(e);}
+}
+
+function subtract() {
+    operands[0] = value;
+    clear = true;
+    first = true;
+
+    lastOperation = function() {
+        return Number(operands[0]) - Number(operands[1]);
+    };
+}
+
+function multiply() {
+    operands[0] = value;
+    clear = true;
+    first = true;
+
+    lastOperation = function() {
+        return Number(operands[0]) * Number(operands[1]);
+    };
+}
+
+function divide() {
+    operands[0] = value;
+    clear = true;
+    first = true;
+
+    lastOperation = function() {
+        return Number(operands[0]) / Number(operands[1]);
+    };
+}
+
+function mod() {
+    operands[0] = value;
+    clear = true;
+    first = true;
+
+    lastOperation = function() {
+        return Number(operands[0]) % Number(operands[1]);
+    };
+}
+
+function logyx() {
+    operands[0] = value;
+    clear = true;
+    first = true;
+
+    lastOperation = function() {
+        return Math.log(Number(operands[1])) / Math.log(Number(operands[0]));
+    };
+}
+
+function yroot() {
+    operands[0] = value;
+    clear = true;
+    first = true;
+
+    lastOperation = function() {
+        return Math.pow(Number(operands[0]), 1/Number(operands[1]));
+    };
+}
+
+function xy() {
+    try {
+        operands[0] = value;
+        clear = true;
+        first = true;
+
+        lastOperation = function() {
+            return Math.pow(Number(operands[0]), Number(operands[1]));
+        };
     } catch(e) {alert(e);}
 }
