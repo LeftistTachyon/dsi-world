@@ -31,12 +31,18 @@ try {
 }
 
 var display = document.getElementById('display'),
-        clearButton = document.getElementById('clear-button');
+        clearButton = document.getElementById('clear-button'),
+        ansDisplay = document.getElementById('ans');
 var value = "0", ans = null, clear = true,
         lastOperation = null, operands = [], mode = "Deg";
 
 function updateDisplay() {
     display.innerHTML = value;
+    if(ans === null) {
+        ansDisplay.innerHTML = 'Ans:';
+    } else {
+        ansDisplay.innerHTML = 'Ans: ' + ans;
+    }
     if(value === "0") {
         clear = true;
         clearButton.innerHTML = "C";
@@ -107,7 +113,7 @@ function cube() {
 
 clearButton.addEventListener('click', function(e) {
     if(this.innerHTML === 'C') {
-        null;
+        ans = null;
         lastOperation = null;
         operands = [];
     }
