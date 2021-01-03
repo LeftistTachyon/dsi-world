@@ -58,6 +58,7 @@ function typeCharacter(c) {
         if(c === '.' || c === 'E') {
             if(!value.includes(c)) {
                 value += c;
+                clear = false;
                 updateDisplay();
             }
         } else {
