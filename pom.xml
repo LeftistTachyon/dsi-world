@@ -23,7 +23,7 @@
         <java.version>11</java.version>
 
         <azure-blob.version>11.0.0</azure-blob.version>
-        <commons-io.version>2.6</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <commons-lang.version>3.10</commons-lang.version>
         <jgit.version>5.7.0.202003110725-r</jgit.version>
         <sendgrid.version>4.4.1</sendgrid.version>
